@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">arkhdialect</string>
+
+    <string name="interview">Интервью</string>
+    <string name="cards">Карточки</string>
+    <string name="settings">Настройки</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="cant_take_photo">Нельзя фотографировать из-за отсутствия камеры</string>
+
+    <string name="find_interview">Найти интервью</string>
+
+    <string name="text_attachment">Заметки</string>
+    <string name="text_attachment_add">Добавить заметку</string>
+    <string name="text_attachment_title">Заголовок</string>
+    <string name="text_attachment_data">Текст заметки</string>
+
+    <string name="photo_attachments">Фотографии</string>
+    <string name="photo_attachment_add">Сделать фотографию</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@id/interviewFragment"
+        android:enabled="true"
+        android:icon="@drawable/baseline_speaker_notes_24"
+        android:title="@string/interview" />
+    <item
+        android:id="@id/cardFragment"
+        android:enabled="true"
+        android:icon="@drawable/baseline_note_24"
+        android:title="@string/cards" />
+</menu>

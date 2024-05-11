@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:baselineAligned="false">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme">
+
+        <EditText
+            android:id="@+id/editTextText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:ems="10"
+            android:inputType="text"
+            android:singleLine="false"
+            android:text="Название карточки" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Район"
+            app:expandedHintEnabled="false"
+            android:paddingStart="@dimen/padding"
+            android:paddingTop="@dimen/padding"
+            android:paddingEnd="@dimen/padding"
+            app:boxBackgroundMode="filled">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edittext2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Характеристика"
+            app:expandedHintEnabled="false"
+            android:paddingStart="@dimen/padding"
+            android:paddingTop="@dimen/padding"
+            android:paddingEnd="@dimen/padding"
+            app:boxBackgroundMode="filled">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edittext3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Значение"
+            app:expandedHintEnabled="false"
+            android:paddingStart="@dimen/padding"
+            android:paddingTop="@dimen/padding"
+            android:paddingEnd="@dimen/padding"
+            app:boxBackgroundMode="filled">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edittext4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text|textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Примеры употребления"
+            app:expandedHintEnabled="false"
+            android:paddingStart="@dimen/padding"
+            android:paddingTop="@dimen/padding"
+            android:paddingEnd="@dimen/padding"
+            app:boxBackgroundMode="filled">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edittext5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text|textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginVertical="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/undo"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Отменить" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Сохранить" />
+    </LinearLayout>
+
+</LinearLayout>
