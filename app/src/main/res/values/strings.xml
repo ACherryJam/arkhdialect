@@ -16,4 +16,7 @@
 
     <string name="photo_attachments">Фотографии</string>
     <string name="photo_attachment_add">Сделать фотографию</string>
+    
+    <!--new code-->
+    <string name="menu_item_delete">Delete</string>
 </resources>
