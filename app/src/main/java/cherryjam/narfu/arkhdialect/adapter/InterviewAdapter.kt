@@ -10,9 +10,8 @@ import cherryjam.narfu.arkhdialect.R
 import cherryjam.narfu.arkhdialect.data.Interview
 import cherryjam.narfu.arkhdialect.databinding.ItemInterviewBinding
 
-class InterviewAdapter() :
-    Adapter<InterviewAdapter.InterviewViewHolder>() {
-    var data: List<Interview> = emptyList()
+class InterviewAdapter() : Adapter<InterviewAdapter.InterviewViewHolder>() {
+    var data: MutableList<Interview> = arrayListOf()
         set(newValue) {
             field = newValue
             notifyDataSetChanged()
@@ -25,7 +24,7 @@ class InterviewAdapter() :
         init {
             binding.listItemOptions.setOnClickListener {
                 //creating a popup menu
-                val popup: PopupMenu = PopupMenu(it.context, binding.listItemOptions)
+                val popup = PopupMenu(it.context, binding.listItemOptions)
 
                 //inflating menu from xml resource
                 popup.inflate(R.menu.options_menu)
@@ -60,13 +59,17 @@ class InterviewAdapter() :
 
     override fun onBindViewHolder(holder: InterviewViewHolder, position: Int) {
         val interview = data[position]
-
+        // Change the color of item if it's highlighted
         with (holder.binding.listItem) {
             tag = interview
 
             headline.text = interview.name
             supportText.text = interview.location
         }
+        if (selected_data.contains(data.get(position)))
+            holder.binding.listItem.setBackgroundResource(R.color.selected_item)
+        else
+            holder.binding.listItem.setBackgroundResource(R.color.white)
     }
 
     override fun getItemCount(): Int {
@@ -74,4 +77,5 @@ class InterviewAdapter() :
     }
 
     //https://habr.com/ru/articles/705064/
+    //https://github.com/jaisonfdo/MultiSelectRecyclerVIew?tab=readme-ov-file
 }
