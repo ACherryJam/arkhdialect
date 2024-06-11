@@ -18,6 +18,9 @@ class InterviewAdapter() :
             notifyDataSetChanged()
         }
 
+    var selected_data: MutableList<Interview> = arrayListOf()
+
+
     class InterviewViewHolder(val binding: ItemInterviewBinding) : ViewHolder(binding.root) {
         init {
             binding.listItemOptions.setOnClickListener {
