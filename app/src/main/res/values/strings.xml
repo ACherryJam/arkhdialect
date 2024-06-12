@@ -22,7 +22,7 @@
     <string name="items_selected">Выбрано: %d</string>
 
     <string name="alert_negative">Отмена</string>
-    <string name="delete_interview_title">Удалить интервью?</string>
+    <string name="delete_interview_title">Удалить интервью</string>
     <string name="delete_interview_message">Вы точно хотите удалить %d интервью?</string>
     <string name="delete_interview_positive">Удалить</string>
 </resources>
