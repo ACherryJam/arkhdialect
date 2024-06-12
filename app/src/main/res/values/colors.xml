@@ -5,4 +5,7 @@
 
     <color name="primary">#00ABC5</color>
     <color name="secondary">#46ABC5</color>
+
+    <!--new code-->
+    <color name="selected_item">#CCCCCC</color>
 </resources>
