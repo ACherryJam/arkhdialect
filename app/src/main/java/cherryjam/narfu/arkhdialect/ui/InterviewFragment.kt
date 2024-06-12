@@ -123,6 +123,7 @@ class InterviewFragment : Fragment(), AlertDialogListener {
         override fun onDestroyActionMode(mode: ActionMode?) {
             isMultiSelect = false
             binding.searchItem.visibility = View.VISIBLE
+            adapter.endSelection()
         }
     }
 
