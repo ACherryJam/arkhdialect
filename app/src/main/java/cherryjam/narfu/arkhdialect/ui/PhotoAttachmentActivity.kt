@@ -55,6 +55,11 @@ class PhotoAttachmentActivity : AppCompatActivity() {
         binding.attachmentList.adapter = adapter
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressedDispatcher.onBackPressed()
+        return true
+    }
+
     private fun askForPermissionIfNeeded(permission: String) {
         if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(arrayOf(permission), REQUEST_CODE)
@@ -69,7 +74,6 @@ class PhotoAttachmentActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-//            Toast.makeText(this, "Can't do shit ${permissions[0]}", Toast.LENGTH_SHORT).show()
             Snackbar.make(
                 binding.root,
                 "Can't take and get images without permission",

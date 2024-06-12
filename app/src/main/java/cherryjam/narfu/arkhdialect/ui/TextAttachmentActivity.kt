@@ -37,4 +37,9 @@ class TextAttachmentActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressedDispatcher.onBackPressed()
+        return true
+    }
 }
