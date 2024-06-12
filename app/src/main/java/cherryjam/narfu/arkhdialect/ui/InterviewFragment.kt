@@ -69,7 +69,7 @@ class InterviewFragment : Fragment(), AlertDialogListener {
             }
 
             override fun onItemSelect(position: Int) {
-                actionMode?.title = "Выбрано: ${adapter.getSelectedItemCount()}"
+                actionMode?.title = getString(R.string.items_selected, adapter.getSelectedItemCount())
 
                 val viewHolder = binding.interviews.findViewHolderForAdapterPosition(position)
                         as InterviewAdapter.InterviewViewHolder
@@ -77,7 +77,7 @@ class InterviewFragment : Fragment(), AlertDialogListener {
             }
 
             override fun onItemDeselect(position: Int) {
-                actionMode?.title = "Выбрано: ${adapter.getSelectedItemCount()}"
+                actionMode?.title = getString(R.string.items_selected, adapter.getSelectedItemCount())
 
                 val viewHolder = binding.interviews.findViewHolderForAdapterPosition(position)
                         as InterviewAdapter.InterviewViewHolder
@@ -105,13 +105,11 @@ class InterviewFragment : Fragment(), AlertDialogListener {
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             when (item.itemId) {
                 R.id.action_delete -> {
-                    alertDialogHelper!!.showAlertDialog(
-                        "",
-                        "Delete Contact",
-                        "DELETE",
-                        "CANCEL",
-                        1,
                     alertDialogHelper.showAlertDialog(
+                        getString(R.string.delete_interview_title),
+                        getString(R.string.delete_interview_message, adapter.getSelectedItemCount()),
+                        getString(R.string.delete_interview_positive),
+                        getString(R.string.alert_negative),
                         DELETE_INTERVIEW_ALERT,
                         false
                     )
