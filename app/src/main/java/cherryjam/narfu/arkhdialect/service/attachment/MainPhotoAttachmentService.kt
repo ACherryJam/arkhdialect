@@ -48,12 +48,8 @@ class MainPhotoAttachmentService(val context: Context) : PhotoAttachementService
                 cursor.getColumnIndexOrThrow(MediaStore.Images.ImageColumns.DATA)
 
             while (cursor.moveToNext()) {
-                val uri =  ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                                                      cursor.getLong(idColumn))
-                val photoAttachment = PhotoAttachment(
-                    cursor.getLong(idColumn),
-                    uri
-                )
+                val uri =  ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, cursor.getLong(idColumn))
+                val photoAttachment = PhotoAttachment(cursor.getLong(idColumn), uri)
                 newAttachments.add(photoAttachment)
             }
         }
