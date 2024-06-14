@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    >
 
     <net.nicbell.materiallists.ListItem
         android:id="@+id/listItem"
@@ -16,7 +17,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="48dp">
+            android:layout_marginEnd="48dp"
+            android:paddingVertical="10dp"
+            >
 
             <TextView
                 android:id="@+id/recording_title"
@@ -54,17 +57,15 @@
                 android:id="@+id/recording_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                android:layout_marginBottom="9dp"
                 android:ellipsize="end"
+
                 android:maxLines="1"
-
-                android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@id/recording_date"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/recording_title"
-
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5"
+                app:layout_constraintVertical_bias="1.0"
                 tools:text="00:05" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

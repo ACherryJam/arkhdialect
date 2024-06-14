@@ -116,7 +116,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/voiceAttachment"
+            android:id="@+id/recordingAttachment"
             style="?attr/materialIconButtonFilledStyle"
             android:layout_width="0dp"
             android:layout_height="0dp"
