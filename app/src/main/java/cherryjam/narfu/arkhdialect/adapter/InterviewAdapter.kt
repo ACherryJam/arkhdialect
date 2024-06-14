@@ -50,7 +50,7 @@ class InterviewAdapter : SelectableAdapter<InterviewAdapter.InterviewViewHolder>
                         startSelection()
                     selectItem(position)
 
-                    false
+                    true
                 }
 
                 val color = if (isItemSelected(position))

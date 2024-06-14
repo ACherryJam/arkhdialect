@@ -22,8 +22,7 @@ class PhotoAttachmentAdapter(val context: Context) :
             notifyDataSetChanged()
         }
 
-    class PhotoAttachmentViewHolder(val binding: ItemPhotoAttachmentBinding)
-            : ViewHolder(binding.root)
+    class PhotoAttachmentViewHolder(val binding: ItemPhotoAttachmentBinding) : ViewHolder(binding.root)
 
     override fun getItemCount(): Int {
         return data.size
