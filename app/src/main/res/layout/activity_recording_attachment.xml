@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".ui.recorderAttachmentActivity">
+        tools:context=".ui.recordingAttachmentActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@id/toolbar"
@@ -22,7 +22,7 @@
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
-            app:title="@string/recorder_attachment" />
+            app:title="@string/recording_attachment" />
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -40,7 +40,7 @@
         android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/addRecorderAttachment"
+            android:id="@+id/addRecordingAttachment"
             style="?attr/materialIconButtonFilledStyle"
 
             android:layout_width="130dp"
@@ -49,9 +49,8 @@
 
             app:icon="@drawable/baseline_mic_24"
             app:iconGravity="textStart"
-            app:iconSize="@dimen/recorder_icon_size"
             app:cornerRadius="30dp"
-
+            app:iconSize="@dimen/recording_icon_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

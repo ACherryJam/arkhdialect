@@ -3,20 +3,17 @@ package cherryjam.narfu.arkhdialect.service.attachment
 import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.Context
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.MediaStore.Audio
 import android.provider.MediaStore.Audio.Media
-import cherryjam.narfu.arkhdialect.data.PhotoAttachment
-import cherryjam.narfu.arkhdialect.data.RecorderAttachment
+import cherryjam.narfu.arkhdialect.data.RecordingAttachment
 
-class RecorderAttachmentService(val context: Context) : IRecorderAttachmentService {
-    private var attachments: MutableList<RecorderAttachment> = mutableListOf()
-    override fun getData(): MutableList<RecorderAttachment> = attachments
+class RecordingAttachmentService(val context: Context) : IRecordingAttachmentService {
+    private var attachments: MutableList<RecordingAttachment> = mutableListOf()
+    override fun getData(): MutableList<RecordingAttachment> = attachments
     override fun updateAttachments() {
-        val audioList: MutableList<RecorderAttachment> = mutableListOf()
+        val audioList: MutableList<RecordingAttachment> = mutableListOf()
 
         val collection =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -66,8 +63,8 @@ class RecorderAttachmentService(val context: Context) : IRecorderAttachmentServi
                 val uri = ContentUris.withAppendedId(Media.EXTERNAL_CONTENT_URI, id)
                 val timeStamp = cursor.getInt(timestampColumn)
                 val duration = cursor.getInt(durationColumn)
-                val recorderAttachment = RecorderAttachment(id, name, uri, timeStamp, duration)
-                audioList.add(recorderAttachment)
+                val recordAttachment = RecordingAttachment(id, name, uri, timeStamp, duration)
+                audioList.add(recordAttachment)
             }
         }
         attachments = audioList

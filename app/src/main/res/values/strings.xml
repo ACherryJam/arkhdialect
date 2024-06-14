@@ -17,8 +17,8 @@
     <string name="photo_attachments">Фотографии</string>
     <string name="photo_attachment_add">Сделать фотографию</string>
 
-    <string name="recorder_attachment">Диктофон</string>
-    <string name="recorder_attachment_add">Записать голос</string>
+    <string name="recording_attachment">Диктофон</string>
+    <string name="recording_attachment_add">Записать голос</string>
 
     <string name="menu_item_delete">Удалить</string>
 
