@@ -12,8 +12,11 @@
         android:name="android.permission.READ_MEDIA_IMAGES"
         android:minSdkVersion="33"
         tools:ignore="SelectedPhotoAccess" />
-    <uses-permission
-        android:name="android.permission.READ_MEDIA_AUDIO" />
+
+    <!--Audio-->
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -66,6 +69,9 @@
     <queries>
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
         </intent>
     </queries>
 </manifest>

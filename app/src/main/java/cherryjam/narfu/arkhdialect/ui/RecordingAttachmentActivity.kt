@@ -1,16 +1,20 @@
 package cherryjam.narfu.arkhdialect.ui
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.MediaStore.Audio.Media
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import cherryjam.narfu.arkhdialect.adapter.RecordingAttachmentAdapter
 import cherryjam.narfu.arkhdialect.databinding.ActivityRecordingAttachmentBinding
 import cherryjam.narfu.arkhdialect.service.attachment.IRecordingAttachmentService
 import cherryjam.narfu.arkhdialect.service.attachment.RecordingAttachmentService
 import com.google.android.material.snackbar.Snackbar
+import java.io.IOException
 
 class RecordingAttachmentActivity : AppCompatActivity() {
     private val binding: ActivityRecordingAttachmentBinding by lazy {
@@ -36,6 +40,14 @@ class RecordingAttachmentActivity : AppCompatActivity() {
         adapter = RecordingAttachmentAdapter(this)
         adapter.data = service.getData()
         binding.attachmentList.adapter = adapter
+
+        binding.addRecordingAttachment.setOnClickListener {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                askForPermissionIfNeeded(Manifest.permission.RECORD_AUDIO)
+            } else {
+                openRecorderIntent()
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -64,6 +76,29 @@ class RecordingAttachmentActivity : AppCompatActivity() {
             ).show()
         }
     }
+
+    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val data: Intent? = result.data
+
+        }
+    }
+
+    private fun openRecorderIntent() {
+        val intent = Intent(Media.RECORD_SOUND_ACTION)
+        startForResult.launch(intent)
+
+        /*
+        if (intent.resolveActivity(packageManager) != null) {
+            startForResult.launch(intent)
+        } else {
+            // Обработка случая, когда нет приложения для записи аудио
+            Toast.makeText(this, "No audio recording app found", Toast.LENGTH_SHORT).show()
+        }
+        */
+    }
+
+
 
     companion object {
         private val mediaPermission: String by lazy {

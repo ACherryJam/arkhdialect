@@ -61,5 +61,6 @@ class RecordingAttachmentService(val context: Context) : IRecordingAttachmentSer
             }
         }
         attachments = audioList
-}
     }
+
+}
