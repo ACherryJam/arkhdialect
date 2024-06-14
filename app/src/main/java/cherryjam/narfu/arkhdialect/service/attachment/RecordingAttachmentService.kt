@@ -15,14 +15,7 @@ class RecordingAttachmentService(val context: Context) : IRecordingAttachmentSer
     override fun updateAttachments() {
         val audioList: MutableList<RecordingAttachment> = mutableListOf()
 
-        val collection =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                MediaStore.Video.Media.getContentUri(
-                    MediaStore.VOLUME_EXTERNAL
-                )
-            } else {
-                MediaStore.Video.Media.EXTERNAL_CONTENT_URI
-            }
+        val collection = Media.EXTERNAL_CONTENT_URI
 
         val projection = arrayOf(
             Media._ID,
