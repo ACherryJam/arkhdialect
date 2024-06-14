@@ -41,10 +41,20 @@ abstract class SelectableAdapter<T : ViewHolder> : RecyclerView.Adapter<T>() {
             return
         }
 
+        isSelecting = false
         for (listener in listeners)
             listener.onSelectionEnd()
-        isSelecting = false
         selectedItemPositions.clear()
+    }
+
+    fun clearSelection() {
+        if (!isSelecting) {
+            Log.i(javaClass.simpleName, "Trying to clear selection while not selecting")
+            return
+        }
+
+        for (position in selectedItemPositions)
+            removeItemFromSelection(position)
     }
 
     private fun addItemToSelection(position: Int) {

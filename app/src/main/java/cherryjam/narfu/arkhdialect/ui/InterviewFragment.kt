@@ -27,7 +27,6 @@ class InterviewFragment : Fragment(), AlertDialogListener {
     private val service: InterviewService = FakerInterviewService()
 
     private var actionMode: ActionMode? = null
-    public var isMultiSelect: Boolean = false
 
     private lateinit var alertDialogHelper: AlertDialogHelper
     private lateinit var contextMenu: Menu
@@ -58,13 +57,6 @@ class InterviewFragment : Fragment(), AlertDialogListener {
             }
 
             override fun onSelectionEnd() {
-                // Temporary removal solution
-                // REPLACE THIS WITH SERVICE CALLS
-                val dataToChange = adapter.data
-                for (position in adapter.getSelectedItemPositions())
-                    dataToChange.removeAt(position)
-                adapter.data = dataToChange
-
                 actionMode?.finish()
             }
 
@@ -87,6 +79,21 @@ class InterviewFragment : Fragment(), AlertDialogListener {
 
         binding.interviews.adapter = adapter
     }
+
+    override fun onPositiveClick(from: Int) {
+        // Temporary removal solution
+        // REPLACE THIS WITH SERVICE CALLS
+        val dataToChange = adapter.data
+        for (position in adapter.getSelectedItemPositions())
+            dataToChange.removeAt(position)
+        adapter.data = dataToChange
+
+        adapter.endSelection()
+    }
+
+    override fun onNegativeClick(from: Int) {}
+
+    override fun onNeutralClick(from: Int) {}
 
     private val actionModeCallback = object : ActionMode.Callback {
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
@@ -115,25 +122,22 @@ class InterviewFragment : Fragment(), AlertDialogListener {
                     )
                     return true
                 }
-
                 else -> return false
             }
         }
 
         override fun onDestroyActionMode(mode: ActionMode?) {
-            isMultiSelect = false
+            actionMode = null
             binding.searchItem.visibility = View.VISIBLE
-            adapter.endSelection()
+
+            // Janky way to handle OnBackPressed in ActionMode
+            // OnBackPressedCallback doesn't work
+            if (adapter.isSelecting) {
+                adapter.clearSelection()
+                adapter.endSelection()
+            }
         }
     }
-
-    override fun onPositiveClick(from: Int) {
-        adapter.endSelection()
-    }
-
-    override fun onNegativeClick(from: Int) {}
-
-    override fun onNeutralClick(from: Int) {}
 
     companion object {
         val DELETE_INTERVIEW_ALERT = 1
