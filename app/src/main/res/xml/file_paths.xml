@@ -2,4 +2,7 @@
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
     <external-path path="Pictures" name="images"/>
     <external-files-path path="Pictures" name="my_images"/>
+
+    <!-- Audio -->
+    <external-path path="Music" name="my_records"/>
 </paths>
