@@ -61,6 +61,9 @@ class InterviewEditActivity : AppCompatActivity() {
                 AppDatabase.getInstance().interviewDao().update(interview)
                 finish()
             }.start()
+            
+        binding.recordingAttachment.setOnClickListener {
+            startAttachmentActivity(RecordingAttachmentActivity::class)
         }
 
         setSupportActionBar(binding.toolbar)

@@ -42,6 +42,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.simple.tools.commons)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
