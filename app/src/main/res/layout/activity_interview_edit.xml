@@ -13,25 +13,24 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:contentInsetRight="16dp">
+        android:theme="?attr/actionBarTheme">
 
         <EditText
-            android:id="@+id/fullName"
+            android:id="@+id/editTextText"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:background="@null"
             android:ems="10"
-            android:hint="@string/interview_full_name_hint"
             android:inputType="text"
-            android:singleLine="false" />
+            android:singleLine="false"
+            android:text="ФИО" />
 
     </androidx.appcompat.widget.Toolbar>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/interview_interviewer_hint"
+        android:hint="Интервьюер"
         android:paddingStart="@dimen/padding"
         android:paddingTop="@dimen/padding"
         android:paddingEnd="@dimen/padding"
@@ -39,17 +38,16 @@
         app:placeholderText="yeah">
 
         <EditText
-            android:id="@+id/interviewer"
+            android:id="@+id/edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:importantForAutofill="no"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/interview_location_hint"
+        android:hint="Район"
         android:paddingStart="@dimen/padding"
         android:paddingTop="@dimen/padding"
         android:paddingEnd="@dimen/padding"
@@ -57,10 +55,9 @@
         app:placeholderText="yeah">
 
         <EditText
-            android:id="@+id/location"
+            android:id="@+id/edittext2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:importantForAutofill="no"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -71,7 +68,7 @@
         android:paddingLeft="@dimen/padding"
         android:paddingTop="@dimen/padding"
         android:paddingRight="@dimen/padding"
-        android:text="@string/interview_attachments"
+        android:text="Вложения"
         android:textAlignment="textStart"
         android:textSize="20sp" />
 
@@ -89,10 +86,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:text="@string/interview_text_attachment"
             app:cornerRadius="30dp"
             app:icon="@drawable/baseline_text_fields_24"
-            app:iconGravity="textTop"
+            app:iconGravity="textStart"
             app:iconSize="@dimen/interview_icon_size"
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintEnd_toStartOf="@+id/photoAttachment"
@@ -109,10 +105,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="@string/interview_photo_attachment"
             app:cornerRadius="30dp"
             app:icon="@drawable/baseline_photo_camera_24"
-            app:iconGravity="textTop"
+            app:iconGravity="textStart"
             app:iconSize="@dimen/interview_icon_size"
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintEnd_toEndOf="parent"
@@ -128,10 +123,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:text="@string/interview_recording_attachment"
             app:cornerRadius="30dp"
             app:icon="@drawable/baseline_mic_24"
-            app:iconGravity="textTop"
+            app:iconGravity="textStart"
             app:iconSize="@dimen/interview_icon_size"
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintEnd_toStartOf="@+id/addAttachment"
@@ -182,10 +176,10 @@
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cancel" />
+            android:text="Отменить" />
 
         <Space
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
@@ -193,7 +187,7 @@
             android:id="@+id/save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/save" />
+            android:text="Сохранить" />
     </LinearLayout>
 
 </LinearLayout>

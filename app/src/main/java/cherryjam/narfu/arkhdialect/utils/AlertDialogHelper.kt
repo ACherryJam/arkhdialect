@@ -10,9 +10,14 @@ import android.view.View
 import androidx.fragment.app.Fragment
 
 
-class AlertDialogHelper(val context: Context, val callBack: AlertDialogListener) {
+class AlertDialogHelper(var fragment: Fragment?) {
     var alertDialog: AlertDialog? = null
-    var current_activity = context
+    var callBack: AlertDialogListener
+    var current_activity = fragment!!.requireActivity()
+
+    init {
+        callBack = fragment as AlertDialogListener
+    }
 
     /**
      * Displays the AlertDialog with 3 Action buttons
@@ -80,15 +85,17 @@ class AlertDialogHelper(val context: Context, val callBack: AlertDialogListener)
         } else {
             try {
                 // Возможно надо переделать (см. код в DeepSeek)
-                Thread {
-                    Looper.prepare()
-                    alertDialog = alertDialogBuilder.create()
-                    alertDialog?.show()
+                object : Thread() {
+                    override fun run() {
+                        Looper.prepare()
+                        alertDialog = alertDialogBuilder.create()
+                        alertDialog?.show()
 
-                    val negative_button = alertDialog?.getButton(DialogInterface.BUTTON_NEGATIVE)
-                    negative_button?.visibility = View.GONE
+                        val negative_button = alertDialog?.getButton(DialogInterface.BUTTON_NEGATIVE)
+                        negative_button?.visibility = View.GONE
 
-                    Looper.loop()
+                        Looper.loop()
+                    }
                 }.start()
             } catch (e: Exception) {
                 // TODO: handle exception

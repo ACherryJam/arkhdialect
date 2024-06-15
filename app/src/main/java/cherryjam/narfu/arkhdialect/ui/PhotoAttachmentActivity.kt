@@ -5,8 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaScannerConnection
 import android.media.MediaScannerConnection.OnScanCompletedListener
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.os.Environment.getExternalStoragePublicDirectory
@@ -16,10 +14,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import cherryjam.narfu.arkhdialect.adapter.PhotoAttachmentAdapter
-import cherryjam.narfu.arkhdialect.data.AppDatabase
-import cherryjam.narfu.arkhdialect.data.entity.PhotoAttachment
-import cherryjam.narfu.arkhdialect.data.entity.Interview
 import cherryjam.narfu.arkhdialect.databinding.ActivityPhotoAttachmentBinding
+import cherryjam.narfu.arkhdialect.service.attachment.MainPhotoAttachmentService
+import cherryjam.narfu.arkhdialect.service.attachment.PhotoAttachementService
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
 import java.io.IOException
@@ -32,9 +29,8 @@ class PhotoAttachmentActivity : AppCompatActivity() {
         ActivityPhotoAttachmentBinding.inflate(layoutInflater)
     }
 
+    lateinit var service: PhotoAttachementService
     private lateinit var adapter: PhotoAttachmentAdapter
-
-    lateinit var interview: Interview
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,12 +40,6 @@ class PhotoAttachmentActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        interview = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra("interview", Interview::class.java)
-        } else {
-            intent.getParcelableExtra("interview")
-        } ?: throw IllegalArgumentException("No Interview entity passed to PhotoAttachmentActivity")
-
         askForPermissionIfNeeded(mediaPermission)
         askForPermissionIfNeeded(android.Manifest.permission.CAMERA)
 
@@ -57,14 +47,11 @@ class PhotoAttachmentActivity : AppCompatActivity() {
             openCameraIntent()
         }
 
-        adapter = PhotoAttachmentAdapter()
-        AppDatabase.getInstance().photoAttachmentDao().getByInterviewId(interview.id!!).observe(this) {
-            adapter.data = it
-        }
-    }
+        service = MainPhotoAttachmentService(this)
+        service.updateAttachments()
 
-    override fun onStart() {
-        super.onStart()
+        adapter = PhotoAttachmentAdapter(this)
+        adapter.data = service.getData()
         binding.attachmentList.adapter = adapter
     }
 
@@ -98,8 +85,10 @@ class PhotoAttachmentActivity : AppCompatActivity() {
     private val cameraLauncher = registerForActivityResult(StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val callback = OnScanCompletedListener { _, _ ->
-                val attachment = PhotoAttachment(interview.id!!, currentPhotoUri)
-                AppDatabase.getInstance().photoAttachmentDao().insert(attachment)
+                service.updateAttachments()
+                runOnUiThread {
+                    adapter.data = service.getData()
+                }
             }
 
             MediaScannerConnection.scanFile(
@@ -119,14 +108,13 @@ class PhotoAttachmentActivity : AppCompatActivity() {
                 return
             }
 
-            currentPhotoUri = FileProvider.getUriForFile(this, "$packageName.provider", photoFile)
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, currentPhotoUri)
+            val photoUri = FileProvider.getUriForFile(this, "$packageName.provider", photoFile)
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
             cameraLauncher.launch(takePictureIntent)
         }
     }
 
     private lateinit var currentPhotoPath: String
-    private lateinit var currentPhotoUri: Uri
 
     private fun createImageFile(): File {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
