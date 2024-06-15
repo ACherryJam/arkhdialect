@@ -19,7 +19,7 @@ class RecordingAttachmentAdapter(val context: Context) :  RecyclerView.Adapter<R
 
     class RecordingAttachmentViewHolder(val binding: ItemRecordingAttachmentBinding) : RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecordingAttachmentAdapter.RecordingAttachmentViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecordingAttachmentViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemRecordingAttachmentBinding.inflate(layoutInflater, parent, false)
 
@@ -30,17 +30,16 @@ class RecordingAttachmentAdapter(val context: Context) :  RecyclerView.Adapter<R
         return data.size
     }
 
-    override fun onBindViewHolder(holder: RecordingAttachmentAdapter.RecordingAttachmentViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecordingAttachmentViewHolder, position: Int) {
         val recordingAttachment = data[position]
 
         with (holder.binding) {
-            with (itemHolder) {
-                recordingTitle.text = recordingAttachment.name
-                recordingDate.text = recordingAttachment.timestamp.formatDate(root.context)
-                val toSec = recordingAttachment.duration / 1000
+            recordingTitle.text = recordingAttachment.name
+            recordingDate.text = recordingAttachment.timestamp.formatDate(root.context)
+            val toSec = recordingAttachment.duration / 1000
 
-                recordingDuration.text = toSec.getFormattedDuration()
-            }
+            recordingDuration.text = toSec.getFormattedDuration()
+
         }
 
     }
