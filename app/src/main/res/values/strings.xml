@@ -1,19 +1,45 @@
 <resources>
     <string name="app_name">arkhdialect</string>
 
+    <!-- COMMONLY USED -->
     <string name="interview">Интервью</string>
     <string name="cards">Карточки</string>
     <string name="settings">Настройки</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="cant_take_photo">Нельзя фотографировать из-за отсутствия камеры</string>
 
+    <string name="cancel">Отменить</string>
+    <string name="save">Сохранить</string>
+    <string name="alert_negative">Отмена</string>
+
+    <!-- MAIN ACTIVITY -->
     <string name="find_interview">Найти интервью</string>
 
+    <!-- INTERVIEW EDITOR -->
+    <string name="cant_take_photo">Нельзя фотографировать из-за отсутствия камеры</string>
+
+    <string name="interview_full_name_hint">ФИО</string>
+    <string name="interview_interviewer_hint">Интервьюер</string>
+    <string name="interview_location_hint">Район</string>
+    <string name="interview_attachments">Вложения</string>
+    <string name="interview_text_attachment">Заметки</string>
+    <string name="interview_photo_attachment">Фотографии</string>
+    <string name="interview_recording_attachment">Записи голоса</string>
+
+    <!-- CARD EDITOR -->
+    <string name="card_word_hint">Слово</string>
+    <string name="card_location_hint">Район</string>
+    <string name="card_characteristics_hint">Характеристики</string>
+    <string name="card_meaning_hint">Значение слова</string>
+    <string name="card_example_hint">Примеры употребления</string>
+
+    <!-- TEXT ATTACHMENT -->
     <string name="text_attachment">Заметки</string>
     <string name="text_attachment_add">Добавить заметку</string>
+
+    <!-- TEXT ATTACHMENT EDITOR -->
     <string name="text_attachment_title">Заголовок</string>
     <string name="text_attachment_data">Текст заметки</string>
 
+    <!-- PHOTO ATTACHMENT -->
     <string name="photo_attachments">Фотографии</string>
     <string name="photo_attachment_add">Сделать фотографию</string>
 
@@ -22,10 +48,9 @@
 
     <string name="menu_item_delete">Удалить</string>
 
+    <!-- SELECTION -->
     <string name="items_selected">Выбрано: %d</string>
-
-    <string name="alert_negative">Отмена</string>
-    <string name="delete_interview_title">Удалить интервью</string>
+    <string name="delete_interview_title">Удалить интервью?</string>
     <string name="delete_interview_message">Вы точно хотите удалить %d интервью?</string>
     <string name="delete_interview_positive">Удалить</string>
 </resources>
