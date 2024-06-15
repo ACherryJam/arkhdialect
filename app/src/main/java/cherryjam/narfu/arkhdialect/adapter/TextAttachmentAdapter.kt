@@ -74,7 +74,7 @@ class TextAttachmentAdapter(val context: Context) :
                 headline.text = textAttachment.title
                 supportText.text = textAttachment.content
 
-                val color = if (isItemSelected(position))
+                val color = if (isItemSelected(adapterPosition))
                     R.color.selected_item
                 else
                     R.color.white

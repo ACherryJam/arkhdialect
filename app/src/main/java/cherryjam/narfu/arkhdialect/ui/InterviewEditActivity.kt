@@ -63,6 +63,10 @@ class InterviewEditActivity : AppCompatActivity() {
             }.start()
         }
 
+        binding.recordingAttachment.setOnClickListener {
+            startAttachmentActivity(RecordingAttachmentActivity::class)
+        }
+
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
