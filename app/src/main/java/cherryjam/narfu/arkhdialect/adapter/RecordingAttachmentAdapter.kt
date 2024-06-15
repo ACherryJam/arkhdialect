@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import cherryjam.narfu.arkhdialect.data.RecordingAttachment
+import cherryjam.narfu.arkhdialect.data.entity.RecordingAttachment
 import cherryjam.narfu.arkhdialect.databinding.ItemRecordingAttachmentBinding
 import com.simplemobiletools.commons.extensions.formatDate
 import com.simplemobiletools.commons.extensions.getFormattedDuration
@@ -39,9 +39,6 @@ class RecordingAttachmentAdapter(val context: Context) :  RecyclerView.Adapter<R
             val toSec = recordingAttachment.duration / 1000
 
             recordingDuration.text = toSec.getFormattedDuration()
-
         }
-
     }
-
 }

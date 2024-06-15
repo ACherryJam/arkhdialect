@@ -72,6 +72,9 @@
             <action android:name="android.media.action.IMAGE_CAPTURE" />
         </intent>
         <intent>
+            <action android:name="android.media.action.RECORD_SOUND" />
+        </intent>
+        <intent>
             <action android:name="android.intent.action.VIEW" />
         </intent>
     </queries>

@@ -1,35 +1,39 @@
 package cherryjam.narfu.arkhdialect.ui
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
 import android.provider.MediaStore.Audio.Media
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.FileProvider
 import cherryjam.narfu.arkhdialect.adapter.RecordingAttachmentAdapter
+import cherryjam.narfu.arkhdialect.data.AppDatabase
+import cherryjam.narfu.arkhdialect.data.entity.Interview
+import cherryjam.narfu.arkhdialect.data.entity.RecordingAttachment
 import cherryjam.narfu.arkhdialect.databinding.ActivityRecordingAttachmentBinding
-import cherryjam.narfu.arkhdialect.service.attachment.IRecordingAttachmentService
-import cherryjam.narfu.arkhdialect.service.attachment.RecordingAttachmentService
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+
 
 class RecordingAttachmentActivity : AppCompatActivity() {
     private val binding: ActivityRecordingAttachmentBinding by lazy {
         ActivityRecordingAttachmentBinding.inflate(layoutInflater)
     }
 
-    private lateinit var service: IRecordingAttachmentService
+    lateinit var interview: Interview
     private lateinit var adapter: RecordingAttachmentAdapter
     private val permissions = arrayOf(mediaPermission,Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,19 +43,27 @@ class RecordingAttachmentActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        interview = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra("interview", Interview::class.java)
+        } else {
+            intent.getParcelableExtra("interview")
+        } ?: throw IllegalArgumentException("No Interview entity passed to RecordingAttachmentActivity")
+
         ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE)
 
-        // to show all recordings
-        service = RecordingAttachmentService(this)
-        service.updateAttachments()
-
         adapter = RecordingAttachmentAdapter(this)
-        adapter.data = service.getData()
-        binding.attachmentList.adapter = adapter
+        AppDatabase.getInstance().recordingAttachmentDao().getByInterviewId(interview.id!!).observe(this) {
+            adapter.data = it
+        }
 
         binding.addRecordingAttachment.setOnClickListener {
             startRecording()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.attachmentList.adapter = adapter
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -84,30 +96,46 @@ class RecordingAttachmentActivity : AppCompatActivity() {
     private fun startRecording() {
         val intent = Intent(Media.RECORD_SOUND_ACTION)
         if (intent.resolveActivity(packageManager) != null) {
-            startActivityForResult(intent, REQUEST_CODE)
+            val recordingFile: File = try { createRecordingFile() } catch (e: IOException) {
+                e.printStackTrace()
+                return
+            }
+
+            val uri = FileProvider.getUriForFile(this, "$packageName.provider", recordingFile)
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+            recorderLauncher.launch(intent)
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-            val audioUri: Uri? = data?.data
-            audioUri?.let { uri ->
-                try {
-                    val inputStream = contentResolver.openInputStream(uri)
-                    val outputFile = createRecordingFile()
-                    inputStream?.use { input ->
-                        outputFile.outputStream().use { output ->
-                            input.copyTo(output)
-                        }
-                    }
-                    // Now the file is saved in the custom directory
-                } catch (e: IOException) {
-                    e.printStackTrace()
+    private val recorderLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val uri = result.data?.data
+            uri?.let {
+                contentResolver.query(
+                    it,
+                    arrayOf(Media.DISPLAY_NAME, Media.DATE_ADDED, Media.DURATION),
+                    null, null, null
+                )
+            }?.use { cursor ->
+                val nameColumn = cursor.getColumnIndexOrThrow(Media.DISPLAY_NAME)
+                val timestampColumn = cursor.getColumnIndexOrThrow(Media.DATE_ADDED)
+                val durationColumn = cursor.getColumnIndexOrThrow(Media.DURATION)
+
+                if (cursor.moveToFirst()) {
+                    val name = cursor.getString(nameColumn)
+                    val timestamp = cursor.getInt(timestampColumn)
+                    val duration = cursor.getInt(durationColumn)
+
+                    Thread {
+                        AppDatabase.getInstance().recordingAttachmentDao().insert(RecordingAttachment(
+                            interview.id!!, uri, name, timestamp, duration
+                        ))
+                    }.start()
                 }
             }
         }
     }
+
     @Throws(IOException::class)
     private fun createRecordingFile(): File {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
