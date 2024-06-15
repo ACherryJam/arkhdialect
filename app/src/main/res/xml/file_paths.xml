@@ -4,5 +4,5 @@
     <external-files-path path="Pictures" name="my_images"/>
 
     <!-- Audio -->
-    <external-path name="my_music" path="Music" />
+    <external-files-path name="my_music" path="Music" />
 </paths>

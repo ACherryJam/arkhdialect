@@ -14,6 +14,7 @@ import cherryjam.narfu.arkhdialect.data.entity.*
         Card::class,
         TextAttachment::class,
         PhotoAttachment::class,
+        RecordingAttachment::class
     ],
     version = AppDatabase.VERSION,
     exportSchema = false
@@ -23,10 +24,11 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun interviewDao() : InterviewDao
     abstract fun textAttachmentDao() : TextAttachmentDao
     abstract fun photoAttachmentDao() : PhotoAttachmentDao
+    abstract fun recordingAttachmentDao() : RecordingAttachmentDao
     abstract fun cardDao() : CardDao
 
     companion object {
-        const val VERSION = 8 // Increment on schema change
+        const val VERSION = 9 // Increment on schema change
         private var instance: AppDatabase? = null
 
         fun createInstance(context: Context) {
