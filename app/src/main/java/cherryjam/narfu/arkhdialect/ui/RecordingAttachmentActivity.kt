@@ -3,11 +3,10 @@ package cherryjam.narfu.arkhdialect.ui
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.media.MediaScannerConnection
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore.Audio.Media
-import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AppCompatActivity
 import cherryjam.narfu.arkhdialect.adapter.RecordingAttachmentAdapter
 import cherryjam.narfu.arkhdialect.databinding.ActivityRecordingAttachmentBinding
@@ -19,10 +18,8 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import android.os.Environment.getExternalStoragePublicDirectory
-import android.provider.MediaStore
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 
 class RecordingAttachmentActivity : AppCompatActivity() {
     private val binding: ActivityRecordingAttachmentBinding by lazy {
@@ -31,7 +28,7 @@ class RecordingAttachmentActivity : AppCompatActivity() {
 
     private lateinit var service: IRecordingAttachmentService
     private lateinit var adapter: RecordingAttachmentAdapter
-    private lateinit var currentRecordingPath: String
+    private val permissions = arrayOf(mediaPermission,Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,8 +39,7 @@ class RecordingAttachmentActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val permissions = arrayOf(mediaPermission)
-        askForPermissionIfNeeded(permissions)
+        ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE)
 
         // to show all recordings
         service = RecordingAttachmentService(this)
@@ -54,7 +50,7 @@ class RecordingAttachmentActivity : AppCompatActivity() {
         binding.attachmentList.adapter = adapter
 
         binding.addRecordingAttachment.setOnClickListener {
-            openRecorderIntent()
+            startRecording()
         }
     }
 
@@ -63,86 +59,60 @@ class RecordingAttachmentActivity : AppCompatActivity() {
         return true
     }
 
-
-    private fun askForPermissionIfNeeded(permissions: Array<String>) {
-        if (!hasPermissions(this, permissions)) {
-            requestPermissions(permissions, REQUEST_CODE)
-        }
-    }
-
-    private fun hasPermissions(attachment: RecordingAttachmentActivity, permissions: Array<String>): Boolean {
-        for(permission in permissions) {
-            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED)
-                return false
-        }
-        return true
-    }
-
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-            Snackbar.make(
-                binding.root,
-                "Can't get data without permission",
-                Snackbar.LENGTH_SHORT
-            ).show()
-        }
-    }
-
-    private val recorderLauncher = registerForActivityResult(StartActivityForResult()) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val callback = MediaScannerConnection.OnScanCompletedListener { _, _ ->
-                service.updateAttachments()
-                runOnUiThread {
-                    adapter.data = service.getData()
+        if (requestCode == 200) {
+            var allPermissionsGranted = true
+            for (result in grantResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    allPermissionsGranted = false
+                    break
                 }
             }
-
-            MediaScannerConnection.scanFile(
-                this,
-                arrayOf(currentRecordingPath),
-                null, callback
-            )
-
+            if (allPermissionsGranted) {
+                startRecording()
+            } else {
+                Snackbar.make(
+                    binding.root,
+                    "Can't get data without permission",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
-    private fun openRecorderIntent() {
-        val recordIntent = Intent(Media.RECORD_SOUND_ACTION)
-
-        val recordingFile: File = try { createRecordingFile() } catch (e: IOException) {
-            e.printStackTrace()
-            return
-        }
-
-        val recordingUri = FileProvider.getUriForFile(this, "$packageName.provider", recordingFile)
-        recordIntent.putExtra(MediaStore.EXTRA_OUTPUT, recordingUri)
-
-        recorderLauncher.launch(recordIntent)
-
-        /*
+    private fun startRecording() {
+        val intent = Intent(Media.RECORD_SOUND_ACTION)
         if (intent.resolveActivity(packageManager) != null) {
-            startForResult.launch(intent)
-        } else {
-            // Обработка случая, когда нет приложения для записи аудио
-            Toast.makeText(this, "No audio recording app found", Toast.LENGTH_SHORT).show()
+            startActivityForResult(intent, REQUEST_CODE)
         }
-        */
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            val audioUri: Uri? = data?.data
+            audioUri?.let { uri ->
+                try {
+                    val inputStream = contentResolver.openInputStream(uri)
+                    val outputFile = createRecordingFile()
+                    inputStream?.use { input ->
+                        outputFile.outputStream().use { output ->
+                            input.copyTo(output)
+                        }
+                    }
+                    // Now the file is saved in the custom directory
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+    @Throws(IOException::class)
     private fun createRecordingFile(): File {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-        val recordingFileName = "record_" + timeStamp + "_"
-        val storageDir: File? = getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC)
-        val recording: File = File.createTempFile(recordingFileName, ".m4a", storageDir)
-
-        currentRecordingPath = recording.absolutePath
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_MUSIC)
+        val recording: File = File.createTempFile("RECORD_${timeStamp}_", ".mp3", storageDir)
 
         return recording
     }
