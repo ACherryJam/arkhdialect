@@ -15,11 +15,7 @@ abstract class SelectableAdapter<T : ViewHolder> : RecyclerView.Adapter<T>() {
     }
 
     private val listeners: MutableList<Listener> = mutableListOf()
-
     private var selectedItemPositions: TreeSet<Int> = sortedSetOf(Collections.reverseOrder())
-
-    protected var recyclerView: RecyclerView? = null
-        private set
 
     var isSelecting: Boolean = false
         private set
@@ -92,12 +88,7 @@ abstract class SelectableAdapter<T : ViewHolder> : RecyclerView.Adapter<T>() {
             return
         }
 
-        if (recyclerView == null) {
-            Log.e(javaClass.simpleName, "Trying to select item while not attacked to recycler view")
-            return
-        }
-
-        val position = recyclerView!!.getChildAdapterPosition(viewHolder.itemView)
+        val position = viewHolder.adapterPosition
         if (position == RecyclerView.NO_POSITION) {
             Log.e(javaClass.simpleName, "Couldn't find position of ViewHolder $viewHolder")
             return
@@ -119,15 +110,5 @@ abstract class SelectableAdapter<T : ViewHolder> : RecyclerView.Adapter<T>() {
 
     fun getSelectedItemCount(): Int {
         return selectedItemPositions.size
-    }
-
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        this.recyclerView = recyclerView
-        super.onAttachedToRecyclerView(recyclerView)
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        this.recyclerView = null
-        super.onDetachedFromRecyclerView(recyclerView)
     }
 }
