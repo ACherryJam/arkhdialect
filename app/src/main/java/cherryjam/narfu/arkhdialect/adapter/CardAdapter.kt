@@ -1,11 +1,13 @@
 package cherryjam.narfu.arkhdialect.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import cherryjam.narfu.arkhdialect.data.Card
+import cherryjam.narfu.arkhdialect.data.entity.Card
 import cherryjam.narfu.arkhdialect.databinding.ItemInterviewBinding
+import cherryjam.narfu.arkhdialect.ui.CardEditActivity
 
 class CardAdapter() : Adapter<CardAdapter.CardViewHolder>() {
     var data: List<Card> = emptyList()
@@ -14,13 +16,26 @@ class CardAdapter() : Adapter<CardAdapter.CardViewHolder>() {
             notifyDataSetChanged()
         }
 
-    constructor(data: List<Card>) : this() {
-        this.data = data
-    }
+    class CardViewHolder(val binding: ItemInterviewBinding) : ViewHolder(binding.root) {
+        private val context = binding.root.context
+        private lateinit var card: Card
 
-    class CardViewHolder(val binding: ItemInterviewBinding) : ViewHolder(binding.root)
-    {
+        init {
+            binding.listItem.setOnClickListener {
+                val intent = Intent(context, CardEditActivity::class.java)
+                intent.putExtra("card", card)
+                context.startActivity(intent)
+            }
+        }
 
+        fun onBind(card: Card) {
+            this.card = card
+
+            with (binding.listItem) {
+                headline.text = card.word
+                supportText.text = card.location
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
@@ -32,11 +47,7 @@ class CardAdapter() : Adapter<CardAdapter.CardViewHolder>() {
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         val card = data[position]
-
-        with (holder.binding.listItem) {
-            headline.text = card.word
-            supportText.text = card.location
-        }
+        holder.onBind(card)
     }
 
     override fun getItemCount(): Int {

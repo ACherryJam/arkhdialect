@@ -6,18 +6,79 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import cherryjam.narfu.arkhdialect.R
-import cherryjam.narfu.arkhdialect.data.Interview
+import cherryjam.narfu.arkhdialect.data.AppDatabase
+import cherryjam.narfu.arkhdialect.data.entity.Interview
 import cherryjam.narfu.arkhdialect.databinding.ItemInterviewBinding
 import cherryjam.narfu.arkhdialect.ui.InterviewEditActivity
 
 class InterviewAdapter : SelectableAdapter<InterviewAdapter.InterviewViewHolder>() {
-    var data: MutableList<Interview> = arrayListOf()
+    var data: List<Interview> = listOf()
         set(newValue) {
             field = newValue
             notifyDataSetChanged()
         }
 
-    class InterviewViewHolder(val binding: ItemInterviewBinding) : ViewHolder(binding.root) {}
+    inner class InterviewViewHolder(val binding: ItemInterviewBinding) : ViewHolder(binding.root) {
+        private val context = binding.root.context
+        private lateinit var interview: Interview
+
+        init {
+            binding.listItem.setOnClickListener {
+                if (isSelecting)
+                    selectItem(this)
+                else {
+                    val intent = Intent(context, InterviewEditActivity::class.java)
+                    intent.putExtra("interview", interview)
+                    context.startActivity(intent)
+                }
+            }
+            binding.listItem.setOnLongClickListener {
+                if (!isSelecting)
+                    startSelection()
+                selectItem(this)
+
+                false
+            }
+            binding.listItemOptions.setOnClickListener {
+                val popup = PopupMenu(it.context, it)
+                popup.inflate(R.menu.options_menu)
+
+                popup.setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.select -> {
+                            if (!isSelecting)
+                                startSelection()
+                            selectItem(this)
+                            true
+                        }
+                        R.id.delete -> {
+                            Thread {
+                                AppDatabase.getInstance().interviewDao().delete(interview)
+                            }.start()
+                            true//
+                        }
+                        else -> false
+                    }
+                }
+                popup.show()
+            }
+        }
+
+        fun onBind(interview: Interview, position: Int) {
+            this.interview = interview
+
+            with(binding) {
+                listItem.headline.text = interview.name
+                listItem.supportText.text = interview.location
+
+                val color = if (isItemSelected(position))
+                    R.color.selected_item
+                else
+                    R.color.white
+                listItem.setBackgroundResource(color)
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InterviewViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -28,65 +89,7 @@ class InterviewAdapter : SelectableAdapter<InterviewAdapter.InterviewViewHolder>
 
     override fun onBindViewHolder(holder: InterviewViewHolder, position: Int) {
         val interview = data[position]
-
-        with (holder.binding) {
-            with (listItem) {
-                tag = interview
-
-                headline.text = interview.name
-                supportText.text = interview.location
-
-                setOnClickListener {
-                    if (isSelecting)
-                        selectItem(position)
-                    else {
-                        val intent = Intent(context, InterviewEditActivity::class.java)
-                        intent.putExtra("interview", interview)
-                        context.startActivity(intent)
-                    }
-                }
-                setOnLongClickListener {
-                    if (!isSelecting)
-                        startSelection()
-                    selectItem(position)
-
-                    false
-                }
-
-                val color = if (isItemSelected(position))
-                    R.color.selected_item
-                else
-                    R.color.white
-                setBackgroundResource(color)
-            }
-
-            with (listItemOptions) {
-                setOnClickListener {
-                    val popup = PopupMenu(it.context, it)
-                    popup.inflate(R.menu.options_menu)
-
-                    popup.setOnMenuItemClickListener { item ->
-                        when (item.itemId) {
-                            R.id.select -> {
-                                if (!isSelecting)
-                                    startSelection()
-                                selectItem(position)
-                                true
-                            }
-                            R.id.delete -> {
-                                // ADD DELETE CODE
-                                // TO-DO: Figure out where to handle fucking service interactions
-                                // because if it's gonna be in both adapter and fragment that'll
-                                // be a huge mess
-                                true
-                            }
-                            else -> false
-                        }
-                    }
-                    popup.show()
-                }
-            }
-        }
+        holder.onBind(interview, position)
     }
 
     override fun getItemCount(): Int {
