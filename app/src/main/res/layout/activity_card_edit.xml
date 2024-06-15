@@ -13,17 +13,18 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme">
+        android:theme="?attr/actionBarTheme"
+        app:contentInsetEnd="16dp">
 
         <EditText
-            android:id="@+id/editTextText"
+            android:id="@+id/word"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:background="@null"
             android:ems="10"
+            android:hint="@string/card_word_hint"
             android:inputType="text"
-            android:singleLine="false"
-            android:text="Название карточки" />
+            android:singleLine="false" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -36,7 +37,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Район"
+            android:hint="@string/card_location_hint"
             app:expandedHintEnabled="false"
             android:paddingStart="@dimen/padding"
             android:paddingTop="@dimen/padding"
@@ -44,7 +45,7 @@
             app:boxBackgroundMode="filled">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edittext2"
+                android:id="@+id/location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text" />
@@ -54,7 +55,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Характеристика"
+            android:hint="@string/card_characteristics_hint"
             app:expandedHintEnabled="false"
             android:paddingStart="@dimen/padding"
             android:paddingTop="@dimen/padding"
@@ -62,7 +63,7 @@
             app:boxBackgroundMode="filled">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edittext3"
+                android:id="@+id/characteristics"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text" />
@@ -72,7 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Значение"
+            android:hint="@string/card_meaning_hint"
             app:expandedHintEnabled="false"
             android:paddingStart="@dimen/padding"
             android:paddingTop="@dimen/padding"
@@ -80,7 +81,7 @@
             app:boxBackgroundMode="filled">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edittext4"
+                android:id="@+id/meaning"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="text|textMultiLine" />
@@ -90,7 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Примеры употребления"
+            android:hint="@string/card_meaning_hint"
             app:expandedHintEnabled="false"
             android:paddingStart="@dimen/padding"
             android:paddingTop="@dimen/padding"
@@ -98,7 +99,7 @@
             app:boxBackgroundMode="filled">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edittext5"
+                android:id="@+id/example"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="text|textMultiLine" />

@@ -2,6 +2,7 @@ package cherryjam.narfu.arkhdialect.data
 
 import android.net.Uri
 import android.os.Parcelable
+import cherryjam.narfu.arkhdialect.data.entity.Interview
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

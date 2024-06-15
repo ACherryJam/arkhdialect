@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import cherryjam.narfu.arkhdialect.adapter.CardAdapter
+import cherryjam.narfu.arkhdialect.data.AppDatabase
+import cherryjam.narfu.arkhdialect.data.entity.Card
 import cherryjam.narfu.arkhdialect.databinding.FragmentCardBinding
-import cherryjam.narfu.arkhdialect.service.card.CardService
-import cherryjam.narfu.arkhdialect.service.card.FakerCardService
 
 class CardFragment : Fragment() {
     private val binding: FragmentCardBinding by lazy {
@@ -17,10 +17,8 @@ class CardFragment : Fragment() {
     }
 
     private lateinit var adapter: CardAdapter
-    private val service: CardService = FakerCardService()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private val database by lazy {
+        AppDatabase.getInstance()
     }
 
     override fun onCreateView(
@@ -34,13 +32,23 @@ class CardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.floatingActionButton.setOnClickListener {
-            val intent = Intent(context, CardEditActivity::class.java)
-            startActivity(intent)
+            Thread {
+                val card = database.cardDao().insert(Card())
+
+                val intent = Intent(context, CardEditActivity::class.java)
+                intent.putExtra("card", card)
+                startActivity(intent)
+            }.start()
         }
 
         adapter = CardAdapter()
-        adapter.data = service.getData()
+        AppDatabase.getInstance().cardDao().getAll().observe(viewLifecycleOwner) {
+            adapter.data = it
+        }
+    }
 
+    override fun onStart() {
+        super.onStart()
         binding.cards.adapter = adapter
     }
 }

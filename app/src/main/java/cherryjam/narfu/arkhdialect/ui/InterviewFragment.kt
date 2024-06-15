@@ -12,9 +12,9 @@ import androidx.fragment.app.Fragment
 import cherryjam.narfu.arkhdialect.R
 import cherryjam.narfu.arkhdialect.adapter.InterviewAdapter
 import cherryjam.narfu.arkhdialect.adapter.SelectableAdapter
+import cherryjam.narfu.arkhdialect.data.AppDatabase
+import cherryjam.narfu.arkhdialect.data.entity.Interview
 import cherryjam.narfu.arkhdialect.databinding.FragmentInterviewBinding
-import cherryjam.narfu.arkhdialect.service.interview.FakerInterviewService
-import cherryjam.narfu.arkhdialect.service.interview.InterviewService
 import cherryjam.narfu.arkhdialect.utils.AlertDialogHelper
 import cherryjam.narfu.arkhdialect.utils.AlertDialogHelper.AlertDialogListener
 
@@ -24,7 +24,9 @@ class InterviewFragment : Fragment(), AlertDialogListener {
     }
 
     private lateinit var adapter: InterviewAdapter
-    private val service: InterviewService = FakerInterviewService()
+    private val database: AppDatabase by lazy {
+        AppDatabase.getInstance() // Make sure to create instance first
+    }
 
     private var actionMode: ActionMode? = null
 
@@ -42,58 +44,69 @@ class InterviewFragment : Fragment(), AlertDialogListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        alertDialogHelper = AlertDialogHelper(this)
+        alertDialogHelper = AlertDialogHelper(this.requireActivity(), this)
 
         binding.floatingActionButton.setOnClickListener {
-            val intent = Intent(context, InterviewEditActivity::class.java)
-            startActivity(intent)
+            Thread {
+                val interview = database.interviewDao().insert(Interview())
+
+                val intent = Intent(context, InterviewEditActivity::class.java)
+                intent.putExtra("interview", interview)
+                startActivity(intent)
+            }.start()
         }
 
         adapter = InterviewAdapter()
-        adapter.data = service.getData()
-        adapter.addListener(object : SelectableAdapter.Listener {
-            override fun onSelectionStart() {
-                actionMode = (activity as MainActivity).startSupportActionMode(actionModeCallback)
-            }
+        adapter.addListener(selectableAdapterCallback)
+        database.interviewDao().getAll().observe(viewLifecycleOwner) {
+            adapter.data = it
+        }
+    }
 
-            override fun onSelectionEnd() {
-                actionMode?.finish()
-            }
-
-            override fun onItemSelect(position: Int) {
-                actionMode?.title = getString(R.string.items_selected, adapter.getSelectedItemCount())
-
-                val viewHolder = binding.interviews.findViewHolderForAdapterPosition(position)
-                        as InterviewAdapter.InterviewViewHolder
-                viewHolder.binding.listItem.setBackgroundResource(R.color.selected_item)
-            }
-
-            override fun onItemDeselect(position: Int) {
-                actionMode?.title = getString(R.string.items_selected, adapter.getSelectedItemCount())
-
-                val viewHolder = binding.interviews.findViewHolderForAdapterPosition(position)
-                        as InterviewAdapter.InterviewViewHolder
-                viewHolder.binding.listItem.setBackgroundResource(R.color.white)
-            }
-        })
-
+    override fun onStart() {
+        super.onStart()
         binding.interviews.adapter = adapter
     }
 
     override fun onPositiveClick(from: Int) {
-        // Temporary removal solution
-        // REPLACE THIS WITH SERVICE CALLS
-        val dataToChange = adapter.data
-        for (position in adapter.getSelectedItemPositions())
-            dataToChange.removeAt(position)
-        adapter.data = dataToChange
+        Thread {
+            for (position in adapter.getSelectedItemPositions()) {
+                database.interviewDao().delete(adapter.data[position])
+            }
 
-        adapter.endSelection()
+            activity?.runOnUiThread { adapter.endSelection() }
+        }.start()
     }
 
     override fun onNegativeClick(from: Int) {}
 
     override fun onNeutralClick(from: Int) {}
+
+    private val selectableAdapterCallback = object : SelectableAdapter.Listener {
+        override fun onSelectionStart() {
+            actionMode = (activity as MainActivity).startSupportActionMode(actionModeCallback)
+        }
+
+        override fun onSelectionEnd() {
+            actionMode?.finish()
+        }
+
+        override fun onItemSelect(position: Int) {
+            actionMode?.title = getString(R.string.items_selected, adapter.getSelectedItemCount())
+
+            val viewHolder = binding.interviews.findViewHolderForAdapterPosition(position)
+                    as InterviewAdapter.InterviewViewHolder
+            viewHolder.binding.listItem.setBackgroundResource(R.color.selected_item)
+        }
+
+        override fun onItemDeselect(position: Int) {
+            actionMode?.title = getString(R.string.items_selected, adapter.getSelectedItemCount())
+
+            val viewHolder = binding.interviews.findViewHolderForAdapterPosition(position)
+                    as InterviewAdapter.InterviewViewHolder
+            viewHolder.binding.listItem.setBackgroundResource(R.color.white)
+        }
+    }
 
     private val actionModeCallback = object : ActionMode.Callback {
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
