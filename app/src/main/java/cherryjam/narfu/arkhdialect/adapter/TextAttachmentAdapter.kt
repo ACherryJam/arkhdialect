@@ -31,11 +31,8 @@ class TextAttachmentAdapter(val context: Context) :
             binding.listItem.setOnClickListener {
                 if (isSelecting)
                     selectItem(this)
-                else {
-                    val intent = Intent(context, TextAttachmentEditActivity::class.java)
-                    intent.putExtra("attachment", textAttachment)
-                    context.startActivity(intent)
-                }
+                else
+                    openEditor()
             }
             binding.listItem.setOnLongClickListener {
                 if (!isSelecting)
@@ -96,6 +93,12 @@ class TextAttachmentAdapter(val context: Context) :
                 else -> R.color.item_background_day
             }
             binding.listItem.setBackgroundResource(color)
+        }
+
+        fun openEditor() {
+            val intent = Intent(context, TextAttachmentEditActivity::class.java)
+            intent.putExtra("attachment", textAttachment)
+            context.startActivity(intent)
         }
     }
 

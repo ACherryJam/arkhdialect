@@ -24,9 +24,16 @@ class CardAdapter() : SelectableAdapter<CardAdapter.CardViewHolder>() {
 
         init {
             binding.listItem.setOnClickListener {
-                val intent = Intent(context, CardEditActivity::class.java)
-                intent.putExtra("card", card)
-                context.startActivity(intent)
+                if (isSelecting)
+                    selectItem(this)
+                else
+                    openEditor()
+            }
+            binding.listItem.setOnLongClickListener {
+                if (!isSelecting)
+                    startSelection()
+                selectItem(this)
+                true
             }
         }
 
@@ -57,6 +64,12 @@ class CardAdapter() : SelectableAdapter<CardAdapter.CardViewHolder>() {
                 else -> R.color.item_background_day
             }
             binding.listItem.setBackgroundResource(color)
+        }
+
+        fun openEditor() {
+            val intent = Intent(context, CardEditActivity::class.java)
+            intent.putExtra("card", card)
+            context.startActivity(intent)
         }
     }
 

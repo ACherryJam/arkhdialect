@@ -29,18 +29,14 @@ class InterviewAdapter : SelectableAdapter<InterviewAdapter.InterviewViewHolder>
             binding.listItem.setOnClickListener {
                 if (isSelecting)
                     selectItem(this)
-                else {
-                    val intent = Intent(context, InterviewEditActivity::class.java)
-                    intent.putExtra("interview", interview)
-                    context.startActivity(intent)
-                }
+                else
+                    openEditor()
             }
             binding.listItem.setOnLongClickListener {
                 if (!isSelecting)
                     startSelection()
                 selectItem(this)
-
-                false
+                true
             }
             binding.listItemOptions.setOnClickListener {
                 val popup = PopupMenu(it.context, it)
@@ -94,6 +90,12 @@ class InterviewAdapter : SelectableAdapter<InterviewAdapter.InterviewViewHolder>
                 else -> R.color.item_background_day
             }
             binding.listItem.setBackgroundResource(color)
+        }
+
+        fun openEditor() {
+            val intent = Intent(context, InterviewEditActivity::class.java)
+            intent.putExtra("interview", interview)
+            context.startActivity(intent)
         }
     }
 

@@ -27,7 +27,16 @@ class RecordingAttachmentAdapter(val context: Context)
         private lateinit var attachment: RecordingAttachment
 
         init {
-
+            binding.listItem.setOnClickListener {
+                if (isSelecting)
+                    selectItem(this)
+            }
+            binding.listItem.setOnLongClickListener {
+                if (!isSelecting)
+                    startSelection()
+                selectItem(this)
+                true
+            }
         }
 
         fun onBind(attachment: RecordingAttachment) {
@@ -76,5 +85,6 @@ class RecordingAttachmentAdapter(val context: Context)
 
     override fun onBindViewHolder(holder: RecordingAttachmentViewHolder, position: Int) {
         val recordingAttachment = data[position]
+        holder.onBind(recordingAttachment)
     }
 }
