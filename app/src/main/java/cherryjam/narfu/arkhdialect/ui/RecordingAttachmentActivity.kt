@@ -2,6 +2,7 @@ package cherryjam.narfu.arkhdialect.ui
 
 import android.Manifest
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -9,6 +10,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.Media
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -95,7 +97,11 @@ class RecordingAttachmentActivity : AppCompatActivity() {
 
     private fun startRecording() {
         val intent = Intent(Media.RECORD_SOUND_ACTION)
-        if (intent.resolveActivity(packageManager) != null) {
+
+        // Recorder application developers tend to not add Media.RECORD_SOUND_ACTION to
+        // their intent filter, Intent.resolveActivity(packageManager) is discarded in
+        // favor of catching ActivityNotFoundException
+        try {
             val recordingFile: File = try { createRecordingFile() } catch (e: IOException) {
                 e.printStackTrace()
                 return
@@ -104,6 +110,9 @@ class RecordingAttachmentActivity : AppCompatActivity() {
             val uri = FileProvider.getUriForFile(this, "$packageName.provider", recordingFile)
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
             recorderLauncher.launch(intent)
+        } catch (e: ActivityNotFoundException) {
+            e.printStackTrace()
+            Toast.makeText(this, "Couldn't find a recorder app", Toast.LENGTH_SHORT).show()
         }
     }
 
