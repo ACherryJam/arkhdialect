@@ -2,6 +2,7 @@ package cherryjam.narfu.arkhdialect.adapter
 
 import android.util.Size
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -19,7 +20,8 @@ class PhotoAttachmentAdapter :
             notifyDataSetChanged()
         }
 
-    inner class PhotoAttachmentViewHolder(val binding: ItemPhotoAttachmentBinding) : ViewHolder(binding.root) {
+    inner class PhotoAttachmentViewHolder(val binding: ItemPhotoAttachmentBinding)
+        : ViewHolder(binding.root), SelectableItem {
         private val context = binding.root.context
         private lateinit var attachment: PhotoAttachment
 
@@ -58,9 +60,20 @@ class PhotoAttachmentAdapter :
                     attachment.uri, Size(256, 256), null
                 )
                 binding.imageView.setImageBitmap(image)
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+
+            if (isItemSelected(bindingAdapterPosition)) onSelect() else onDeselect()
+        }
+
+        override fun onSelect() {
+            binding.selectedIcon.visibility = View.VISIBLE
+        }
+
+        override fun onDeselect() {
+            binding.selectedIcon.visibility = View.INVISIBLE
         }
     }
 

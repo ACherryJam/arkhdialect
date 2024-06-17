@@ -1,6 +1,7 @@
 package cherryjam.narfu.arkhdialect.adapter
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
@@ -11,6 +12,7 @@ import cherryjam.narfu.arkhdialect.data.entity.Interview
 import cherryjam.narfu.arkhdialect.databinding.ItemInterviewBinding
 import cherryjam.narfu.arkhdialect.ui.InterviewEditActivity
 
+
 class InterviewAdapter : SelectableAdapter<InterviewAdapter.InterviewViewHolder>() {
     var data: List<Interview> = listOf()
         set(newValue) {
@@ -18,7 +20,8 @@ class InterviewAdapter : SelectableAdapter<InterviewAdapter.InterviewViewHolder>
             notifyDataSetChanged()
         }
 
-    inner class InterviewViewHolder(val binding: ItemInterviewBinding) : ViewHolder(binding.root) {
+    inner class InterviewViewHolder(val binding: ItemInterviewBinding)
+        : ViewHolder(binding.root), SelectableItem {
         private val context = binding.root.context
         private lateinit var interview: Interview
 
@@ -71,12 +74,26 @@ class InterviewAdapter : SelectableAdapter<InterviewAdapter.InterviewViewHolder>
                 listItem.headline.text = interview.name
                 listItem.supportText.text = interview.location
 
-                val color = if (isItemSelected(position))
-                    R.color.selected_item
-                else
-                    R.color.white
-                listItem.setBackgroundResource(color)
+                if (isItemSelected(position)) onSelect() else onDeselect()
             }
+        }
+
+        override fun onSelect() {
+            val nightModeFlags: Int = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+            val color = when (nightModeFlags) {
+                Configuration.UI_MODE_NIGHT_YES -> R.color.item_background_selected_night
+                else -> R.color.item_background_selected_day
+            }
+            binding.listItem.setBackgroundResource(color)
+        }
+
+        override fun onDeselect() {
+            val nightModeFlags: Int = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+            val color = when (nightModeFlags) {
+                Configuration.UI_MODE_NIGHT_YES -> R.color.item_background_night
+                else -> R.color.item_background_day
+            }
+            binding.listItem.setBackgroundResource(color)
         }
     }
 

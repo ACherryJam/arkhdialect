@@ -2,6 +2,7 @@ package cherryjam.narfu.arkhdialect.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
@@ -21,7 +22,8 @@ class TextAttachmentAdapter(val context: Context) :
             notifyDataSetChanged()
         }
 
-    inner class TextAttachmentViewHolder(val binding: ItemTextAttachmentBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class TextAttachmentViewHolder(val binding: ItemTextAttachmentBinding)
+        : RecyclerView.ViewHolder(binding.root), SelectableItem {
         private val context = binding.root.context
         private lateinit var textAttachment: TextAttachment
 
@@ -74,12 +76,26 @@ class TextAttachmentAdapter(val context: Context) :
                 headline.text = textAttachment.title
                 supportText.text = textAttachment.content
 
-                val color = if (isItemSelected(adapterPosition))
-                    R.color.selected_item
-                else
-                    R.color.white
-                setBackgroundResource(color)
+                if (isItemSelected(bindingAdapterPosition)) onSelect() else onDeselect()
             }
+        }
+
+        override fun onSelect() {
+            val nightModeFlags: Int = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+            val color = when (nightModeFlags) {
+                Configuration.UI_MODE_NIGHT_YES -> R.color.item_background_selected_night
+                else -> R.color.item_background_selected_day
+            }
+            binding.listItem.setBackgroundResource(color)
+        }
+
+        override fun onDeselect() {
+            val nightModeFlags: Int = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+            val color = when (nightModeFlags) {
+                Configuration.UI_MODE_NIGHT_YES -> R.color.item_background_night
+                else -> R.color.item_background_day
+            }
+            binding.listItem.setBackgroundResource(color)
         }
     }
 
