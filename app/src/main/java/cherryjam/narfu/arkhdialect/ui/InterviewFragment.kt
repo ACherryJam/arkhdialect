@@ -46,9 +46,9 @@ class InterviewFragment : Fragment(), AlertDialogListener {
 
         alertDialogHelper = AlertDialogHelper(this.requireActivity(), this)
 
-        binding.aboutButton.setOnClickListener {
+        binding.settingsButton.setOnClickListener {
             Thread {
-                val intent = Intent(context, AboutActivity::class.java)
+                val intent = Intent(context, SettingsActivity::class.java)
                 startActivity(intent)
             }.start()
         }

@@ -35,15 +35,15 @@
             </SearchView>
 
             <Button
-                android:id="@+id/aboutButton"
+                android:id="@+id/settingsButton"
                 style="@style/Widget.Material3.Button.IconButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:contentDescription="@string/about"
+                android:contentDescription="@string/activity_settings_title"
                 android:paddingLeft="38dp"
                 android:paddingRight="38dp"
-                app:icon="@drawable/info_icon"
+                app:icon="@drawable/baseline_settings_24"
                 app:iconGravity="textStart"
                 app:iconPadding="0dp"
                 app:iconSize="24dp" />

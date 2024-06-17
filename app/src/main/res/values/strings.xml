@@ -4,8 +4,6 @@
     <!-- COMMONLY USED -->
     <string name="interview">Интервью</string>
     <string name="cards">Карточки</string>
-    <string name="settings">Настройки</string>
-    <string name="about">О программе</string>
 
     <string name="cancel">Отменить</string>
     <string name="save">Сохранить</string>
@@ -56,5 +54,16 @@
     <string name="delete_interview_positive">Удалить</string>
 
     <!-- SETTINGS -->
-    <string name="activity_about_title">О программе</string>
+    <string name="activity_settings_title">Настройки</string>
+    <string name="activity_about_title">О приложении</string>
+    <string name="rate_us">Оценить нас</string>
+    <string name="general">Основные</string>
+    <string name="other">Другие</string>
+    <string name="language">Язык</string>
+    <string name="extension">Расширение</string>
+
+    <!-- formats -->
+    <string name="m4a">m4a</string>
+    <string name="mp3">mp3</string>
+    <string name="ogg">ogg</string>
 </resources>
