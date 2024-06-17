@@ -3,6 +3,7 @@ package cherryjam.narfu.arkhdialect.adapter
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.provider.MediaStore.Audio.Media
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
@@ -72,12 +73,30 @@ class RecordingAttachmentAdapter(val context: Context)
         fun onBind(attachment: RecordingAttachment) {
             this.attachment = attachment
 
-            with (binding) {
-                recordingTitle.text = attachment.name
-                recordingDate.text = attachment.timestamp.formatDate(root.context)
+            context.contentResolver.query(
+                attachment.uri,
+                arrayOf(Media.DISPLAY_NAME,
+                        Media.DATE_ADDED,
+                        Media.DURATION),
+                null, null, null
+            )?.use { cursor ->
+                val nameColumn = cursor.getColumnIndexOrThrow(Media.DISPLAY_NAME)
+                val timestampColumn = cursor.getColumnIndexOrThrow(Media.DATE_ADDED)
+                val durationColumn = cursor.getColumnIndexOrThrow(Media.DURATION)
 
-                val toSec = attachment.duration / 1000
-                recordingDuration.text = toSec.getFormattedDuration()
+                if (cursor.moveToFirst()) {
+                    val name = cursor.getString(nameColumn)
+                    val timestamp = cursor.getInt(timestampColumn)
+                    val duration = cursor.getInt(durationColumn)
+
+                    with (binding) {
+                        recordingTitle.text = name
+                        recordingDate.text = timestamp.formatDate(root.context)
+
+                        val toSec = duration / 1000
+                        recordingDuration.text = toSec.getFormattedDuration()
+                    }
+                }
             }
 
             if (isItemSelected(bindingAdapterPosition)) onSelect() else onDeselect()

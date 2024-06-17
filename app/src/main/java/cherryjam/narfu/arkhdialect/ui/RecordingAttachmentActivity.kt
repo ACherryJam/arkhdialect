@@ -6,6 +6,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -19,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.preference.PreferenceManager
 import cherryjam.narfu.arkhdialect.R
 import cherryjam.narfu.arkhdialect.adapter.RecordingAttachmentAdapter
@@ -58,6 +60,14 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+
+        val format = sharedPreferences!!.getString("formats", "1")
+        extention = when(format) {
+            "1" -> ".mp3"
+            "2" -> ".m4a"
+            "3" -> ".ogg"
+            else -> ".mp3"
+        }
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -149,30 +159,21 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
         if (result.resultCode == Activity.RESULT_OK) {
             val uri = result.data?.data
             uri?.let {
-                contentResolver.query(
-                    it,
-                    arrayOf(Media.DISPLAY_NAME, Media.DATE_ADDED, Media.DURATION),
-                    null, null, null
-                )
-            }?.use { cursor ->
-                val nameColumn = cursor.getColumnIndexOrThrow(Media.DISPLAY_NAME)
-                val timestampColumn = cursor.getColumnIndexOrThrow(Media.DATE_ADDED)
-                val durationColumn = cursor.getColumnIndexOrThrow(Media.DURATION)
-
-                if (cursor.moveToFirst()) {
-                    val name = cursor.getString(nameColumn)
-                    val timestamp = cursor.getInt(timestampColumn)
-                    val duration = cursor.getInt(durationColumn)
-
-                    Thread {
-                        database.recordingAttachmentDao().insert(RecordingAttachment(
-                            interview.id!!, uri, name, timestamp, duration
-                        ))
-                    }.start()
+                this.contentResolver.openInputStream(uri).use { input ->
+                    File(currentAudioPath).outputStream().use { output ->
+                        input?.copyTo(output)
+                    }
                 }
+
+                Thread {
+                    database.recordingAttachmentDao().insert(RecordingAttachment(interview.id!!, uri))
+                }.start()
             }
         }
     }
+
+    private lateinit var currentAudioPath: String
+    private lateinit var currentAudioUri: Uri
 
     @Throws(IOException::class)
     private fun createRecordingFile(): File {
@@ -180,6 +181,9 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_MUSIC)
         //val recording: File = File.createTempFile("RECORD_${timeStamp}_", ".mp3", storageDir)
         val recording: File = File.createTempFile("RECORD_${timeStamp}_", extention, storageDir)
+        currentAudioUri = recording.toUri()
+        currentAudioPath = recording.absolutePath
+        Toast.makeText(this, currentAudioPath, Toast.LENGTH_SHORT).show()
 
         return recording
     }
@@ -187,12 +191,13 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
             "formats" -> {
-                val format = sharedPreferences!!.getString("formats", "")
+                val format = sharedPreferences!!.getString("formats", "1")
 
-                when(format) {
-                    "1" -> extention = ".mp3"
-                    "2" -> extention = ".m4a"
-                    "3" -> extention = ".ogg"
+                extention = when(format) {
+                    "1" -> ".mp3"
+                    "2" -> ".m4a"
+                    "3" -> ".ogg"
+                    else -> ".mp3"
                 }
             }
 
