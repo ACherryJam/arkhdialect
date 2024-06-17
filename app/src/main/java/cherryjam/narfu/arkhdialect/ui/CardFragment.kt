@@ -31,9 +31,9 @@ class CardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.aboutButton.setOnClickListener {
+        binding.settingsButton.setOnClickListener {
             Thread {
-                val intent = Intent(context, AboutActivity::class.java)
+                val intent = Intent(context, SettingsActivity::class.java)
                 startActivity(intent)
             }.start()
         }
