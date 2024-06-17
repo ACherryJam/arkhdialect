@@ -2,6 +2,7 @@ package cherryjam.narfu.arkhdialect.ui
 
 import android.Manifest
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -9,15 +10,22 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.Media
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ActionMode
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
+import cherryjam.narfu.arkhdialect.R
 import cherryjam.narfu.arkhdialect.adapter.RecordingAttachmentAdapter
+import cherryjam.narfu.arkhdialect.adapter.SelectableAdapter
 import cherryjam.narfu.arkhdialect.data.AppDatabase
 import cherryjam.narfu.arkhdialect.data.entity.Interview
 import cherryjam.narfu.arkhdialect.data.entity.RecordingAttachment
 import cherryjam.narfu.arkhdialect.databinding.ActivityRecordingAttachmentBinding
+import cherryjam.narfu.arkhdialect.utils.AlertDialogHelper
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
 import java.io.IOException
@@ -32,6 +40,11 @@ class RecordingAttachmentActivity : AppCompatActivity() {
     }
 
     lateinit var interview: Interview
+    private val database by lazy { AppDatabase.getInstance(this) }
+
+    private var actionMode: ActionMode? = null
+    private lateinit var contextMenu: Menu
+
     private lateinit var adapter: RecordingAttachmentAdapter
     private val permissions = arrayOf(mediaPermission,Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
@@ -52,7 +65,8 @@ class RecordingAttachmentActivity : AppCompatActivity() {
         ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE)
 
         adapter = RecordingAttachmentAdapter(this)
-        AppDatabase.getInstance().recordingAttachmentDao().getByInterviewId(interview.id!!).observe(this) {
+        adapter.addListener(selectableAdapterCallback)
+        database.recordingAttachmentDao().getByInterviewId(interview.id!!).observe(this) {
             adapter.data = it
         }
 
@@ -64,6 +78,11 @@ class RecordingAttachmentActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         binding.attachmentList.adapter = adapter
+    }
+
+    override fun onStop() {
+        super.onStop()
+        actionMode?.finish()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -95,7 +114,11 @@ class RecordingAttachmentActivity : AppCompatActivity() {
 
     private fun startRecording() {
         val intent = Intent(Media.RECORD_SOUND_ACTION)
-        if (intent.resolveActivity(packageManager) != null) {
+
+        // Recorder application developers tend to not add Media.RECORD_SOUND_ACTION to
+        // their intent filter, Intent.resolveActivity(packageManager) is discarded in
+        // favor of catching ActivityNotFoundException
+        try {
             val recordingFile: File = try { createRecordingFile() } catch (e: IOException) {
                 e.printStackTrace()
                 return
@@ -104,6 +127,9 @@ class RecordingAttachmentActivity : AppCompatActivity() {
             val uri = FileProvider.getUriForFile(this, "$packageName.provider", recordingFile)
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
             recorderLauncher.launch(intent)
+        } catch (e: ActivityNotFoundException) {
+            e.printStackTrace()
+            Toast.makeText(this, "Couldn't find a recorder app", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -127,7 +153,7 @@ class RecordingAttachmentActivity : AppCompatActivity() {
                     val duration = cursor.getInt(durationColumn)
 
                     Thread {
-                        AppDatabase.getInstance().recordingAttachmentDao().insert(RecordingAttachment(
+                        database.recordingAttachmentDao().insert(RecordingAttachment(
                             interview.id!!, uri, name, timestamp, duration
                         ))
                     }.start()
@@ -143,6 +169,75 @@ class RecordingAttachmentActivity : AppCompatActivity() {
         val recording: File = File.createTempFile("RECORD_${timeStamp}_", ".mp3", storageDir)
 
         return recording
+    }
+
+    private val selectableAdapterCallback = object : SelectableAdapter.Listener {
+        override fun onSelectionStart() {
+            actionMode = startSupportActionMode(actionModeCallback)
+        }
+
+        override fun onSelectionEnd() {
+            actionMode?.finish()
+        }
+
+        override fun onItemSelect(position: Int) {
+            actionMode?.title = getString(R.string.selected_items, adapter.getSelectedItemCount())
+        }
+
+        override fun onItemDeselect(position: Int) {
+            actionMode?.title = getString(R.string.selected_items, adapter.getSelectedItemCount())
+        }
+    }
+
+    private val actionModeCallback = object : ActionMode.Callback {
+        override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
+            mode.menuInflater.inflate(R.menu.menu_multi_select, menu)
+            contextMenu = menu
+
+            return true
+        }
+
+        override fun onPrepareActionMode(mode: ActionMode, menu: Menu?): Boolean {
+            return false
+        }
+
+        override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
+            when (item.itemId) {
+                R.id.action_delete -> {
+                    AlertDialogHelper.showAlertDialog(
+                        this@RecordingAttachmentActivity,
+                        title = getString(R.string.delete_recording_title),
+                        message = getString(R.string.delete_recording_message, adapter.getSelectedItemCount()),
+                        positiveText = getString(R.string.delete),
+                        positiveCallback = ::deleteSelectedItems,
+                        negativeText = getString(R.string.cancel),
+                    )
+                    return true
+                }
+                else -> return false
+            }
+        }
+
+        override fun onDestroyActionMode(mode: ActionMode?) {
+            actionMode = null
+
+            // Janky way to handle OnBackPressed in ActionMode
+            // OnBackPressedCallback doesn't work
+            if (adapter.isSelecting) {
+                adapter.clearSelection()
+                adapter.endSelection()
+            }
+        }
+    }
+
+    fun deleteSelectedItems() {
+        Thread {
+            for (position in adapter.getSelectedItemPositions()) {
+                database.recordingAttachmentDao().delete(adapter.data[position])
+            }
+
+            runOnUiThread { adapter.endSelection() }
+        }.start()
     }
 
 

@@ -2,11 +2,7 @@ package cherryjam.narfu.arkhdialect.ui
 
 import android.os.Build
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import cherryjam.narfu.arkhdialect.R
 import cherryjam.narfu.arkhdialect.data.AppDatabase
 import cherryjam.narfu.arkhdialect.data.entity.TextAttachment
 import cherryjam.narfu.arkhdialect.databinding.ActivityTextAttachmentEditBinding
@@ -17,6 +13,7 @@ class TextAttachmentEditActivity : AppCompatActivity() {
     }
 
     lateinit var attachment: TextAttachment
+    private val database by lazy { AppDatabase.getInstance(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +39,7 @@ class TextAttachmentEditActivity : AppCompatActivity() {
             attachment.title = binding.title.text.toString()
             attachment.content = binding.data.text.toString()
 
-            AppDatabase.getInstance().textAttachmentDao().update(attachment)
+            database.textAttachmentDao().update(attachment)
         }.start()
     }
 

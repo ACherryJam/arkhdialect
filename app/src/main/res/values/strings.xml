@@ -8,7 +8,9 @@
 
     <string name="cancel">Отменить</string>
     <string name="save">Сохранить</string>
-    <string name="alert_negative">Отмена</string>
+    <string name="delete">Удалить</string>
+    <string name="open">Открыть</string>
+    <string name="select">Выбрать</string>
 
     <!-- MAIN ACTIVITY -->
     <string name="find_interview">Найти интервью</string>
@@ -49,8 +51,19 @@
     <string name="menu_item_delete">Удалить</string>
 
     <!-- SELECTION -->
-    <string name="items_selected">Выбрано: %d</string>
+    <string name="selected_items">Выбрано: %d</string>
     <string name="delete_interview_title">Удалить интервью?</string>
     <string name="delete_interview_message">Вы точно хотите удалить %d интервью?</string>
-    <string name="delete_interview_positive">Удалить</string>
+
+    <string name="delete_card_title">Удалить карточки?</string>
+    <string name="delete_card_message">Вы точно хотите удалить %d карточек?</string>
+
+    <string name="delete_text_title">Удалить заметки?</string>
+    <string name="delete_text_message">Вы точно хотите удалить %d заметок?</string>
+
+    <string name="delete_photo_title">Удалить фотографии?</string>
+    <string name="delete_photo_message">Вы точно хотите удалить %d фото?</string>
+
+    <string name="delete_recording_title">Удалить записи?</string>
+    <string name="delete_recording_message">Вы точно хотите удалить %d записей?</string>
 </resources>

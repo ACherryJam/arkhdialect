@@ -18,6 +18,7 @@ class InterviewEditActivity : AppCompatActivity() {
     }
 
     lateinit var interview: Interview
+    private val database by lazy { AppDatabase.getInstance(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +59,7 @@ class InterviewEditActivity : AppCompatActivity() {
                 interview.interviewer = binding.interviewer.text.toString()
                 interview.location = binding.location.text.toString()
 
-                AppDatabase.getInstance().interviewDao().update(interview)
+                database.interviewDao().update(interview)
                 finish()
             }.start()
         }

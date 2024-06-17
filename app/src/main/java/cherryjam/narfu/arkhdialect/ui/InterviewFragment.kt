@@ -16,21 +16,16 @@ import cherryjam.narfu.arkhdialect.data.AppDatabase
 import cherryjam.narfu.arkhdialect.data.entity.Interview
 import cherryjam.narfu.arkhdialect.databinding.FragmentInterviewBinding
 import cherryjam.narfu.arkhdialect.utils.AlertDialogHelper
-import cherryjam.narfu.arkhdialect.utils.AlertDialogHelper.AlertDialogListener
 
-class InterviewFragment : Fragment(), AlertDialogListener {
+class InterviewFragment : Fragment() {
     private val binding: FragmentInterviewBinding by lazy {
         FragmentInterviewBinding.inflate(layoutInflater)
     }
 
     private lateinit var adapter: InterviewAdapter
-    private val database: AppDatabase by lazy {
-        AppDatabase.getInstance() // Make sure to create instance first
-    }
+    private val database by lazy { AppDatabase.getInstance(requireContext()) }
 
     private var actionMode: ActionMode? = null
-
-    private lateinit var alertDialogHelper: AlertDialogHelper
     private lateinit var contextMenu: Menu
 
     override fun onCreateView(
@@ -43,8 +38,6 @@ class InterviewFragment : Fragment(), AlertDialogListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        alertDialogHelper = AlertDialogHelper(this.requireActivity(), this)
 
         binding.floatingActionButton.setOnClickListener {
             Thread {
@@ -68,19 +61,10 @@ class InterviewFragment : Fragment(), AlertDialogListener {
         binding.interviews.adapter = adapter
     }
 
-    override fun onPositiveClick(from: Int) {
-        Thread {
-            for (position in adapter.getSelectedItemPositions()) {
-                database.interviewDao().delete(adapter.data[position])
-            }
-
-            activity?.runOnUiThread { adapter.endSelection() }
-        }.start()
+    override fun onStop() {
+        super.onStop()
+        actionMode?.finish()
     }
-
-    override fun onNegativeClick(from: Int) {}
-
-    override fun onNeutralClick(from: Int) {}
 
     private val selectableAdapterCallback = object : SelectableAdapter.Listener {
         override fun onSelectionStart() {
@@ -92,19 +76,11 @@ class InterviewFragment : Fragment(), AlertDialogListener {
         }
 
         override fun onItemSelect(position: Int) {
-            actionMode?.title = getString(R.string.items_selected, adapter.getSelectedItemCount())
-
-            val viewHolder = binding.interviews.findViewHolderForAdapterPosition(position)
-                    as InterviewAdapter.InterviewViewHolder
-            viewHolder.binding.listItem.setBackgroundResource(R.color.selected_item)
+            actionMode?.title = getString(R.string.selected_items, adapter.getSelectedItemCount())
         }
 
         override fun onItemDeselect(position: Int) {
-            actionMode?.title = getString(R.string.items_selected, adapter.getSelectedItemCount())
-
-            val viewHolder = binding.interviews.findViewHolderForAdapterPosition(position)
-                    as InterviewAdapter.InterviewViewHolder
-            viewHolder.binding.listItem.setBackgroundResource(R.color.white)
+            actionMode?.title = getString(R.string.selected_items, adapter.getSelectedItemCount())
         }
     }
 
@@ -125,13 +101,13 @@ class InterviewFragment : Fragment(), AlertDialogListener {
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             when (item.itemId) {
                 R.id.action_delete -> {
-                    alertDialogHelper.showAlertDialog(
-                        getString(R.string.delete_interview_title),
-                        getString(R.string.delete_interview_message, adapter.getSelectedItemCount()),
-                        getString(R.string.delete_interview_positive),
-                        getString(R.string.alert_negative),
-                        DELETE_INTERVIEW_ALERT,
-                        false
+                    AlertDialogHelper.showAlertDialog(
+                        this@InterviewFragment.requireContext(),
+                        title = getString(R.string.delete_interview_title),
+                        message = getString(R.string.delete_interview_message, adapter.getSelectedItemCount()),
+                        positiveText = getString(R.string.delete),
+                        positiveCallback = ::deleteSelectedItems,
+                        negativeText = getString(R.string.cancel),
                     )
                     return true
                 }
@@ -150,6 +126,15 @@ class InterviewFragment : Fragment(), AlertDialogListener {
                 adapter.endSelection()
             }
         }
+    }
+
+    fun deleteSelectedItems() {
+        Thread {
+            for (position in adapter.getSelectedItemPositions())
+                database.interviewDao().delete(adapter.data[position])
+
+            activity?.runOnUiThread { adapter.endSelection() }
+        }.start()
     }
 
     companion object {
