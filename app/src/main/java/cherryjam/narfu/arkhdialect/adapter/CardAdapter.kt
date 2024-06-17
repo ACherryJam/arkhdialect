@@ -4,8 +4,10 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import cherryjam.narfu.arkhdialect.R
+import cherryjam.narfu.arkhdialect.data.AppDatabase
 import cherryjam.narfu.arkhdialect.data.entity.Card
 import cherryjam.narfu.arkhdialect.databinding.ItemInterviewBinding
 import cherryjam.narfu.arkhdialect.ui.CardEditActivity
@@ -34,6 +36,33 @@ class CardAdapter() : SelectableAdapter<CardAdapter.CardViewHolder>() {
                     startSelection()
                 selectItem(this)
                 true
+            }
+            binding.listItemOptions.setOnClickListener {
+                val popup = PopupMenu(it.context, it)
+                popup.inflate(R.menu.options_menu)
+
+                popup.setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.open -> {
+                            openEditor()
+                            true
+                        }
+                        R.id.select -> {
+                            if (!isSelecting)
+                                startSelection()
+                            selectItem(this)
+                            true
+                        }
+                        R.id.delete -> {
+                            Thread {
+                                AppDatabase.getInstance(context).cardDao().delete(card)
+                            }.start()
+                            true//
+                        }
+                        else -> false
+                    }
+                }
+                popup.show()
             }
         }
 

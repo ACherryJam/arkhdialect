@@ -47,6 +47,10 @@ class TextAttachmentAdapter(val context: Context) :
 
                 popup.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
+                        R.id.open -> {
+                            openEditor()
+                            true
+                        }
                         R.id.select -> {
                             if (!isSelecting)
                                 startSelection()

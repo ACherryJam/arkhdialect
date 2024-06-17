@@ -34,6 +34,10 @@ class PhotoAttachmentAdapter :
 
                     popup.setOnMenuItemClickListener { item ->
                         when (item.itemId) {
+                            R.id.open -> {
+                                openAttachment()
+                                true
+                            }
                             R.id.select -> {
                                 if (!isSelecting)
                                     startSelection()

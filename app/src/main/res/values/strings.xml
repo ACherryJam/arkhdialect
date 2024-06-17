@@ -9,7 +9,8 @@
     <string name="cancel">Отменить</string>
     <string name="save">Сохранить</string>
     <string name="delete">Удалить</string>
-    <string name="alert_negative">Отмена</string>
+    <string name="open">Открыть</string>
+    <string name="select">Выбрать</string>
 
     <!-- MAIN ACTIVITY -->
     <string name="find_interview">Найти интервью</string>

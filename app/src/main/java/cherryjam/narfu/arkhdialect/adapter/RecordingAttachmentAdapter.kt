@@ -1,11 +1,14 @@
 package cherryjam.narfu.arkhdialect.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import cherryjam.narfu.arkhdialect.R
+import cherryjam.narfu.arkhdialect.data.AppDatabase
 import cherryjam.narfu.arkhdialect.data.entity.RecordingAttachment
 import cherryjam.narfu.arkhdialect.databinding.ItemRecordingAttachmentBinding
 import com.simplemobiletools.commons.extensions.formatDate
@@ -36,6 +39,33 @@ class RecordingAttachmentAdapter(val context: Context)
                     startSelection()
                 selectItem(this)
                 true
+            }
+            binding.listItemOptions.setOnClickListener {
+                val popup = PopupMenu(it.context, it)
+                popup.inflate(R.menu.options_menu)
+
+                popup.setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.open -> {
+                            openAttachment()
+                            true
+                        }
+                        R.id.select -> {
+                            if (!isSelecting)
+                                startSelection()
+                            selectItem(this)
+                            true
+                        }
+                        R.id.delete -> {
+                            Thread {
+                                AppDatabase.getInstance(context).recordingAttachmentDao().delete(attachment)
+                            }.start()
+                            true//
+                        }
+                        else -> false
+                    }
+                }
+                popup.show()
             }
         }
 
@@ -69,6 +99,14 @@ class RecordingAttachmentAdapter(val context: Context)
                 else -> R.color.item_background_day
             }
             binding.listItem.setBackgroundResource(color)
+        }
+
+        fun openAttachment() {
+            val intent = Intent().apply {
+                setAction(Intent.ACTION_VIEW)
+                setDataAndType(attachment.uri, context.contentResolver.getType(attachment.uri))
+            }
+            context.startActivity(intent)
         }
     }
 
