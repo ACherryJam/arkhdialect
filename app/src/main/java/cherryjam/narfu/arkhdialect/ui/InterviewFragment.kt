@@ -46,6 +46,13 @@ class InterviewFragment : Fragment(), AlertDialogListener {
 
         alertDialogHelper = AlertDialogHelper(this.requireActivity(), this)
 
+        binding.aboutButton.setOnClickListener {
+            Thread {
+                val intent = Intent(context, AboutActivity::class.java)
+                startActivity(intent)
+            }.start()
+        }
+
         binding.floatingActionButton.setOnClickListener {
             Thread {
                 val interview = database.interviewDao().insert(Interview())

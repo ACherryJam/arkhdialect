@@ -29,6 +29,9 @@
         android:theme="@style/Theme.Arkhdialect"
         tools:targetApi="31">
         <activity
+            android:name=".ui.AboutActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.RecordingAttachmentActivity"
             android:exported="false" />
         <activity

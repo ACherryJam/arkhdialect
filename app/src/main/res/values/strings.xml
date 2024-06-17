@@ -5,6 +5,7 @@
     <string name="interview">Интервью</string>
     <string name="cards">Карточки</string>
     <string name="settings">Настройки</string>
+    <string name="about">О программе</string>
 
     <string name="cancel">Отменить</string>
     <string name="save">Сохранить</string>
@@ -53,4 +54,7 @@
     <string name="delete_interview_title">Удалить интервью?</string>
     <string name="delete_interview_message">Вы точно хотите удалить %d интервью?</string>
     <string name="delete_interview_positive">Удалить</string>
+
+    <!-- SETTINGS -->
+    <string name="activity_about_title">О программе</string>
 </resources>

@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.Media
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -95,16 +96,19 @@ class RecordingAttachmentActivity : AppCompatActivity() {
 
     private fun startRecording() {
         val intent = Intent(Media.RECORD_SOUND_ACTION)
-        if (intent.resolveActivity(packageManager) != null) {
-            val recordingFile: File = try { createRecordingFile() } catch (e: IOException) {
-                e.printStackTrace()
-                return
-            }
-
-            val uri = FileProvider.getUriForFile(this, "$packageName.provider", recordingFile)
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-            recorderLauncher.launch(intent)
+        val recordingFile: File = try { createRecordingFile() } catch (e: IOException) {
+            e.printStackTrace()
+            return
         }
+
+        val uri = FileProvider.getUriForFile(this, "$packageName.provider", recordingFile)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+        recorderLauncher.launch(intent)
+//        if (intent.resolveActivity(packageManager) != null) {
+//        }else {
+//            // Handle the case where no activity can handle the intent
+//            Toast.makeText(this, "No app available to record sound", Toast.LENGTH_SHORT).show();
+//        }
     }
 
     private val recorderLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
