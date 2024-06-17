@@ -4,7 +4,6 @@
     <!-- COMMONLY USED -->
     <string name="interview">Интервью</string>
     <string name="cards">Карточки</string>
-    <string name="settings">Настройки</string>
 
     <string name="cancel">Отменить</string>
     <string name="save">Сохранить</string>
@@ -54,7 +53,7 @@
     <string name="selected_items">Выбрано: %d</string>
     <string name="delete_interview_title">Удалить интервью?</string>
     <string name="delete_interview_message">Вы точно хотите удалить %d интервью?</string>
-
+  
     <string name="delete_card_title">Удалить карточки?</string>
     <string name="delete_card_message">Вы точно хотите удалить %d карточек?</string>
 
@@ -66,4 +65,18 @@
 
     <string name="delete_recording_title">Удалить записи?</string>
     <string name="delete_recording_message">Вы точно хотите удалить %d записей?</string>
+
+    <!-- SETTINGS -->
+    <string name="activity_settings_title">Настройки</string>
+    <string name="activity_about_title">О приложении</string>
+    <string name="rate_us">Оценить нас</string>
+    <string name="general">Основные</string>
+    <string name="other">Другие</string>
+    <string name="language">Язык</string>
+    <string name="extension">Расширение</string>
+
+    <!-- formats -->
+    <string name="m4a">m4a</string>
+    <string name="mp3">mp3</string>
+    <string name="ogg">ogg</string>
 </resources>

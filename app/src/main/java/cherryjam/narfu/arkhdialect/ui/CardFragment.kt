@@ -38,6 +38,13 @@ class CardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.settingsButton.setOnClickListener {
+            Thread {
+                val intent = Intent(context, SettingsActivity::class.java)
+                startActivity(intent)
+            }.start()
+        }
+
         binding.floatingActionButton.setOnClickListener {
             Thread {
                 val card = database.cardDao().insert(Card())
