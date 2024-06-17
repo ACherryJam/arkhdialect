@@ -52,7 +52,7 @@ class InterviewAdapter : SelectableAdapter<InterviewAdapter.InterviewViewHolder>
                         }
                         R.id.delete -> {
                             Thread {
-                                AppDatabase.getInstance().interviewDao().delete(interview)
+                                AppDatabase.getInstance(context).interviewDao().delete(interview)
                             }.start()
                             true//
                         }

@@ -55,7 +55,7 @@ class TextAttachmentAdapter(val context: Context) :
                         }
                         R.id.delete -> {
                             Thread {
-                                AppDatabase.getInstance().textAttachmentDao().delete(textAttachment)
+                                AppDatabase.getInstance(context).textAttachmentDao().delete(textAttachment)
                             }.start()
                             true//
                         }

@@ -42,7 +42,7 @@ class PhotoAttachmentAdapter :
                             }
                             R.id.delete -> {
                                 Thread {
-                                    AppDatabase.getInstance().photoAttachmentDao().delete(attachment)
+                                    AppDatabase.getInstance(context).photoAttachmentDao().delete(attachment)
                                 }.start()
                                 true//
                             }
