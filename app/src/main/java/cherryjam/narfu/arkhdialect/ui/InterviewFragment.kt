@@ -24,9 +24,7 @@ class InterviewFragment : Fragment(), AlertDialogListener {
     }
 
     private lateinit var adapter: InterviewAdapter
-    private val database: AppDatabase by lazy {
-        AppDatabase.getInstance() // Make sure to create instance first
-    }
+    private val database by lazy { AppDatabase.getInstance(requireContext()) }
 
     private var actionMode: ActionMode? = null
 

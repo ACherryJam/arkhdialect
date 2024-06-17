@@ -22,9 +22,7 @@ class TextAttachmentActivity : AppCompatActivity(), AlertDialogHelper.AlertDialo
     }
 
     lateinit var adapter: TextAttachmentAdapter
-    private val database: AppDatabase by lazy {
-        AppDatabase.getInstance() // Make sure to create instance first
-    }
+    private val database by lazy { AppDatabase.getInstance(this) }
 
     private var actionMode: ActionMode? = null
 
@@ -57,7 +55,7 @@ class TextAttachmentActivity : AppCompatActivity(), AlertDialogHelper.AlertDialo
 
         binding.addTextAttachment.setOnClickListener {
             Thread {
-                val textAttachment = AppDatabase.getInstance().textAttachmentDao().insert(TextAttachment(interview.id!!))
+                val textAttachment = database.textAttachmentDao().insert(TextAttachment(interview.id!!))
 
                 val intent = Intent(this, TextAttachmentEditActivity::class.java)
                 intent.putExtra("attachment", textAttachment)

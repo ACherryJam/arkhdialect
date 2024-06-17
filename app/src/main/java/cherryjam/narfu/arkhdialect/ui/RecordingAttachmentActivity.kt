@@ -34,6 +34,8 @@ class RecordingAttachmentActivity : AppCompatActivity() {
     }
 
     lateinit var interview: Interview
+    private val database by lazy { AppDatabase.getInstance(this) }
+
     private lateinit var adapter: RecordingAttachmentAdapter
     private val permissions = arrayOf(mediaPermission,Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
@@ -54,7 +56,7 @@ class RecordingAttachmentActivity : AppCompatActivity() {
         ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE)
 
         adapter = RecordingAttachmentAdapter(this)
-        AppDatabase.getInstance().recordingAttachmentDao().getByInterviewId(interview.id!!).observe(this) {
+        database.recordingAttachmentDao().getByInterviewId(interview.id!!).observe(this) {
             adapter.data = it
         }
 
@@ -136,7 +138,7 @@ class RecordingAttachmentActivity : AppCompatActivity() {
                     val duration = cursor.getInt(durationColumn)
 
                     Thread {
-                        AppDatabase.getInstance().recordingAttachmentDao().insert(RecordingAttachment(
+                        database.recordingAttachmentDao().insert(RecordingAttachment(
                             interview.id!!, uri, name, timestamp, duration
                         ))
                     }.start()

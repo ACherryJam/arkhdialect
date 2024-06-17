@@ -17,6 +17,7 @@ class CardEditActivity : AppCompatActivity() {
     }
 
     lateinit var card: Card
+    private val database by lazy { AppDatabase.getInstance(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +53,7 @@ class CardEditActivity : AppCompatActivity() {
                 card.meaning = binding.meaning.text.toString()
                 card.example = binding.example.text.toString()
 
-                AppDatabase.getInstance().cardDao().update(card)
+                database.cardDao().update(card)
                 finish()
             }.start()
         }

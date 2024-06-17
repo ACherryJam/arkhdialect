@@ -17,9 +17,7 @@ class CardFragment : Fragment() {
     }
 
     private lateinit var adapter: CardAdapter
-    private val database by lazy {
-        AppDatabase.getInstance()
-    }
+    private val database by lazy { AppDatabase.getInstance(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,7 +40,7 @@ class CardFragment : Fragment() {
         }
 
         adapter = CardAdapter()
-        AppDatabase.getInstance().cardDao().getAll().observe(viewLifecycleOwner) {
+        database.cardDao().getAll().observe(viewLifecycleOwner) {
             adapter.data = it
         }
     }

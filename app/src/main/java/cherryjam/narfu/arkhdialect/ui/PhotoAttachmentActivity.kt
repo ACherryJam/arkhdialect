@@ -35,6 +35,7 @@ class PhotoAttachmentActivity : AppCompatActivity() {
     private lateinit var adapter: PhotoAttachmentAdapter
 
     lateinit var interview: Interview
+    private val database by lazy { AppDatabase.getInstance(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +59,7 @@ class PhotoAttachmentActivity : AppCompatActivity() {
         }
 
         adapter = PhotoAttachmentAdapter()
-        AppDatabase.getInstance().photoAttachmentDao().getByInterviewId(interview.id!!).observe(this) {
+        database.photoAttachmentDao().getByInterviewId(interview.id!!).observe(this) {
             adapter.data = it
         }
     }
@@ -99,7 +100,7 @@ class PhotoAttachmentActivity : AppCompatActivity() {
         if (result.resultCode == Activity.RESULT_OK) {
             val callback = OnScanCompletedListener { _, _ ->
                 val attachment = PhotoAttachment(interview.id!!, currentPhotoUri)
-                AppDatabase.getInstance().photoAttachmentDao().insert(attachment)
+                database.photoAttachmentDao().insert(attachment)
             }
 
             MediaScannerConnection.scanFile(

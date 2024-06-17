@@ -17,6 +17,7 @@ class TextAttachmentEditActivity : AppCompatActivity() {
     }
 
     lateinit var attachment: TextAttachment
+    private val database by lazy { AppDatabase.getInstance(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +43,7 @@ class TextAttachmentEditActivity : AppCompatActivity() {
             attachment.title = binding.title.text.toString()
             attachment.content = binding.data.text.toString()
 
-            AppDatabase.getInstance().textAttachmentDao().update(attachment)
+            database.textAttachmentDao().update(attachment)
         }.start()
     }
 
