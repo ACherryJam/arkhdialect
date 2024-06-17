@@ -69,11 +69,13 @@ class PhotoAttachmentAdapter :
         }
 
         override fun onSelect() {
-            binding.selectedIcon.visibility = View.VISIBLE
+            binding.imageView.scaleX = 0.75f
+            binding.imageView.scaleY = 0.75f
         }
 
         override fun onDeselect() {
-            binding.selectedIcon.visibility = View.INVISIBLE
+            binding.imageView.scaleX = 1f
+            binding.imageView.scaleY = 1f
         }
     }
 
