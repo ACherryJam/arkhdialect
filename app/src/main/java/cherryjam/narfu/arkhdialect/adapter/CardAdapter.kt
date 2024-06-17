@@ -3,13 +3,12 @@ package cherryjam.narfu.arkhdialect.adapter
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import cherryjam.narfu.arkhdialect.data.entity.Card
 import cherryjam.narfu.arkhdialect.databinding.ItemInterviewBinding
 import cherryjam.narfu.arkhdialect.ui.CardEditActivity
 
-class CardAdapter() : Adapter<CardAdapter.CardViewHolder>() {
+class CardAdapter() : SelectableAdapter<CardAdapter.CardViewHolder>() {
     var data: List<Card> = emptyList()
         set(newValue) {
             field = newValue

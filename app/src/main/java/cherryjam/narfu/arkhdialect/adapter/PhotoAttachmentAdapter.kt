@@ -1,11 +1,9 @@
 package cherryjam.narfu.arkhdialect.adapter
 
-import android.content.Context
 import android.util.Size
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import cherryjam.narfu.arkhdialect.R
 import cherryjam.narfu.arkhdialect.data.AppDatabase
@@ -13,7 +11,7 @@ import cherryjam.narfu.arkhdialect.data.entity.PhotoAttachment
 import cherryjam.narfu.arkhdialect.databinding.ItemPhotoAttachmentBinding
 
 class PhotoAttachmentAdapter :
-    RecyclerView.Adapter<PhotoAttachmentAdapter.PhotoAttachmentViewHolder>() {
+    SelectableAdapter<PhotoAttachmentAdapter.PhotoAttachmentViewHolder>() {
 
     var data: List<PhotoAttachment> = emptyList()
         set(newValue) {

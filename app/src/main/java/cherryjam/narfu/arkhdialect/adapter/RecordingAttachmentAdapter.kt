@@ -10,7 +10,8 @@ import com.simplemobiletools.commons.extensions.formatDate
 import com.simplemobiletools.commons.extensions.getFormattedDuration
 
 
-class RecordingAttachmentAdapter(val context: Context) :  RecyclerView.Adapter<RecordingAttachmentAdapter.RecordingAttachmentViewHolder>(){
+class RecordingAttachmentAdapter(val context: Context)
+    : SelectableAdapter<RecordingAttachmentAdapter.RecordingAttachmentViewHolder>() {
     var data: List<RecordingAttachment> = emptyList()
         set(newValue) {
             field = newValue
