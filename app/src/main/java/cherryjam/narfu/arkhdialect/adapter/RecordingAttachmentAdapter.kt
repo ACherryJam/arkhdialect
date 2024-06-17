@@ -33,6 +33,8 @@ class RecordingAttachmentAdapter(val context: Context)
             binding.listItem.setOnClickListener {
                 if (isSelecting)
                     selectItem(this)
+                else
+                    openAttachment()
             }
             binding.listItem.setOnLongClickListener {
                 if (!isSelecting)
