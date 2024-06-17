@@ -5,8 +5,16 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import cherryjam.narfu.arkhdialect.data.dao.*
-import cherryjam.narfu.arkhdialect.data.entity.*
+import cherryjam.narfu.arkhdialect.data.dao.CardDao
+import cherryjam.narfu.arkhdialect.data.dao.InterviewDao
+import cherryjam.narfu.arkhdialect.data.dao.PhotoAttachmentDao
+import cherryjam.narfu.arkhdialect.data.dao.RecordingAttachmentDao
+import cherryjam.narfu.arkhdialect.data.dao.TextAttachmentDao
+import cherryjam.narfu.arkhdialect.data.entity.Card
+import cherryjam.narfu.arkhdialect.data.entity.Interview
+import cherryjam.narfu.arkhdialect.data.entity.PhotoAttachment
+import cherryjam.narfu.arkhdialect.data.entity.RecordingAttachment
+import cherryjam.narfu.arkhdialect.data.entity.TextAttachment
 
 @Database(
     entities = [
@@ -39,8 +47,8 @@ abstract class AppDatabase : RoomDatabase() {
         }
 
         @Synchronized
-        fun getInstance(): AppDatabase {
-            instance ?: throw NullPointerException("Create database instance with createInstance()")
+        fun getInstance(context: Context): AppDatabase {
+            instance ?: createInstance(context)
             return instance!!
         }
     }

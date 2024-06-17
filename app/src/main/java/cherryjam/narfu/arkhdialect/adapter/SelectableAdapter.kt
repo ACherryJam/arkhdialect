@@ -6,7 +6,13 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import java.util.Collections
 import java.util.TreeSet
 
-abstract class SelectableAdapter<T : ViewHolder> : RecyclerView.Adapter<T>() {
+abstract class SelectableAdapter<T>
+    : RecyclerView.Adapter<T>() where T : ViewHolder, T: SelectableAdapter.SelectableItem {
+    interface SelectableItem {
+        fun onSelect()
+        fun onDeselect()
+    }
+
     interface Listener {
         fun onSelectionStart()
         fun onSelectionEnd()
@@ -16,6 +22,8 @@ abstract class SelectableAdapter<T : ViewHolder> : RecyclerView.Adapter<T>() {
 
     private val listeners: MutableList<Listener> = mutableListOf()
     private var selectedItemPositions: TreeSet<Int> = sortedSetOf(Collections.reverseOrder())
+
+    private var recyclerView: RecyclerView? = null
 
     var isSelecting: Boolean = false
         private set
@@ -50,7 +58,7 @@ abstract class SelectableAdapter<T : ViewHolder> : RecyclerView.Adapter<T>() {
         }
 
         for (position in selectedItemPositions)
-            removeItemFromSelection(position)
+            selectItem(position)
     }
 
     private fun addItemToSelection(position: Int) {
@@ -65,7 +73,38 @@ abstract class SelectableAdapter<T : ViewHolder> : RecyclerView.Adapter<T>() {
             listener.onItemDeselect(position)
     }
 
+    @Suppress("UNCHECKED_CAST")
     fun selectItem(position: Int) {
+        if (recyclerView == null) {
+            Log.e(javaClass.simpleName, "Trying to select while not attached to recycler view")
+            return
+        }
+
+        val viewHolder = recyclerView?.findViewHolderForAdapterPosition(position)
+        if (viewHolder == null) {
+            Log.e(javaClass.simpleName, "ViewHolder not found")
+            return
+        }
+
+        if (viewHolder !is SelectableItem) {
+            Log.e(javaClass.simpleName, "ViewHolder does not implement SelectableItem")
+            return
+        }
+
+        selectItem(position, viewHolder as T)
+    }
+
+    fun selectItem(viewHolder: T) {
+        val position = viewHolder.bindingAdapterPosition
+        if (position == RecyclerView.NO_POSITION) {
+            Log.e(javaClass.simpleName, "Couldn't find position of ViewHolder $viewHolder")
+            return
+        }
+
+        selectItem(position, viewHolder)
+    }
+
+    private fun selectItem(position: Int, viewHolder: T) {
         if (!isSelecting) {
             Log.e(javaClass.simpleName, "Trying to select item while not selecting")
             return
@@ -76,25 +115,14 @@ abstract class SelectableAdapter<T : ViewHolder> : RecyclerView.Adapter<T>() {
             return
         }
 
-        if (isItemSelected(position))
+        if (isItemSelected(position)) {
             removeItemFromSelection(position)
-        else
+            viewHolder.onDeselect()
+        }
+        else {
             addItemToSelection(position)
-    }
-
-    fun selectItem(viewHolder: T) {
-        if (!isSelecting) {
-            Log.e(javaClass.simpleName, "Trying to select item while not selecting")
-            return
+            viewHolder.onSelect()
         }
-
-        val position = viewHolder.adapterPosition
-        if (position == RecyclerView.NO_POSITION) {
-            Log.e(javaClass.simpleName, "Couldn't find position of ViewHolder $viewHolder")
-            return
-        }
-
-        selectItem(position)
     }
 
     fun addListener(listener: Listener) = listeners.add(listener)
@@ -110,5 +138,15 @@ abstract class SelectableAdapter<T : ViewHolder> : RecyclerView.Adapter<T>() {
 
     fun getSelectedItemCount(): Int {
         return selectedItemPositions.size
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        this.recyclerView = recyclerView
+        super.onAttachedToRecyclerView(recyclerView)
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        this.recyclerView = null
+        super.onDetachedFromRecyclerView(recyclerView)
     }
 }
