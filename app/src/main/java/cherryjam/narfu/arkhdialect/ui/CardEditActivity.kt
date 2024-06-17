@@ -3,12 +3,8 @@ package cherryjam.narfu.arkhdialect.ui
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import cherryjam.narfu.arkhdialect.R
 import cherryjam.narfu.arkhdialect.data.AppDatabase
 import cherryjam.narfu.arkhdialect.data.entity.Card
-import cherryjam.narfu.arkhdialect.data.entity.Interview
 import cherryjam.narfu.arkhdialect.databinding.ActivityCardEditBinding
 
 class CardEditActivity : AppCompatActivity() {

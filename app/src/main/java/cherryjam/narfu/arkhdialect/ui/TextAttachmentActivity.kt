@@ -16,7 +16,7 @@ import cherryjam.narfu.arkhdialect.data.entity.TextAttachment
 import cherryjam.narfu.arkhdialect.databinding.ActivityTextAttachmentBinding
 import cherryjam.narfu.arkhdialect.utils.AlertDialogHelper
 
-class TextAttachmentActivity : AppCompatActivity(), AlertDialogHelper.AlertDialogListener {
+class TextAttachmentActivity : AppCompatActivity() {
     private val binding: ActivityTextAttachmentBinding by lazy {
         ActivityTextAttachmentBinding.inflate(layoutInflater)
     }
@@ -25,8 +25,6 @@ class TextAttachmentActivity : AppCompatActivity(), AlertDialogHelper.AlertDialo
     private val database by lazy { AppDatabase.getInstance(this) }
 
     private var actionMode: ActionMode? = null
-
-    private lateinit var alertDialogHelper: AlertDialogHelper
     private lateinit var contextMenu: Menu
 
     lateinit var interview: Interview
@@ -34,8 +32,6 @@ class TextAttachmentActivity : AppCompatActivity(), AlertDialogHelper.AlertDialo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-        alertDialogHelper = AlertDialogHelper(this, this)
 
         interview = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra("interview", Interview::class.java)
@@ -69,6 +65,11 @@ class TextAttachmentActivity : AppCompatActivity(), AlertDialogHelper.AlertDialo
         binding.attachmentList.adapter = adapter
     }
 
+    override fun onStop() {
+        super.onStop()
+        actionMode?.finish()
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressedDispatcher.onBackPressed()
         return true
@@ -84,19 +85,11 @@ class TextAttachmentActivity : AppCompatActivity(), AlertDialogHelper.AlertDialo
         }
 
         override fun onItemSelect(position: Int) {
-            actionMode?.title = getString(R.string.items_selected, adapter.getSelectedItemCount())
-
-            val viewHolder = binding.attachmentList.findViewHolderForAdapterPosition(position)
-                    as TextAttachmentAdapter.TextAttachmentViewHolder
-            viewHolder.binding.listItem.setBackgroundResource(R.color.selected_item)
+            actionMode?.title = getString(R.string.selected_items, adapter.getSelectedItemCount())
         }
 
         override fun onItemDeselect(position: Int) {
-            actionMode?.title = getString(R.string.items_selected, adapter.getSelectedItemCount())
-
-            val viewHolder = binding.attachmentList.findViewHolderForAdapterPosition(position)
-                    as TextAttachmentAdapter.TextAttachmentViewHolder
-            viewHolder.binding.listItem.setBackgroundResource(R.color.white)
+            actionMode?.title = getString(R.string.selected_items, adapter.getSelectedItemCount())
         }
     }
 
@@ -115,13 +108,13 @@ class TextAttachmentActivity : AppCompatActivity(), AlertDialogHelper.AlertDialo
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             when (item.itemId) {
                 R.id.action_delete -> {
-                    alertDialogHelper.showAlertDialog(
-                        getString(R.string.delete_interview_title),
-                        getString(R.string.delete_interview_message, adapter.getSelectedItemCount()),
-                        getString(R.string.delete_interview_positive),
-                        getString(R.string.alert_negative),
-                        InterviewFragment.DELETE_INTERVIEW_ALERT,
-                        false
+                    AlertDialogHelper.showAlertDialog(
+                        this@TextAttachmentActivity,
+                        title = getString(R.string.delete_text_title),
+                        message = getString(R.string.delete_text_message, adapter.getSelectedItemCount()),
+                        positiveText = getString(R.string.delete),
+                        positiveCallback = ::deleteSelectedItems,
+                        negativeText = getString(R.string.cancel),
                     )
                     return true
                 }
@@ -141,7 +134,7 @@ class TextAttachmentActivity : AppCompatActivity(), AlertDialogHelper.AlertDialo
         }
     }
 
-    override fun onPositiveClick(from: Int) {
+    fun deleteSelectedItems() {
         Thread {
             for (position in adapter.getSelectedItemPositions()) {
                 database.textAttachmentDao().delete(adapter.data[position])
@@ -149,13 +142,5 @@ class TextAttachmentActivity : AppCompatActivity(), AlertDialogHelper.AlertDialo
 
             runOnUiThread { adapter.endSelection() }
         }.start()
-    }
-
-    override fun onNegativeClick(from: Int) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onNeutralClick(from: Int) {
-        TODO("Not yet implemented")
     }
 }

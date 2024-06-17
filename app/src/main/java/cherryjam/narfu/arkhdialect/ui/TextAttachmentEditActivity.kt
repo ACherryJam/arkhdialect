@@ -2,11 +2,7 @@ package cherryjam.narfu.arkhdialect.ui
 
 import android.os.Build
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import cherryjam.narfu.arkhdialect.R
 import cherryjam.narfu.arkhdialect.data.AppDatabase
 import cherryjam.narfu.arkhdialect.data.entity.TextAttachment
 import cherryjam.narfu.arkhdialect.databinding.ActivityTextAttachmentEditBinding
