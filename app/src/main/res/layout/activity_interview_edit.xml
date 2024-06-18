@@ -36,7 +36,7 @@
         android:paddingTop="@dimen/padding"
         android:paddingEnd="@dimen/padding"
         app:boxBackgroundMode="filled"
-        app:placeholderText="yeah">
+        app:placeholderText="Интервьюер">
 
         <EditText
             android:id="@+id/interviewer"
@@ -54,7 +54,7 @@
         android:paddingTop="@dimen/padding"
         android:paddingEnd="@dimen/padding"
         app:boxBackgroundMode="filled"
-        app:placeholderText="yeah">
+        app:placeholderText="Район">
 
         <EditText
             android:id="@+id/location"
