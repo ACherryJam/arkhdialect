@@ -12,6 +12,7 @@ class TextAttachmentEditActivity : AppCompatActivity() {
         ActivityTextAttachmentEditBinding.inflate(layoutInflater)
     }
 
+    var isNewAttachment: Boolean = false
     lateinit var attachment: TextAttachment
     private val database by lazy { AppDatabase.getInstance(this) }
 
@@ -29,6 +30,8 @@ class TextAttachmentEditActivity : AppCompatActivity() {
             intent.getParcelableExtra("attachment")
         } ?: throw IllegalArgumentException("No attachment passed to TextAttachmentEditActivity")
 
+        isNewAttachment = intent.getBooleanExtra("new", false)
+
         binding.title.setText(attachment.title)
         binding.data.setText(attachment.content)
     }
@@ -36,10 +39,21 @@ class TextAttachmentEditActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         Thread {
-            attachment.title = binding.title.text.toString()
-            attachment.content = binding.data.text.toString()
+            val title = binding.title.text.toString()
+            val content = binding.data.text.toString()
 
-            database.textAttachmentDao().update(attachment)
+            attachment.title = title
+            attachment.content = content
+
+            val dao = database.textAttachmentDao()
+            if (isNewAttachment) {
+                if (title.isEmpty() && content.isEmpty())
+                    return@Thread
+                dao.insert(attachment)
+            }
+            else {
+                dao.update(attachment)
+            }
         }.start()
     }
 

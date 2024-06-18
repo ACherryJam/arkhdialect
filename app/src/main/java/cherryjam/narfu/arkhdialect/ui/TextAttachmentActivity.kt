@@ -51,10 +51,12 @@ class TextAttachmentActivity : AppCompatActivity() {
 
         binding.addTextAttachment.setOnClickListener {
             Thread {
-                val textAttachment = database.textAttachmentDao().insert(TextAttachment(interview.id!!))
+//                val textAttachment = database.textAttachmentDao().insert(TextAttachment(interview.id!!))
+                val textAttachment = TextAttachment(interview.id!!)
 
                 val intent = Intent(this, TextAttachmentEditActivity::class.java)
                 intent.putExtra("attachment", textAttachment)
+                intent.putExtra("new", true)
                 startActivity(intent)
             }.start()
         }
