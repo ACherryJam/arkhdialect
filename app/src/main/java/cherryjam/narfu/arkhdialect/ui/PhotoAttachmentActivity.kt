@@ -137,7 +137,13 @@ class PhotoAttachmentActivity : AppCompatActivity() {
 
             currentPhotoUri = FileProvider.getUriForFile(this, "$packageName.provider", photoFile)
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, currentPhotoUri)
-            cameraLauncher.launch(takePictureIntent)
+            try {
+                cameraLauncher.launch(takePictureIntent)
+            } catch (e: SecurityException) {
+                photoFile.delete()
+                askForPermissionIfNeeded(mediaPermission)
+                askForPermissionIfNeeded(android.Manifest.permission.CAMERA)
+            }
         }
     }
 
