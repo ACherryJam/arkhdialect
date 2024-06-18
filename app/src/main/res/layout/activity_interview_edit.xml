@@ -35,8 +35,7 @@
         android:paddingStart="@dimen/padding"
         android:paddingTop="@dimen/padding"
         android:paddingEnd="@dimen/padding"
-        app:boxBackgroundMode="filled"
-        app:placeholderText="Интервьюер">
+        app:boxBackgroundMode="filled">
 
         <EditText
             android:id="@+id/interviewer"
@@ -53,8 +52,7 @@
         android:paddingStart="@dimen/padding"
         android:paddingTop="@dimen/padding"
         android:paddingEnd="@dimen/padding"
-        app:boxBackgroundMode="filled"
-        app:placeholderText="Район">
+        app:boxBackgroundMode="filled">
 
         <EditText
             android:id="@+id/location"
@@ -155,7 +153,7 @@
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/voiceAttachment"
+            app:layout_constraintStart_toEndOf="@+id/recordingAttachment"
             app:layout_constraintTop_toBottomOf="@+id/photoAttachment" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,8 +6,16 @@
     <color name="primary">#00ABC5</color>
     <color name="secondary">#46ABC5</color>
 
+    <!--background items colors-->
     <color name="item_background_day">#fff</color>
     <color name="item_background_night">#000</color>
     <color name="item_background_selected_day">#ccc</color>
     <color name="item_background_selected_night">#333</color>
+
+    <!--background colors-->
+    <color name="background_day">#F7FEFF</color>
+    <color name="background_day_bottom_navigation">#CFF3F8</color>
+    <color name="floating_button_background">#7ED0E1</color>
+
+
 </resources>
