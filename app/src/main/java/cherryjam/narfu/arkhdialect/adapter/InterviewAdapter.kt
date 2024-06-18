@@ -71,11 +71,20 @@ class InterviewAdapter : SelectableAdapter<InterviewAdapter.InterviewViewHolder>
             this.interview = interview
 
             with(binding) {
-                listItem.headline.text = interview.name
-                listItem.supportText.text = interview.location
+                with(interview) {
+                    listItem.headline.text = if (name.isEmpty())
+                        context.getString(R.string.empty_interview_name)
+                    else
+                        name
 
-                if (isItemSelected(position)) onSelect() else onDeselect()
+                    listItem.supportText.text = if (location.isEmpty())
+                        context.getString(R.string.empty_interview_region)
+                    else
+                        location
+                }
             }
+
+            if (isItemSelected(position)) onSelect() else onDeselect()
         }
 
         override fun onSelect() {

@@ -74,11 +74,15 @@ class TextAttachmentAdapter(val context: Context) :
             this.textAttachment = textAttachment
 
             with(binding.listItem) {
-                headline.text = textAttachment.title
+                headline.text = if (textAttachment.title.isEmpty())
+                    context.getText(R.string.empty_text_title)
+                else
+                    textAttachment.title
                 supportText.text = textAttachment.content
 
-                if (isItemSelected(bindingAdapterPosition)) onSelect() else onDeselect()
             }
+
+            if (isItemSelected(bindingAdapterPosition)) onSelect() else onDeselect()
         }
 
         override fun onSelect() {

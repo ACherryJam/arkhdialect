@@ -79,4 +79,13 @@
     <string name="m4a">m4a</string>
     <string name="mp3">mp3</string>
     <string name="ogg">ogg</string>
+
+    <!-- Empty values -->
+    <string name="empty_interview_name">Неизвесное ФИО</string>
+    <string name="empty_interview_region">Неизвестный район</string>
+
+    <string name="empty_card_word">Неизвестное слово</string>
+    <string name="empty_card_region">Неизвестный регион</string>
+
+    <string name="empty_text_title">Заголовок</string>
 </resources>

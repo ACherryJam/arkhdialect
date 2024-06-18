@@ -70,8 +70,17 @@ class CardAdapter() : SelectableAdapter<CardAdapter.CardViewHolder>() {
             this.card = card
 
             with (binding.listItem) {
-                headline.text = card.word
-                supportText.text = card.location
+                with (card) {
+                    headline.text = if (word.isEmpty())
+                        context.getString(R.string.empty_card_word)
+                    else
+                        word
+
+                    supportText.text = if (location.isEmpty())
+                        context.getString(R.string.empty_card_region)
+                    else
+                        location
+                }
             }
 
             if (isItemSelected(bindingAdapterPosition)) onSelect() else onDeselect()
