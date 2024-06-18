@@ -59,6 +59,14 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         sharedPreferences.registerOnSharedPreferenceChangeListener(this)
 
+        val extensions = sharedPreferences!!.getString("formats", "1")
+
+        when(extensions) {
+            "1" -> extention = ".mp3"
+            "2" -> extention = ".m4a"
+            "3" -> extention = ".ogg"
+        }
+
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -187,7 +195,7 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
             "formats" -> {
-                val format = sharedPreferences!!.getString("formats", "")
+                val format = sharedPreferences!!.getString("formats", "1")
 
                 when(format) {
                     "1" -> extention = ".mp3"
