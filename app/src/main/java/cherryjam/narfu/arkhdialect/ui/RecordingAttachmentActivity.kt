@@ -13,6 +13,7 @@ import android.provider.MediaStore
 import android.provider.MediaStore.Audio.Media
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -48,7 +49,7 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
     private lateinit var contextMenu: Menu
 
     private lateinit var adapter: RecordingAttachmentAdapter
-    private val permissions = arrayOf(mediaPermission,Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    private val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
     private lateinit var extention: String
 
@@ -234,6 +235,7 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
         }
 
         override fun onPrepareActionMode(mode: ActionMode, menu: Menu?): Boolean {
+            binding.toolbar.visibility = View.GONE
             return false
         }
 
@@ -256,6 +258,7 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
 
         override fun onDestroyActionMode(mode: ActionMode?) {
             actionMode = null
+            binding.toolbar.visibility = View.VISIBLE
 
             // Janky way to handle OnBackPressed in ActionMode
             // OnBackPressedCallback doesn't work

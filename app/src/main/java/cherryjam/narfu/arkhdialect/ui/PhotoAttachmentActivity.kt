@@ -13,6 +13,7 @@ import android.os.Environment.getExternalStoragePublicDirectory
 import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
@@ -186,6 +187,7 @@ class PhotoAttachmentActivity : AppCompatActivity() {
         }
 
         override fun onPrepareActionMode(mode: ActionMode, menu: Menu?): Boolean {
+            binding.toolbar.visibility = View.GONE
             return false
         }
 
@@ -208,6 +210,7 @@ class PhotoAttachmentActivity : AppCompatActivity() {
 
         override fun onDestroyActionMode(mode: ActionMode?) {
             actionMode = null
+            binding.toolbar.visibility = View.VISIBLE
 
             // Janky way to handle OnBackPressed in ActionMode
             // OnBackPressedCallback doesn't work

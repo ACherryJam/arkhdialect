@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import cherryjam.narfu.arkhdialect.R
@@ -33,15 +34,15 @@ class TextAttachmentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         interview = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra("interview", Interview::class.java)
         } else {
             intent.getParcelableExtra("interview")
         } ?: throw IllegalArgumentException("No Interview entity passed to TextAttachmentActivity")
-
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         adapter = TextAttachmentAdapter(this)
         adapter.addListener(selectableAdapterCallback)
@@ -104,6 +105,7 @@ class TextAttachmentActivity : AppCompatActivity() {
         }
 
         override fun onPrepareActionMode(mode: ActionMode, menu: Menu?): Boolean {
+            binding.toolbar.visibility = View.GONE
             return false
         }
 
@@ -126,6 +128,7 @@ class TextAttachmentActivity : AppCompatActivity() {
 
         override fun onDestroyActionMode(mode: ActionMode?) {
             actionMode = null
+            binding.toolbar.visibility = View.VISIBLE
 
             // Janky way to handle OnBackPressed in ActionMode
             // OnBackPressedCallback doesn't work

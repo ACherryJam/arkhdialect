@@ -99,6 +99,7 @@ class CardFragment : Fragment() {
         }
 
         override fun onPrepareActionMode(mode: ActionMode, menu: Menu?): Boolean {
+            binding.searchItem.visibility = View.GONE
             return false
         }
 
@@ -121,6 +122,7 @@ class CardFragment : Fragment() {
 
         override fun onDestroyActionMode(mode: ActionMode?) {
             actionMode = null
+            binding.searchItem.visibility = View.VISIBLE
 
             // Janky way to handle OnBackPressed in ActionMode
             // OnBackPressedCallback doesn't work

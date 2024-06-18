@@ -39,7 +39,7 @@ class TextAttachmentAdapter(val context: Context) :
                     startSelection()
                 selectItem(this)
 
-                false
+                true
             }
             binding.listItemOptions.setOnClickListener {
                 val popup = PopupMenu(it.context, it)
