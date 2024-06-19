@@ -42,7 +42,7 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         binding.settingsRateHolder.setOnClickListener {
-            openUrl("https://www.kinopoisk.ru/film/276598/?ysclid=lxjea3je68759356809&utm_referrer=ya.ru")
+            openUrl("https://docs.google.com/forms/d/e/1FAIpQLScbRqBZ8W7_E-pSyl3NJoz87Tyr2ZsBM7ENo7elJiUpMEIC1Q/viewform?usp=sf_link")
         }
 
     }
