@@ -91,7 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="@string/card_meaning_hint"
+            android:hint="@string/card_example_hint"
             app:expandedHintEnabled="false"
             android:paddingStart="@dimen/padding"
             android:paddingTop="@dimen/padding"
