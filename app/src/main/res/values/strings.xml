@@ -69,7 +69,7 @@
     <!-- SETTINGS -->
     <string name="activity_settings_title">Настройки</string>
     <string name="activity_about_title">О приложении</string>
-    <string name="rate_us">Оценить нас</string>
+    <string name="_rate_us">Оценить нас</string>
     <string name="general">Основные</string>
     <string name="other">Другие</string>
     <string name="language">Язык</string>

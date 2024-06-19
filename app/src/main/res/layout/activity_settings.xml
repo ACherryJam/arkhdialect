@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="7dp"
                     android:gravity="center"
-                    android:text="@string/rate_us"
+                    android:text="@string/_rate_us"
                     app:drawableStartCompat="@drawable/star_icon" />
 
             </RelativeLayout>
