@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.view.ActionMode
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import cherryjam.narfu.arkhdialect.R
 import cherryjam.narfu.arkhdialect.adapter.InterviewAdapter
@@ -61,6 +62,34 @@ class InterviewFragment : Fragment() {
         database.interviewDao().getAll().observe(viewLifecycleOwner) {
             adapter.data = it
         }
+
+        val searchView = binding.searchView
+        searchView.isSubmitButtonEnabled = true
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                if(query != null){
+                    searchDatabase(query)
+                }
+                return true
+            }
+
+            private fun searchDatabase(query: String) {
+                val searchQuery = "%$query%"
+
+                database.interviewDao().searchDatabase(searchQuery).observe(viewLifecycleOwner, { list ->
+                    list.let {
+                        adapter.data = it
+                    }
+                })
+            }
+        })
+
+
+
     }
 
     override fun onStart() {
@@ -143,6 +172,8 @@ class InterviewFragment : Fragment() {
             activity?.runOnUiThread { adapter.endSelection() }
         }.start()
     }
+
+
 
     companion object {
         val DELETE_INTERVIEW_ALERT = 1
