@@ -35,10 +35,8 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         binding.settingsAboutHolder.setOnClickListener {
-            Thread {
-                val intent = Intent(this, AboutActivity::class.java)
-                startActivity(intent)
-            }.start()
+            val intent = Intent(this, AboutActivity::class.java)
+            startActivity(intent)
         }
 
         binding.settingsRateHolder.setOnClickListener {
