@@ -63,4 +63,7 @@ interface InterviewDao {
 
     @Update
     fun update(vararg interview: Interview)
+
+    @Query("SELECT * FROM interviews WHERE name LIKE :searchQuery OR interviewer LIKE :searchQuery")
+    fun searchDatabase(searchQuery: String): LiveData<List<Interview>>
 }

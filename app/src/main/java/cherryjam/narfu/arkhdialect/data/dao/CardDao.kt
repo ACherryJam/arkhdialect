@@ -41,4 +41,7 @@ interface CardDao {
 
     @Update
     fun update(vararg card: Card)
+
+    @Query("SELECT * FROM cards WHERE word LIKE :searchQuery")
+    fun searchDatabase(searchQuery: String): LiveData<List<Card>>
 }
