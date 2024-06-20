@@ -58,7 +58,7 @@ class InterviewAdapter : SelectableAdapter<InterviewAdapter.InterviewViewHolder>
                             Thread {
                                 AppDatabase.getInstance(context).interviewDao().delete(interview)
                             }.start()
-                            true//
+                            true
                         }
                         else -> false
                     }

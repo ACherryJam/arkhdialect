@@ -3,20 +3,17 @@ package cherryjam.narfu.arkhdialect.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.view.ActionMode
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import cherryjam.narfu.arkhdialect.R
 import cherryjam.narfu.arkhdialect.adapter.InterviewAdapter
 import cherryjam.narfu.arkhdialect.adapter.SelectableAdapter
 import cherryjam.narfu.arkhdialect.data.AppDatabase
 import cherryjam.narfu.arkhdialect.data.entity.Interview
 import cherryjam.narfu.arkhdialect.databinding.FragmentInterviewBinding
-import cherryjam.narfu.arkhdialect.utils.AlertDialogHelper
+import cherryjam.narfu.arkhdialect.utils.SelectableHelper
 
 class InterviewFragment : Fragment() {
     private val binding: FragmentInterviewBinding by lazy {
@@ -27,7 +24,9 @@ class InterviewFragment : Fragment() {
     private val database by lazy { AppDatabase.getInstance(requireContext()) }
 
     private var actionMode: ActionMode? = null
-    private lateinit var contextMenu: Menu
+
+    private lateinit var selectableHelper: SelectableHelper<InterviewAdapter.InterviewViewHolder>
+    private lateinit var selectableAdapterCallback: SelectableAdapter.Listener
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,10 +40,8 @@ class InterviewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.settingsButton.setOnClickListener {
-            Thread {
-                val intent = Intent(context, SettingsActivity::class.java)
-                startActivity(intent)
-            }.start()
+            val intent = Intent(context, SettingsActivity::class.java)
+            startActivity(intent)
         }
 
         binding.floatingActionButton.setOnClickListener {
@@ -58,10 +55,14 @@ class InterviewFragment : Fragment() {
         }
 
         adapter = InterviewAdapter()
+        selectableHelper = SelectableHelper(this, null, adapter, requireContext(), ::deleteSelectedItems, ::checkShowItem)
+        selectableAdapterCallback = selectableHelper.getSelectableAdapterCallback()
+
         adapter.addListener(selectableAdapterCallback)
         database.interviewDao().getAll().observe(viewLifecycleOwner) {
             adapter.data = it
         }
+
 
         val searchView = binding.searchView
         searchView.isSubmitButtonEnabled = true
@@ -71,7 +72,7 @@ class InterviewFragment : Fragment() {
             }
 
             override fun onQueryTextChange(query: String?): Boolean {
-                if(query != null){
+                if (query != null) {
                     searchDatabase(query)
                 }
                 return true
@@ -80,14 +81,11 @@ class InterviewFragment : Fragment() {
             private fun searchDatabase(query: String) {
                 val searchQuery = "%$query%"
 
-                database.interviewDao().searchDatabase(searchQuery).observe(viewLifecycleOwner, { list ->
-                    list.let {
-                        adapter.data = it
-                    }
-                })
+                database.interviewDao().searchDatabase(searchQuery).observe(viewLifecycleOwner) {
+                    adapter.data = it
+                }
             }
         })
-
 
 
     }
@@ -102,68 +100,6 @@ class InterviewFragment : Fragment() {
         actionMode?.finish()
     }
 
-    private val selectableAdapterCallback = object : SelectableAdapter.Listener {
-        override fun onSelectionStart() {
-            actionMode = (activity as MainActivity).startSupportActionMode(actionModeCallback)
-        }
-
-        override fun onSelectionEnd() {
-            actionMode?.finish()
-        }
-
-        override fun onItemSelect(position: Int) {
-            actionMode?.title = getString(R.string.selected_items, adapter.getSelectedItemCount())
-        }
-
-        override fun onItemDeselect(position: Int) {
-            actionMode?.title = getString(R.string.selected_items, adapter.getSelectedItemCount())
-        }
-    }
-
-    private val actionModeCallback = object : ActionMode.Callback {
-        override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
-            mode.menuInflater.inflate(R.menu.menu_multi_select, menu)
-            contextMenu = menu
-
-            return true
-        }
-
-        override fun onPrepareActionMode(mode: ActionMode, menu: Menu?): Boolean {
-            binding.searchItem.visibility = View.GONE
-
-            return false
-        }
-
-        override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-            when (item.itemId) {
-                R.id.action_delete -> {
-                    AlertDialogHelper.showAlertDialog(
-                        this@InterviewFragment.requireContext(),
-                        title = getString(R.string.delete_interview_title),
-                        message = getString(R.string.delete_interview_message, adapter.getSelectedItemCount()),
-                        positiveText = getString(R.string.delete),
-                        positiveCallback = ::deleteSelectedItems,
-                        negativeText = getString(R.string.cancel),
-                    )
-                    return true
-                }
-                else -> return false
-            }
-        }
-
-        override fun onDestroyActionMode(mode: ActionMode?) {
-            actionMode = null
-            binding.searchItem.visibility = View.VISIBLE
-
-            // Janky way to handle OnBackPressed in ActionMode
-            // OnBackPressedCallback doesn't work
-            if (adapter.isSelecting) {
-                adapter.clearSelection()
-                adapter.endSelection()
-            }
-        }
-    }
-
     fun deleteSelectedItems() {
         Thread {
             for (position in adapter.getSelectedItemPositions())
@@ -173,7 +109,12 @@ class InterviewFragment : Fragment() {
         }.start()
     }
 
-
+    fun checkShowItem() {
+        if (selectableHelper.flag)
+            binding.searchItem.visibility = View.VISIBLE
+        else
+            binding.searchItem.visibility = View.GONE
+    }
 
     companion object {
         val DELETE_INTERVIEW_ALERT = 1

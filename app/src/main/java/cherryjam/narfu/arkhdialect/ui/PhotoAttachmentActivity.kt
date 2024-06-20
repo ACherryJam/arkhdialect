@@ -11,22 +11,19 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.Environment.getExternalStoragePublicDirectory
 import android.provider.MediaStore
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import cherryjam.narfu.arkhdialect.R
 import cherryjam.narfu.arkhdialect.adapter.PhotoAttachmentAdapter
 import cherryjam.narfu.arkhdialect.adapter.SelectableAdapter
 import cherryjam.narfu.arkhdialect.data.AppDatabase
 import cherryjam.narfu.arkhdialect.data.entity.Interview
 import cherryjam.narfu.arkhdialect.data.entity.PhotoAttachment
 import cherryjam.narfu.arkhdialect.databinding.ActivityPhotoAttachmentBinding
-import cherryjam.narfu.arkhdialect.utils.AlertDialogHelper
+import cherryjam.narfu.arkhdialect.utils.SelectableHelper
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
 import java.io.IOException
@@ -45,7 +42,9 @@ class PhotoAttachmentActivity : AppCompatActivity() {
     private val database by lazy { AppDatabase.getInstance(this) }
 
     private var actionMode: ActionMode? = null
-    private lateinit var contextMenu: Menu
+
+    private lateinit var selectableHelper: SelectableHelper<PhotoAttachmentAdapter.PhotoAttachmentViewHolder>
+    private lateinit var selectableAdapterCallback: SelectableAdapter.Listener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +68,9 @@ class PhotoAttachmentActivity : AppCompatActivity() {
         }
 
         adapter = PhotoAttachmentAdapter()
+        selectableHelper = SelectableHelper(null, this, adapter, this, ::deleteSelectedItems, ::checkShowItem)
+        selectableAdapterCallback = selectableHelper.getSelectableAdapterCallback()
+
         adapter.addListener(selectableAdapterCallback)
         database.photoAttachmentDao().getByInterviewId(interview.id!!).observe(this) {
             adapter.data = it
@@ -160,67 +162,6 @@ class PhotoAttachmentActivity : AppCompatActivity() {
         return image
     }
 
-    private val selectableAdapterCallback = object : SelectableAdapter.Listener {
-        override fun onSelectionStart() {
-            actionMode = startSupportActionMode(actionModeCallback)
-        }
-
-        override fun onSelectionEnd() {
-            actionMode?.finish()
-        }
-
-        override fun onItemSelect(position: Int) {
-            actionMode?.title = getString(R.string.selected_items, adapter.getSelectedItemCount())
-        }
-
-        override fun onItemDeselect(position: Int) {
-            actionMode?.title = getString(R.string.selected_items, adapter.getSelectedItemCount())
-        }
-    }
-
-    private val actionModeCallback = object : ActionMode.Callback {
-        override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
-            mode.menuInflater.inflate(R.menu.menu_multi_select, menu)
-            contextMenu = menu
-
-            return true
-        }
-
-        override fun onPrepareActionMode(mode: ActionMode, menu: Menu?): Boolean {
-            binding.toolbar.visibility = View.GONE
-            return false
-        }
-
-        override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-            when (item.itemId) {
-                R.id.action_delete -> {
-                    AlertDialogHelper.showAlertDialog(
-                        this@PhotoAttachmentActivity,
-                        title = getString(R.string.delete_photo_title),
-                        message = getString(R.string.delete_photo_message, adapter.getSelectedItemCount()),
-                        positiveText = getString(R.string.delete),
-                        positiveCallback = ::deleteSelectedItems,
-                        negativeText = getString(R.string.cancel),
-                    )
-                    return true
-                }
-                else -> return false
-            }
-        }
-
-        override fun onDestroyActionMode(mode: ActionMode?) {
-            actionMode = null
-            binding.toolbar.visibility = View.VISIBLE
-
-            // Janky way to handle OnBackPressed in ActionMode
-            // OnBackPressedCallback doesn't work
-            if (adapter.isSelecting) {
-                adapter.clearSelection()
-                adapter.endSelection()
-            }
-        }
-    }
-
     fun deleteSelectedItems() {
         Thread {
             for (position in adapter.getSelectedItemPositions())
@@ -239,4 +180,12 @@ class PhotoAttachmentActivity : AppCompatActivity() {
         }
         private const val REQUEST_CODE = 1
     }
+
+    fun checkShowItem() {
+        if (selectableHelper.flag)
+            binding.toolbar.visibility = View.VISIBLE
+        else
+            binding.toolbar.visibility = View.GONE
+    }
+
 }

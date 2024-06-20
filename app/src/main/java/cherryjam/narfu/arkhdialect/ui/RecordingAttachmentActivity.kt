@@ -11,8 +11,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.Media
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -21,14 +19,13 @@ import androidx.appcompat.view.ActionMode
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import androidx.preference.PreferenceManager
-import cherryjam.narfu.arkhdialect.R
 import cherryjam.narfu.arkhdialect.adapter.RecordingAttachmentAdapter
 import cherryjam.narfu.arkhdialect.adapter.SelectableAdapter
 import cherryjam.narfu.arkhdialect.data.AppDatabase
 import cherryjam.narfu.arkhdialect.data.entity.Interview
 import cherryjam.narfu.arkhdialect.data.entity.RecordingAttachment
 import cherryjam.narfu.arkhdialect.databinding.ActivityRecordingAttachmentBinding
-import cherryjam.narfu.arkhdialect.utils.AlertDialogHelper
+import cherryjam.narfu.arkhdialect.utils.SelectableHelper
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
 import java.io.IOException
@@ -46,7 +43,9 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
     private val database by lazy { AppDatabase.getInstance(this) }
 
     private var actionMode: ActionMode? = null
-    private lateinit var contextMenu: Menu
+
+    private lateinit var selectableHelper: SelectableHelper<RecordingAttachmentAdapter.RecordingAttachmentViewHolder>
+    private lateinit var selectableAdapterCallback: SelectableAdapter.Listener
 
     private lateinit var adapter: RecordingAttachmentAdapter
     private val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -81,6 +80,9 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
         ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE)
 
         adapter = RecordingAttachmentAdapter(this)
+        selectableHelper = SelectableHelper(null, this, adapter, this, ::deleteSelectedItems, ::checkShowItem)
+        selectableAdapterCallback = selectableHelper.getSelectableAdapterCallback()
+
         adapter.addListener(selectableAdapterCallback)
         database.recordingAttachmentDao().getByInterviewId(interview.id!!).observe(this) {
             adapter.data = it
@@ -208,67 +210,6 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
         }
     }
 
-    private val selectableAdapterCallback = object : SelectableAdapter.Listener {
-        override fun onSelectionStart() {
-            actionMode = startSupportActionMode(actionModeCallback)
-        }
-
-        override fun onSelectionEnd() {
-            actionMode?.finish()
-        }
-
-        override fun onItemSelect(position: Int) {
-            actionMode?.title = getString(R.string.selected_items, adapter.getSelectedItemCount())
-        }
-
-        override fun onItemDeselect(position: Int) {
-            actionMode?.title = getString(R.string.selected_items, adapter.getSelectedItemCount())
-        }
-    }
-
-    private val actionModeCallback = object : ActionMode.Callback {
-        override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
-            mode.menuInflater.inflate(R.menu.menu_multi_select, menu)
-            contextMenu = menu
-
-            return true
-        }
-
-        override fun onPrepareActionMode(mode: ActionMode, menu: Menu?): Boolean {
-            binding.toolbar.visibility = View.GONE
-            return false
-        }
-
-        override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-            when (item.itemId) {
-                R.id.action_delete -> {
-                    AlertDialogHelper.showAlertDialog(
-                        this@RecordingAttachmentActivity,
-                        title = getString(R.string.delete_recording_title),
-                        message = getString(R.string.delete_recording_message, adapter.getSelectedItemCount()),
-                        positiveText = getString(R.string.delete),
-                        positiveCallback = ::deleteSelectedItems,
-                        negativeText = getString(R.string.cancel),
-                    )
-                    return true
-                }
-                else -> return false
-            }
-        }
-
-        override fun onDestroyActionMode(mode: ActionMode?) {
-            actionMode = null
-            binding.toolbar.visibility = View.VISIBLE
-
-            // Janky way to handle OnBackPressed in ActionMode
-            // OnBackPressedCallback doesn't work
-            if (adapter.isSelecting) {
-                adapter.clearSelection()
-                adapter.endSelection()
-            }
-        }
-    }
-
     fun deleteSelectedItems() {
         Thread {
             for (position in adapter.getSelectedItemPositions()) {
@@ -287,5 +228,12 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
                 Manifest.permission.READ_EXTERNAL_STORAGE
         }
         private const val REQUEST_CODE = 1
+    }
+
+    fun checkShowItem() {
+        if (selectableHelper.flag)
+            binding.toolbar.visibility = View.VISIBLE
+        else
+            binding.toolbar.visibility = View.GONE
     }
 }
