@@ -14,14 +14,17 @@ abstract class SelectableAdapter<T>
     }
 
     interface Listener {
-        fun onSelectionStart()
-        fun onSelectionEnd()
-        fun onItemSelect(position: Int)
-        fun onItemDeselect(position: Int)
+        fun onSelectionStart() {}
+        fun onSelectionEnd() {}
+        fun onSelectionChange() {}
+        fun onItemSelect(position: Int) {}
+        fun onItemDeselect(position: Int) {}
     }
 
     private val listeners: MutableList<Listener> = mutableListOf()
     private var selectedItemPositions: TreeSet<Int> = sortedSetOf(Collections.reverseOrder())
+    val selectedItemCount: Int
+        get() { return selectedItemPositions.size }
 
     private var recyclerView: RecyclerView? = null
 
@@ -123,6 +126,9 @@ abstract class SelectableAdapter<T>
             addItemToSelection(position)
             viewHolder.onSelect()
         }
+
+        for (listener in listeners)
+            listener.onSelectionChange()
     }
 
     fun addListener(listener: Listener) = listeners.add(listener)
@@ -134,10 +140,6 @@ abstract class SelectableAdapter<T>
 
     fun getSelectedItemPositions(): TreeSet<Int> {
         return selectedItemPositions
-    }
-
-    fun getSelectedItemCount(): Int {
-        return selectedItemPositions.size
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {

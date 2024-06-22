@@ -87,12 +87,8 @@ class TextAttachmentActivity : AppCompatActivity() {
             actionMode?.finish()
         }
 
-        override fun onItemSelect(position: Int) {
-            actionMode?.title = getString(R.string.selected_items, adapter.getSelectedItemCount())
-        }
-
-        override fun onItemDeselect(position: Int) {
-            actionMode?.title = getString(R.string.selected_items, adapter.getSelectedItemCount())
+        override fun onSelectionChange() {
+            actionMode?.title = getString(R.string.selected_items, adapter.selectedItemCount)
         }
     }
 
@@ -115,7 +111,7 @@ class TextAttachmentActivity : AppCompatActivity() {
                     AlertDialogHelper.showAlertDialog(
                         this@TextAttachmentActivity,
                         title = getString(R.string.delete_text_title),
-                        message = getString(R.string.delete_text_message, adapter.getSelectedItemCount()),
+                        message = getString(R.string.delete_text_message, adapter.selectedItemCount),
                         positiveText = getString(R.string.delete),
                         positiveCallback = ::deleteSelectedItems,
                         negativeText = getString(R.string.cancel),

@@ -107,12 +107,8 @@ class CardFragment : Fragment() {
             actionMode?.finish()
         }
 
-        override fun onItemSelect(position: Int) {
-            actionMode?.title = getString(R.string.selected_items, adapter.getSelectedItemCount())
-        }
-
-        override fun onItemDeselect(position: Int) {
-            actionMode?.title = getString(R.string.selected_items, adapter.getSelectedItemCount())
+        override fun onSelectionChange() {
+            actionMode?.title = getString(R.string.selected_items, adapter.selectedItemCount)
         }
     }
 
@@ -135,7 +131,7 @@ class CardFragment : Fragment() {
                     AlertDialogHelper.showAlertDialog(
                         this@CardFragment.requireContext(),
                         title = getString(R.string.delete_card_title),
-                        message = getString(R.string.delete_card_message, adapter.getSelectedItemCount()),
+                        message = getString(R.string.delete_card_message, adapter.selectedItemCount),
                         positiveText = getString(R.string.delete),
                         positiveCallback = ::deleteSelectedItems,
                         negativeText = getString(R.string.cancel),
