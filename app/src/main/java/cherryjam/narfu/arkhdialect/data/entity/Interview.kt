@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity(tableName = "interviews")
-class Interview(
+data class Interview(
     @PrimaryKey(autoGenerate = true)
     var id: Long?,
     @ColumnInfo(name = "name") var name: String,

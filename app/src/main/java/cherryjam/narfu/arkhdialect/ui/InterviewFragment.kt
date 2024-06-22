@@ -2,17 +2,21 @@ package cherryjam.narfu.arkhdialect.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.ActionMode
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.view.ActionMode
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.selection.SelectionTracker.SelectionObserver
+import androidx.recyclerview.selection.StorageStrategy
 import cherryjam.narfu.arkhdialect.R
-import cherryjam.narfu.arkhdialect.adapter.InterviewAdapter
-import cherryjam.narfu.arkhdialect.adapter.SelectableAdapter
+import cherryjam.narfu.arkhdialect.adapter.interview.InterviewAdapter
+import cherryjam.narfu.arkhdialect.adapter.interview.InterviewItemDetailsLookup
+import cherryjam.narfu.arkhdialect.adapter.interview.InterviewItemKeyProvider
 import cherryjam.narfu.arkhdialect.data.AppDatabase
 import cherryjam.narfu.arkhdialect.data.entity.Interview
 import cherryjam.narfu.arkhdialect.databinding.FragmentInterviewBinding
@@ -27,7 +31,7 @@ class InterviewFragment : Fragment() {
     private val database by lazy { AppDatabase.getInstance(requireContext()) }
 
     private var actionMode: ActionMode? = null
-    private lateinit var contextMenu: Menu
+    private lateinit var selectionTracker: SelectionTracker<Long>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,9 +62,34 @@ class InterviewFragment : Fragment() {
         }
 
         adapter = InterviewAdapter()
-        adapter.addListener(selectableAdapterCallback)
+        binding.interviews.adapter = adapter
+
+        selectionTracker = SelectionTracker.Builder(
+            "interview",
+            binding.interviews,
+            InterviewItemKeyProvider(adapter),
+            InterviewItemDetailsLookup(binding.interviews),
+            StorageStrategy.createLongStorage()
+        ).build()
+
+        selectionTracker.addObserver(object : SelectionObserver<Long>() {
+            override fun onSelectionChanged() {
+                val itemCount = selectionTracker.selection.size()
+                if (!selectionTracker.hasSelection()) {
+                    actionMode?.finish()
+                    return
+                }
+
+                if (actionMode == null) {
+                    requireActivity().startActionMode(actionModeCallback)
+                }
+                actionMode?.title = getString(R.string.selected_items, itemCount)
+            }
+        })
+        adapter.tracker = selectionTracker
+
         database.interviewDao().getAll().observe(viewLifecycleOwner) {
-            adapter.data = it
+            adapter.submitList(it)
         }
 
         val searchView = binding.searchView
@@ -80,21 +109,25 @@ class InterviewFragment : Fragment() {
             private fun searchDatabase(query: String) {
                 val searchQuery = "%$query%"
 
-                database.interviewDao().searchDatabase(searchQuery).observe(viewLifecycleOwner, { list ->
-                    list.let {
-                        adapter.data = it
-                    }
-                })
+                database.interviewDao().searchDatabase(searchQuery).observe(viewLifecycleOwner) {
+                    adapter.submitList(it)
+                }
             }
         })
+    }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        //selectionTracker.onSaveInstanceState(outState)
+    }
 
-
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        //selectionTracker.onRestoreInstanceState(savedInstanceState)
     }
 
     override fun onStart() {
         super.onStart()
-        binding.interviews.adapter = adapter
     }
 
     override fun onStop() {
@@ -102,35 +135,15 @@ class InterviewFragment : Fragment() {
         actionMode?.finish()
     }
 
-    private val selectableAdapterCallback = object : SelectableAdapter.Listener {
-        override fun onSelectionStart() {
-            actionMode = (activity as MainActivity).startSupportActionMode(actionModeCallback)
-        }
-
-        override fun onSelectionEnd() {
-            actionMode?.finish()
-        }
-
-        override fun onItemSelect(position: Int) {
-            actionMode?.title = getString(R.string.selected_items, adapter.getSelectedItemCount())
-        }
-
-        override fun onItemDeselect(position: Int) {
-            actionMode?.title = getString(R.string.selected_items, adapter.getSelectedItemCount())
-        }
-    }
-
     private val actionModeCallback = object : ActionMode.Callback {
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             mode.menuInflater.inflate(R.menu.menu_multi_select, menu)
-            contextMenu = menu
 
+            actionMode = mode
             return true
         }
 
         override fun onPrepareActionMode(mode: ActionMode, menu: Menu?): Boolean {
-            binding.searchItem.visibility = View.GONE
-
             return false
         }
 
@@ -140,9 +153,12 @@ class InterviewFragment : Fragment() {
                     AlertDialogHelper.showAlertDialog(
                         this@InterviewFragment.requireContext(),
                         title = getString(R.string.delete_interview_title),
-                        message = getString(R.string.delete_interview_message, adapter.getSelectedItemCount()),
+                        message = getString(R.string.delete_interview_message, selectionTracker.selection.size()),
                         positiveText = getString(R.string.delete),
-                        positiveCallback = ::deleteSelectedItems,
+                        positiveCallback = {
+                            deleteSelectedItems()
+                            actionMode?.finish()
+                        },
                         negativeText = getString(R.string.cancel),
                     )
                     return true
@@ -153,23 +169,16 @@ class InterviewFragment : Fragment() {
 
         override fun onDestroyActionMode(mode: ActionMode?) {
             actionMode = null
-            binding.searchItem.visibility = View.VISIBLE
-
-            // Janky way to handle OnBackPressed in ActionMode
-            // OnBackPressedCallback doesn't work
-            if (adapter.isSelecting) {
-                adapter.clearSelection()
-                adapter.endSelection()
-            }
+            selectionTracker.clearSelection()
         }
     }
 
     fun deleteSelectedItems() {
         Thread {
-            for (position in adapter.getSelectedItemPositions())
-                database.interviewDao().delete(adapter.data[position])
+            for (id in selectionTracker.selection)
+                database.interviewDao().deleteById(id)
 
-            activity?.runOnUiThread { adapter.endSelection() }
+            activity?.runOnUiThread { selectionTracker.clearSelection() }
         }.start()
     }
 

@@ -12,9 +12,8 @@
         <item name="colorSurfaceContainer">@color/background_day_bottom_navigation</item>
         <item name="android:windowBackground">@color/background_day</item>
 
-
-
-
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="windowActionModeOverlay">true</item>
     </style>
 
     <style name="NoUnderlineEditText" parent="Widget.AppCompat.EditText">

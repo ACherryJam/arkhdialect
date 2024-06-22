@@ -1,10 +1,14 @@
-package cherryjam.narfu.arkhdialect.adapter
+package cherryjam.narfu.arkhdialect.adapter.interview
 
 import android.content.Intent
 import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.recyclerview.selection.ItemDetailsLookup.ItemDetails
+import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import cherryjam.narfu.arkhdialect.R
 import cherryjam.narfu.arkhdialect.data.AppDatabase
@@ -13,30 +17,19 @@ import cherryjam.narfu.arkhdialect.databinding.ItemInterviewBinding
 import cherryjam.narfu.arkhdialect.ui.InterviewEditActivity
 
 
-class InterviewAdapter : SelectableAdapter<InterviewAdapter.InterviewViewHolder>() {
-    var data: List<Interview> = listOf()
-        set(newValue) {
-            field = newValue
-            notifyDataSetChanged()
-        }
+class InterviewAdapter : ListAdapter<Interview, InterviewAdapter.InterviewViewHolder>(
+    DIFF_CALLBACK
+) {
+    var tracker: SelectionTracker<Long>? = null
 
-    inner class InterviewViewHolder(val binding: ItemInterviewBinding)
-        : ViewHolder(binding.root), SelectableItem {
+    class InterviewViewHolder(val binding: ItemInterviewBinding)
+        : ViewHolder(binding.root) {
         private val context = binding.root.context
         private lateinit var interview: Interview
 
         init {
             binding.listItem.setOnClickListener {
-                if (isSelecting)
-                    selectItem(this)
-                else
-                    openEditor()
-            }
-            binding.listItem.setOnLongClickListener {
-                if (!isSelecting)
-                    startSelection()
-                selectItem(this)
-                true
+                openEditor()
             }
             binding.listItemOptions.setOnClickListener {
                 val popup = PopupMenu(it.context, it)
@@ -49,9 +42,7 @@ class InterviewAdapter : SelectableAdapter<InterviewAdapter.InterviewViewHolder>
                             true
                         }
                         R.id.select -> {
-                            if (!isSelecting)
-                                startSelection()
-                            selectItem(this)
+
                             true
                         }
                         R.id.delete -> {
@@ -67,7 +58,7 @@ class InterviewAdapter : SelectableAdapter<InterviewAdapter.InterviewViewHolder>
             }
         }
 
-        fun onBind(interview: Interview, position: Int) {
+        fun onBind(interview: Interview, isSelected: Boolean) {
             this.interview = interview
 
             with(binding) {
@@ -84,10 +75,15 @@ class InterviewAdapter : SelectableAdapter<InterviewAdapter.InterviewViewHolder>
                 }
             }
 
-            if (isItemSelected(position)) onSelect() else onDeselect()
+            if (isSelected) onSelect() else onDeselect()
         }
 
-        override fun onSelect() {
+        fun getItemDetails(): ItemDetails<Long> = object : ItemDetails<Long>() {
+            override fun getPosition(): Int = bindingAdapterPosition
+            override fun getSelectionKey(): Long? = interview.id
+        }
+
+        fun onSelect() {
             val nightModeFlags: Int = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
             val color = when (nightModeFlags) {
                 Configuration.UI_MODE_NIGHT_YES -> R.color.item_background_selected_night
@@ -96,7 +92,7 @@ class InterviewAdapter : SelectableAdapter<InterviewAdapter.InterviewViewHolder>
             binding.listItem.setBackgroundResource(color)
         }
 
-        override fun onDeselect() {
+        fun onDeselect() {
             val nightModeFlags: Int = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
             val color = when (nightModeFlags) {
                 Configuration.UI_MODE_NIGHT_YES -> R.color.item_background_night
@@ -120,11 +116,21 @@ class InterviewAdapter : SelectableAdapter<InterviewAdapter.InterviewViewHolder>
     }
 
     override fun onBindViewHolder(holder: InterviewViewHolder, position: Int) {
-        val interview = data[position]
-        holder.onBind(interview, position)
+        val interview = getItem(position)
+
+        val isSelected = tracker?.isSelected(interview.id) ?: false
+        holder.onBind(interview, isSelected)
     }
 
-    override fun getItemCount(): Int {
-        return data.size
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Interview>() {
+            override fun areItemsTheSame(oldItem: Interview, newItem: Interview): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: Interview, newItem: Interview): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 }
