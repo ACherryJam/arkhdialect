@@ -110,8 +110,8 @@ class TextAttachmentActivity : AppCompatActivity() {
                 R.id.action_delete -> {
                     AlertDialogHelper.showAlertDialog(
                         this@TextAttachmentActivity,
-                        title = getString(R.string.delete_text_title),
-                        message = getString(R.string.delete_text_message, adapter.selectedItemCount),
+                        title = getString(R.string.delete_selected_text_title),
+                        message = getString(R.string.delete_selected_text_message, adapter.selectedItemCount),
                         positiveText = getString(R.string.delete),
                         positiveCallback = ::deleteSelectedItems,
                         negativeText = getString(R.string.cancel),

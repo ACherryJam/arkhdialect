@@ -11,6 +11,7 @@ import cherryjam.narfu.arkhdialect.data.AppDatabase
 import cherryjam.narfu.arkhdialect.data.entity.Interview
 import cherryjam.narfu.arkhdialect.databinding.ItemInterviewBinding
 import cherryjam.narfu.arkhdialect.ui.InterviewEditActivity
+import cherryjam.narfu.arkhdialect.utils.AlertDialogHelper
 
 
 class InterviewAdapter : SelectableAdapter<InterviewAdapter.InterviewViewHolder>() {
@@ -55,9 +56,18 @@ class InterviewAdapter : SelectableAdapter<InterviewAdapter.InterviewViewHolder>
                             true
                         }
                         R.id.delete -> {
-                            Thread {
-                                AppDatabase.getInstance(context).interviewDao().delete(interview)
-                            }.start()
+                            AlertDialogHelper.showAlertDialog(
+                                context,
+                                title = context.getString(R.string.delete_interview_title),
+                                message = context.getString(R.string.delete_interview_message),
+                                positiveText = context.getString(R.string.delete),
+                                negativeText = context.getString(R.string.cancel),
+                                positiveCallback = {
+                                    Thread {
+                                        AppDatabase.getInstance(context).interviewDao().delete(interview)
+                                    }.start()
+                                },
+                            )
                             true//
                         }
                         else -> false

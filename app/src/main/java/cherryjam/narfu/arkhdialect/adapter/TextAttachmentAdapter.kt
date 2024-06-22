@@ -12,6 +12,7 @@ import cherryjam.narfu.arkhdialect.data.AppDatabase
 import cherryjam.narfu.arkhdialect.data.entity.TextAttachment
 import cherryjam.narfu.arkhdialect.databinding.ItemTextAttachmentBinding
 import cherryjam.narfu.arkhdialect.ui.TextAttachmentEditActivity
+import cherryjam.narfu.arkhdialect.utils.AlertDialogHelper
 
 class TextAttachmentAdapter(val context: Context) :
     SelectableAdapter<TextAttachmentAdapter.TextAttachmentViewHolder>()
@@ -58,9 +59,18 @@ class TextAttachmentAdapter(val context: Context) :
                             true
                         }
                         R.id.delete -> {
-                            Thread {
-                                AppDatabase.getInstance(context).textAttachmentDao().delete(textAttachment)
-                            }.start()
+                            AlertDialogHelper.showAlertDialog(
+                                context,
+                                title = context.getString(R.string.delete_text_title),
+                                message = context.getString(R.string.delete_text_message),
+                                positiveText = context.getString(R.string.delete),
+                                negativeText = context.getString(R.string.cancel),
+                                positiveCallback = {
+                                    Thread {
+                                        AppDatabase.getInstance(context).textAttachmentDao().delete(textAttachment)
+                                    }.start()
+                                },
+                            )
                             true//
                         }
                         else -> false

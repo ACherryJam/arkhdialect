@@ -11,6 +11,7 @@ import cherryjam.narfu.arkhdialect.R
 import cherryjam.narfu.arkhdialect.data.AppDatabase
 import cherryjam.narfu.arkhdialect.data.entity.RecordingAttachment
 import cherryjam.narfu.arkhdialect.databinding.ItemRecordingAttachmentBinding
+import cherryjam.narfu.arkhdialect.utils.AlertDialogHelper
 import com.simplemobiletools.commons.extensions.formatDate
 import com.simplemobiletools.commons.extensions.getFormattedDuration
 
@@ -59,9 +60,18 @@ class RecordingAttachmentAdapter(val context: Context)
                             true
                         }
                         R.id.delete -> {
-                            Thread {
-                                AppDatabase.getInstance(context).recordingAttachmentDao().delete(attachment)
-                            }.start()
+                            AlertDialogHelper.showAlertDialog(
+                                context,
+                                title = context.getString(R.string.delete_recording_title),
+                                message = context.getString(R.string.delete_recording_message),
+                                positiveText = context.getString(R.string.delete),
+                                negativeText = context.getString(R.string.cancel),
+                                positiveCallback = {
+                                    Thread {
+                                        AppDatabase.getInstance(context).recordingAttachmentDao().delete(attachment)
+                                    }.start()
+                                },
+                            )
                             true//
                         }
                         else -> false

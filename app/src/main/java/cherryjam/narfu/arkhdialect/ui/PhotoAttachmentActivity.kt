@@ -192,8 +192,8 @@ class PhotoAttachmentActivity : AppCompatActivity() {
                 R.id.action_delete -> {
                     AlertDialogHelper.showAlertDialog(
                         this@PhotoAttachmentActivity,
-                        title = getString(R.string.delete_photo_title),
-                        message = getString(R.string.delete_photo_message, adapter.selectedItemCount),
+                        title = getString(R.string.delete_selected_photo_title),
+                        message = getString(R.string.delete_selected_photo_message, adapter.selectedItemCount),
                         positiveText = getString(R.string.delete),
                         positiveCallback = ::deleteSelectedItems,
                         negativeText = getString(R.string.cancel),

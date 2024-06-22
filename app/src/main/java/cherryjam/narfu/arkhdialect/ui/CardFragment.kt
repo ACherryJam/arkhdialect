@@ -130,8 +130,8 @@ class CardFragment : Fragment() {
                 R.id.action_delete -> {
                     AlertDialogHelper.showAlertDialog(
                         this@CardFragment.requireContext(),
-                        title = getString(R.string.delete_card_title),
-                        message = getString(R.string.delete_card_message, adapter.selectedItemCount),
+                        title = getString(R.string.delete_selected_card_title),
+                        message = getString(R.string.delete_selected_card_message, adapter.selectedItemCount),
                         positiveText = getString(R.string.delete),
                         positiveCallback = ::deleteSelectedItems,
                         negativeText = getString(R.string.cancel),

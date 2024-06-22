@@ -52,20 +52,36 @@
 
     <!-- SELECTION -->
     <string name="selected_items">Выбрано: %d</string>
-    <string name="delete_interview_title">Удалить интервью?</string>
-    <string name="delete_interview_message">Вы точно хотите удалить %d интервью?</string>
+    <string name="delete_selected_interview_title">Удалить интервью?</string>
+    <string name="delete_selected_interview_message">Вы точно хотите удалить %d интервью?</string>
   
-    <string name="delete_card_title">Удалить карточки?</string>
-    <string name="delete_card_message">Вы точно хотите удалить %d карточек?</string>
+    <string name="delete_selected_card_title">Удалить карточки?</string>
+    <string name="delete_selected_card_message">Вы точно хотите удалить %d карточек?</string>
 
-    <string name="delete_text_title">Удалить заметки?</string>
-    <string name="delete_text_message">Вы точно хотите удалить %d заметок?</string>
+    <string name="delete_selected_text_title">Удалить заметки?</string>
+    <string name="delete_selected_text_message">Вы точно хотите удалить %d заметок?</string>
 
-    <string name="delete_photo_title">Удалить фотографии?</string>
-    <string name="delete_photo_message">Вы точно хотите удалить %d фото?</string>
+    <string name="delete_selected_photo_title">Удалить фотографии?</string>
+    <string name="delete_selected_photo_message">Вы точно хотите удалить %d фото?</string>
 
-    <string name="delete_recording_title">Удалить записи?</string>
-    <string name="delete_recording_message">Вы точно хотите удалить %d записей?</string>
+    <string name="delete_selected_recording_title">Удалить записи?</string>
+    <string name="delete_selected_recording_message">Вы точно хотите удалить %d записей?</string>
+
+    <!-- DELETION -->
+    <string name="delete_interview_title">Удалить интервью?</string>
+    <string name="delete_interview_message">Вы точно хотите удалить это интервью?</string>
+
+    <string name="delete_card_title">Удалить карточку?</string>
+    <string name="delete_card_message">Вы точно хотите удалить эту карточку?</string>
+
+    <string name="delete_text_title">Удалить заметку?</string>
+    <string name="delete_text_message">Вы точно хотите удалить эту заметку?</string>
+
+    <string name="delete_photo_title">Удалить фотографию?</string>
+    <string name="delete_photo_message">Вы точно хотите удалить фотографию?</string>
+
+    <string name="delete_recording_title">Удалить запись?</string>
+    <string name="delete_recording_message">Вы точно хотите удалить эту запись?</string>
 
     <!-- SETTINGS -->
     <string name="activity_settings_title">Настройки</string>

@@ -240,8 +240,8 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
                 R.id.action_delete -> {
                     AlertDialogHelper.showAlertDialog(
                         this@RecordingAttachmentActivity,
-                        title = getString(R.string.delete_recording_title),
-                        message = getString(R.string.delete_recording_message, adapter.selectedItemCount),
+                        title = getString(R.string.delete_selected_recording_title),
+                        message = getString(R.string.delete_selected_recording_message, adapter.selectedItemCount),
                         positiveText = getString(R.string.delete),
                         positiveCallback = ::deleteSelectedItems,
                         negativeText = getString(R.string.cancel),

@@ -11,6 +11,7 @@ import cherryjam.narfu.arkhdialect.data.AppDatabase
 import cherryjam.narfu.arkhdialect.data.entity.Card
 import cherryjam.narfu.arkhdialect.databinding.ItemInterviewBinding
 import cherryjam.narfu.arkhdialect.ui.CardEditActivity
+import cherryjam.narfu.arkhdialect.utils.AlertDialogHelper
 
 class CardAdapter() : SelectableAdapter<CardAdapter.CardViewHolder>() {
     var data: List<Card> = emptyList()
@@ -54,9 +55,18 @@ class CardAdapter() : SelectableAdapter<CardAdapter.CardViewHolder>() {
                             true
                         }
                         R.id.delete -> {
-                            Thread {
-                                AppDatabase.getInstance(context).cardDao().delete(card)
-                            }.start()
+                            AlertDialogHelper.showAlertDialog(
+                                context,
+                                title = context.getString(R.string.delete_card_title),
+                                message = context.getString(R.string.delete_card_message),
+                                positiveText = context.getString(R.string.delete),
+                                negativeText = context.getString(R.string.cancel),
+                                positiveCallback = {
+                                    Thread {
+                                        AppDatabase.getInstance(context).cardDao().delete(card)
+                                    }.start()
+                                },
+                            )
                             true//
                         }
                         else -> false

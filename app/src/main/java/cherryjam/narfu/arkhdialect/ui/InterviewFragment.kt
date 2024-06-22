@@ -135,8 +135,8 @@ class InterviewFragment : Fragment() {
                 R.id.action_delete -> {
                     AlertDialogHelper.showAlertDialog(
                         this@InterviewFragment.requireContext(),
-                        title = getString(R.string.delete_interview_title),
-                        message = getString(R.string.delete_interview_message, adapter.selectedItemCount),
+                        title = getString(R.string.delete_selected_interview_title),
+                        message = getString(R.string.delete_selected_interview_message, adapter.selectedItemCount),
                         positiveText = getString(R.string.delete),
                         positiveCallback = ::deleteSelectedItems,
                         negativeText = getString(R.string.cancel),
