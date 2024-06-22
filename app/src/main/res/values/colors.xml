@@ -3,8 +3,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="primary">#00ABC5</color>
-    <color name="secondary">#46ABC5</color>
+    <color name="primary_day">#00ABC5</color>
+    <color name="secondary_day">#46ABC5</color>
+
+    <color name="primary_night">#298292</color>
+    <color name="secondary_night">#176C80</color>
 
     <!--background items colors-->
     <color name="item_background_day">#fff</color>
@@ -12,10 +15,15 @@
     <color name="item_background_selected_day">#ccc</color>
     <color name="item_background_selected_night">#333</color>
 
-    <!--background colors-->
+    <!--background day colors-->
     <color name="background_day">#F7FEFF</color>
     <color name="background_day_bottom_navigation">#CFF3F8</color>
-    <color name="floating_button_background">#7ED0E1</color>
+    <color name="floating_button_background_day">#7ED0E1</color>
+
+    <!--background night colors-->
+    <color name="background_night">#FF000000</color>
+    <color name="floating_button_background_night">#298292</color>
+    <color name="background_icon">#EAEAEA</color>
 
 
 </resources>
