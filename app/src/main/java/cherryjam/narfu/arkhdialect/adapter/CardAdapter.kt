@@ -87,7 +87,7 @@ class CardAdapter() : SelectableAdapter<CardAdapter.CardViewHolder>() {
                         word
 
                     supportText.text = if (location.isEmpty())
-                        context.getString(R.string.empty_card_region)
+                        context.getString(R.string.empty_card_district)
                     else
                         location
                 }

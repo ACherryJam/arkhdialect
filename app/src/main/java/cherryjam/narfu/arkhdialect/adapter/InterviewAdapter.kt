@@ -88,7 +88,7 @@ class InterviewAdapter : SelectableAdapter<InterviewAdapter.InterviewViewHolder>
                         name
 
                     listItem.supportText.text = if (location.isEmpty())
-                        context.getString(R.string.empty_interview_region)
+                        context.getString(R.string.empty_interview_district)
                     else
                         location
                 }

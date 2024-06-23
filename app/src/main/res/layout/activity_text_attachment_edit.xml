@@ -16,7 +16,7 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:title="Заметка" />
+        app:title="@string/text_attachment_edit" />
 
     <EditText
         android:id="@+id/title"

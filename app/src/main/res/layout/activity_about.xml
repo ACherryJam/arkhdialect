@@ -19,7 +19,7 @@
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
-            app:title="@string/activity_about_title" />
+            app:title="@string/about" />
 
 
         <TextView
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:alpha="0.6"
             android:fontFamily="sans-serif-light"
-            android:text="Создатели"
+            android:text="@string/creators"
             android:paddingBottom="10dp"
             android:textAlignment="center"
             android:textSize="48sp" />
