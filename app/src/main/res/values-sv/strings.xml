@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Arkhdialekt</string>
+
+
+    <string name="interview">Intervju</string>
+    <string name="cards">Kort</string>
+
+    <string name="cancel">Annullera</string>
+    <string name="save">Spara</string>
+    <string name="delete">Radera</string>
+    <string name="open">Öppen</string>
+    <string name="select">Välja</string>
+
+    <string name="no_activity_found">Ingen ansökan för att öppna den här filen</string>
+    <string name="no_settings_found">Misslyckas med att öppna inställningarna</string>
+
+
+    <string name="find_interview">Hitta intervjun</string>
+    <string name="find_card">Hitta ett kort</string>
+
+
+    <string name="cant_take_photo">Du kan inte ta bilder på grund av bristen på en kamera</string>
+
+    <string name="interview_full_name_hint">Fullständiga namn</string>
+    <string name="interview_interviewer_hint">Intervjuare</string>
+    <string name="interview_location_hint">Distrikt</string>
+    <string name="interview_attachments">Bilagor</string>
+    <string name="interview_text_attachment">Anteckningar</string>
+    <string name="interview_photo_attachment">Foton</string>
+    <string name="interview_recording_attachment">Röstinspelningar</string>
+
+
+    <string name="card_word_hint">Ord</string>
+    <string name="card_location_hint">Distrikt</string>
+    <string name="card_characteristics_hint">Egenskaper</string>
+    <string name="card_meaning_hint">Betydelse av ordet</string>
+    <string name="card_example_hint">Exempel på användning</string>
+
+
+    <string name="text_attachment">Anteckningar</string>
+    <string name="text_attachment_add">Lägg till en anteckning</string>
+    <string name="text_attachment_edit">Anteckningen</string>
+
+
+    <string name="text_attachment_title">Titel</string>
+    <string name="text_attachment_data">Anteckningen</string>
+
+
+    <string name="photo_attachments">Foton</string>
+    <string name="photo_attachment_add">Ta ett foto</string>
+
+
+    <string name="recording_attachment">Röstinspelningar</string>
+    <string name="recording_attachment_add">Skriv ut en röst</string>
+
+    <string name="menu_item_delete">Radera</string>
+
+
+    <string name="selected_items">Vald: %d</string>
+    <string name="delete_selected_interview_title">Ta bort intervjuer?</string>
+    <string name="delete_selected_interview_message">Vill du definitivt ta bort %D -intervjuer?</string>
+
+    <string name="delete_selected_card_title">Ta bort kort?</string>
+    <string name="delete_selected_card_message">Vill du definitivt ta bort %d -kort?</string>
+
+    <string name="delete_selected_text_title">Ta bort anteckningar?</string>
+    <string name="delete_selected_text_message">Vill du definitivt ta bort %d -anteckningar?</string>
+
+    <string name="delete_selected_photo_title">Ta bort foton?</string>
+    <string name="delete_selected_photo_message">Vill du definitivt ta bort %d -foto?</string>
+
+    <string name="delete_selected_recording_title">Ta bort poster?</string>
+    <string name="delete_selected_recording_message">Vill du definitivt ta bort %d -poster?</string>
+
+
+    <string name="delete_interview_title">Ta bort intervjuer?</string>
+    <string name="delete_interview_message">Vill du definitivt ta bort den här intervjun?</string>
+
+    <string name="delete_card_title">Ta bort ett kort?</string>
+    <string name="delete_card_message">Vill du definitivt ta bort det här kortet?</string>
+
+    <string name="delete_text_title">Ta bort en anteckning?</string>
+    <string name="delete_text_message">Vill du definitivt ta bort den här anteckningen?</string>
+
+    <string name="delete_photo_title">Ta bort foto?</string>
+    <string name="delete_photo_message">Vill du definitivt ta bort fotot?</string>
+
+    <string name="delete_recording_title">Ta bort posten?</string>
+    <string name="delete_recording_message">Vill du definitivt ta bort det här inlägget?</string>
+
+
+    <string name="activity_settings_title">inställningar</string>
+    <string name="activity_about_title">Handla om</string>
+    <string name="_rate_us">Gradera oss</string>
+    <string name="general">Allmän</string>
+    <string name="other">Övrig</string>
+    <string name="language">Språk</string>
+
+
+    <string name="creators">Skapare</string>
+
+
+    <string name="empty_interview_name">Okänt namn</string>
+    <string name="empty_interview_district">Okänt distrikt</string>
+
+    <string name="empty_card_word">Okänt ord</string>
+    <string name="empty_card_district">Okänt distrikt</string>
+
+    <string name="empty_text_title">Titel</string>
+</resources>

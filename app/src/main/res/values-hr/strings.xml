@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Arkhdialect</string>
+
+
+    <string name="interview">Intervju</string>
+    <string name="cards">Kartice</string>
+
+    <string name="cancel">Otkazati</string>
+    <string name="save">Uštedjeti</string>
+    <string name="delete">Izbrisati</string>
+    <string name="open">Otvoren</string>
+    <string name="select">Odabrati</string>
+
+    <string name="no_activity_found">Nema prijave za otvaranje ove datoteke</string>
+    <string name="no_settings_found">Ne uspijeva otvoriti postavke</string>
+
+
+    <string name="find_interview">Pronađite intervju</string>
+    <string name="find_card">Pronađite karticu</string>
+
+
+    <string name="cant_take_photo">Ne možete fotografirati zbog nedostatka kamere</string>
+
+    <string name="interview_full_name_hint">Puno ime</string>
+    <string name="interview_interviewer_hint">Intervjuir</string>
+    <string name="interview_location_hint">Okrug</string>
+    <string name="interview_attachments">Prilozi</string>
+    <string name="interview_text_attachment">Bilješke</string>
+    <string name="interview_photo_attachment">Fotografije</string>
+    <string name="interview_recording_attachment">Glasovne snimke</string>
+
+
+    <string name="card_word_hint">Riječ</string>
+    <string name="card_location_hint">Okrug</string>
+    <string name="card_characteristics_hint">Karakteristike</string>
+    <string name="card_meaning_hint">Značenje riječi</string>
+    <string name="card_example_hint">Primjeri upotrebe</string>
+
+
+    <string name="text_attachment">Bilješke</string>
+    <string name="text_attachment_add">Dodaj bilješku</string>
+    <string name="text_attachment_edit">Bilješka</string>
+
+
+    <string name="text_attachment_title">Titula</string>
+    <string name="text_attachment_data">Tekst bilješke</string>
+
+
+    <string name="photo_attachments">Fotografije</string>
+    <string name="photo_attachment_add">Slikaj</string>
+
+
+    <string name="recording_attachment">Glasovne snimke</string>
+    <string name="recording_attachment_add">Napiši glas</string>
+
+    <string name="menu_item_delete">Izbrisati</string>
+
+
+    <string name="selected_items">Odabrano: %D</string>
+    <string name="delete_selected_interview_title">Izbrisati intervjue?</string>
+    <string name="delete_selected_interview_message">Želite li definitivno izbrisati %D intervjua?</string>
+
+    <string name="delete_selected_card_title">Izbrisati kartice?</string>
+    <string name="delete_selected_card_message">Želite li definitivno izbrisati %d kartice?</string>
+
+    <string name="delete_selected_text_title">Izbrisati bilješke?</string>
+    <string name="delete_selected_text_message">Želite li definitivno izbrisati %d bilješke?</string>
+
+    <string name="delete_selected_photo_title">Izbrisati fotografije?</string>
+    <string name="delete_selected_photo_message">Želite li definitivno izbrisati %d fotografije?</string>
+
+    <string name="delete_selected_recording_title">Izbrisati zapise?</string>
+    <string name="delete_selected_recording_message">Želite li definitivno izbrisati %d zapise?</string>
+
+
+    <string name="delete_interview_title">Izbrisati intervjue?</string>
+    <string name="delete_interview_message">Želite li definitivno izbrisati ovaj intervju?</string>
+
+    <string name="delete_card_title">Izbrisati karticu?</string>
+    <string name="delete_card_message">Želite li definitivno izbrisati ovu karticu?</string>
+
+    <string name="delete_text_title">Izbrisati bilješku?</string>
+    <string name="delete_text_message">Želite li definitivno ukloniti ovu bilješku?</string>
+
+    <string name="delete_photo_title">Izbrisati fotografiju?</string>
+    <string name="delete_photo_message">Želite li definitivno izbrisati fotografiju?</string>
+
+    <string name="delete_recording_title">Izbrisati zapis?</string>
+    <string name="delete_recording_message">Želite li definitivno izbrisati ovaj unos?</string>
+
+
+    <string name="activity_settings_title">Postavke</string>
+    <string name="activity_about_title">Oko</string>
+    <string name="_rate_us">Ocijeni nas</string>
+    <string name="general">Općenito</string>
+    <string name="other">Drugi</string>
+    <string name="language">Jezik</string>
+
+
+    <string name="creators">Kreativci</string>
+
+
+    <string name="empty_interview_name">Nepoznato ime</string>
+    <string name="empty_interview_district">Nepoznati okrug</string>
+
+    <string name="empty_card_word">Nepoznata riječ</string>
+    <string name="empty_card_district">Nepoznati okrug</string>
+
+    <string name="empty_text_title">Titula</string>
+</resources>

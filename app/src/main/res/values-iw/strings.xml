@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Arkhdialect</string>
+
+
+    <string name="interview">רֵאָיוֹן</string>
+    <string name="cards">קלפים</string>
+
+    <string name="cancel">לְבַטֵל</string>
+    <string name="save">להציל</string>
+    <string name="delete">לִמְחוֹק</string>
+    <string name="open">לִפְתוֹחַ</string>
+    <string name="select">בחר</string>
+
+    <string name="no_activity_found">אין בקשה לפתיחת קובץ זה</string>
+    <string name="no_settings_found">לא מצליח לפתוח את ההגדרות</string>
+
+
+    <string name="find_interview">מצא את הראיון</string>
+    <string name="find_card">מצא כרטיס</string>
+
+
+    <string name="cant_take_photo">אתה לא יכול לצלם בגלל היעדר מצלמה</string>
+
+    <string name="interview_full_name_hint">שם מלא</string>
+    <string name="interview_interviewer_hint">מראיין</string>
+    <string name="interview_location_hint">מָחוֹז</string>
+    <string name="interview_attachments">קבצים מצורפים</string>
+    <string name="interview_text_attachment">הערות</string>
+    <string name="interview_photo_attachment">תמונות</string>
+    <string name="interview_recording_attachment">הקלטות קוליות</string>
+
+
+    <string name="card_word_hint">מִלָה</string>
+    <string name="card_location_hint">מָחוֹז</string>
+    <string name="card_characteristics_hint">מאפיינים</string>
+    <string name="card_meaning_hint">משמעות המילה</string>
+    <string name="card_example_hint">דוגמאות לשימוש</string>
+
+
+    <string name="text_attachment">הערות</string>
+    <string name="text_attachment_add">הוסף הערה</string>
+    <string name="text_attachment_edit">הפתק</string>
+
+
+    <string name="text_attachment_title">כותרת</string>
+    <string name="text_attachment_data">את טקסט הפתק</string>
+
+
+    <string name="photo_attachments">תמונות</string>
+    <string name="photo_attachment_add">צלם תמונה</string>
+
+
+    <string name="recording_attachment">הקלטות קוליות</string>
+    <string name="recording_attachment_add">כתוב קול</string>
+
+    <string name="menu_item_delete">לִמְחוֹק</string>
+
+
+    <string name="selected_items">נבחר: %D</string>
+    <string name="delete_selected_interview_title">למחוק ראיונות?</string>
+    <string name="delete_selected_interview_message">האם אתה בהחלט רוצה למחוק %D ראיונות?</string>
+
+    <string name="delete_selected_card_title">למחוק כרטיסים?</string>
+    <string name="delete_selected_card_message">האם אתה בהחלט רוצה למחוק %כרטיסי D?</string>
+
+    <string name="delete_selected_text_title">למחוק הערות?</string>
+    <string name="delete_selected_text_message">האם אתה בהחלט רוצה למחוק %D הערות?</string>
+
+    <string name="delete_selected_photo_title">למחוק תמונות?</string>
+    <string name="delete_selected_photo_message">האם אתה בהחלט רוצה למחוק את %D תמונה?</string>
+
+    <string name="delete_selected_recording_title">למחוק רשומות?</string>
+    <string name="delete_selected_recording_message">האם אתה בהחלט רוצה למחוק %D רשומות?</string>
+
+
+    <string name="delete_interview_title">למחוק ראיונות?</string>
+    <string name="delete_interview_message">האם אתה בהחלט רוצה למחוק את הראיון הזה?</string>
+
+    <string name="delete_card_title">למחוק כרטיס?</string>
+    <string name="delete_card_message">האם אתה בהחלט רוצה למחוק את הכרטיס הזה?</string>
+
+    <string name="delete_text_title">למחוק פתק?</string>
+    <string name="delete_text_message">האם אתה בהחלט רוצה להסיר את הפתק הזה?</string>
+
+    <string name="delete_photo_title">למחוק תמונה?</string>
+    <string name="delete_photo_message">האם אתה בהחלט רוצה למחוק את התמונה?</string>
+
+    <string name="delete_recording_title">למחוק את הרשומה?</string>
+    <string name="delete_recording_message">האם אתה בהחלט רוצה למחוק את הערך הזה?</string>
+
+
+    <string name="activity_settings_title">הגדרות</string>
+    <string name="activity_about_title">על אודות</string>
+    <string name="_rate_us">דרג אותנו</string>
+    <string name="general">כללי</string>
+    <string name="other">אַחֵר</string>
+    <string name="language">שפה</string>
+
+
+    <string name="creators">יוצרים</string>
+
+
+    <string name="empty_interview_name">שם לא ידוע</string>
+    <string name="empty_interview_district">מחוז לא ידוע</string>
+
+    <string name="empty_card_word">מילה לא ידועה</string>
+    <string name="empty_card_district">מחוז לא ידוע</string>
+
+    <string name="empty_text_title">כותרת</string>
+</resources>

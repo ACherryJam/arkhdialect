@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Arkhdialect</string>
+
+    
+    <string name="interview">Entretien</string>
+    <string name="cards">Cartes</string>
+
+    <string name="cancel">Annuler</string>
+    <string name="save">Sauvegarder</string>
+    <string name="delete">Supprimer</string>
+    <string name="open">Ouvrir</string>
+    <string name="select">Choisir</string>
+
+    <string name="no_activity_found">Aucune application pour ouvrir ce fichier</string>
+    <string name="no_settings_found">Ne parvient pas à ouvrir les paramètres</string>
+
+    
+    <string name="find_interview">Retrouvez lentretien</string>
+    <string name="find_card">Trouver une carte</string>
+
+    
+    <string name="cant_take_photo">Vous ne pouvez pas prendre de photos en raison de labsence dun appareil photo</string>
+
+    <string name="interview_full_name_hint">Nom et prénom</string>
+    <string name="interview_interviewer_hint">Interviewer</string>
+    <string name="interview_location_hint">Zone</string>
+    <string name="interview_attachments">Attachements</string>
+    <string name="interview_text_attachment">Remarques</string>
+    <string name="interview_photo_attachment">Photos</string>
+    <string name="interview_recording_attachment">Enregistrements vocaux</string>
+
+    
+    <string name="card_word_hint">Mot</string>
+    <string name="card_location_hint">Zone</string>
+    <string name="card_characteristics_hint">Caractéristiques</string>
+    <string name="card_meaning_hint">Sens du mot</string>
+    <string name="card_example_hint">Exemples dutilisation</string>
+
+    
+    <string name="text_attachment">Remarques</string>
+    <string name="text_attachment_add">Ajouter une note</string>
+    <string name="text_attachment_edit">La note</string>
+
+    
+    <string name="text_attachment_title">Titre</string>
+    <string name="text_attachment_data">Le texte de la note</string>
+
+    
+    <string name="photo_attachments">Photos</string>
+    <string name="photo_attachment_add">Prendre une photo</string>
+
+    
+    <string name="recording_attachment">Enregistrements vocaux</string>
+    <string name="recording_attachment_add">Écrire une voix</string>
+
+    <string name="menu_item_delete">Supprimer</string>
+
+    
+    <string name="selected_items">Sélectionné:% D</string>
+    <string name="delete_selected_interview_title">Supprimer les interviews?</string>
+    <string name="delete_selected_interview_message">Voulez-vous vraiment supprimer des entretiens% d?</string>
+
+    <string name="delete_selected_card_title">Supprimer les cartes?</string>
+    <string name="delete_selected_card_message">Voulez-vous vraiment supprimer les cartes% D?</string>
+
+    <string name="delete_selected_text_title">Supprimer des notes?</string>
+    <string name="delete_selected_text_message">Voulez-vous vraiment supprimer les billets% D?</string>
+
+    <string name="delete_selected_photo_title">Supprimer des photos?</string>
+    <string name="delete_selected_photo_message">Voulez-vous vraiment supprimer% D Photo?</string>
+
+    <string name="delete_selected_recording_title">Supprimer des enregistrements?</string>
+    <string name="delete_selected_recording_message">Voulez-vous vraiment supprimer% D Records?</string>
+
+    
+    <string name="delete_interview_title">Supprimer les interviews?</string>
+    <string name="delete_interview_message">Voulez-vous vraiment supprimer cette interview?</string>
+
+    <string name="delete_card_title">Supprimer une carte?</string>
+    <string name="delete_card_message">Voulez-vous vraiment supprimer cette carte?</string>
+
+    <string name="delete_text_title">Supprimer une note?</string>
+    <string name="delete_text_message">Voulez-vous vraiment supprimer cette note?</string>
+
+    <string name="delete_photo_title">Supprimer la photo?</string>
+    <string name="delete_photo_message">Voulez-vous vraiment supprimer la photo?</string>
+
+    <string name="delete_recording_title">Supprimer lenregistrement?</string>
+    <string name="delete_recording_message">Voulez-vous vraiment supprimer cette entrée?</string>
+
+    
+    <string name="activity_settings_title">Paramètres</string>
+    <string name="activity_about_title">À propos de lannexe</string>
+    <string name="_rate_us">Nous évaluer</string>
+    <string name="general">Sont communs</string>
+    <string name="other">Autre</string>
+    <string name="language">Langue</string>
+
+
+    
+    <string name="creators">Créateurs</string>
+
+
+    
+    <string name="empty_interview_name">Nom inconnu</string>
+    <string name="empty_interview_district">Zone inconnue</string>
+
+    <string name="empty_card_word">Mot inconnu</string>
+    <string name="empty_card_district">Zone inconnue</string>
+
+    <string name="empty_text_title">Titre</string>
+</resources>

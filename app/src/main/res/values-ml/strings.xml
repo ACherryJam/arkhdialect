@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Arkhddilectect</string>
+
+
+    <string name="interview">അഭിമുഖം</string>
+    <string name="cards">കാർഡുകൾ</string>
+
+    <string name="cancel">റദ്ദാക്കുക</string>
+    <string name="save">രക്ഷിക്കും</string>
+    <string name="delete">ഇല്ലാതാക്കുക</string>
+    <string name="open">തുറക്കുക</string>
+    <string name="select">തിരഞ്ഞെടുക്കുക</string>
+
+    <string name="no_activity_found">ഈ ഫയൽ തുറക്കുന്നതിന് അപേക്ഷയൊന്നുമില്ല</string>
+    <string name="no_settings_found">ക്രമീകരണങ്ങൾ തുറക്കുന്നതിൽ പരാജയപ്പെടുന്നു</string>
+
+
+    <string name="find_interview">അഭിമുഖം കണ്ടെത്തുക</string>
+    <string name="find_card">ഒരു കാർഡ് കണ്ടെത്തുക</string>
+
+
+    <string name="cant_take_photo">ക്യാമറയുടെ അഭാവം കാരണം നിങ്ങൾക്ക് ചിത്രമെടുക്കാൻ കഴിയില്ല</string>
+
+    <string name="interview_full_name_hint">പൂർണ്ണമായ പേര്</string>
+    <string name="interview_interviewer_hint">അഭിമുഖം</string>
+    <string name="interview_location_hint">ജില്ല</string>
+    <string name="interview_attachments">അറ്റാച്ചുമെന്റുകൾ</string>
+    <string name="interview_text_attachment">കുറിപ്പുകൾ</string>
+    <string name="interview_photo_attachment">ഫോട്ടോകൾ</string>
+    <string name="interview_recording_attachment">വോയ്സ് റെക്കോർഡിംഗുകൾ</string>
+
+
+    <string name="card_word_hint">വാക്ക്</string>
+    <string name="card_location_hint">ജില്ല</string>
+    <string name="card_characteristics_hint">സ്വഭാവഗുണങ്ങൾ</string>
+    <string name="card_meaning_hint">പദത്തിന്റെ അർത്ഥം</string>
+    <string name="card_example_hint">ഉപയോഗത്തിന്റെ ഉദാഹരണങ്ങൾ</string>
+
+
+    <string name="text_attachment">കുറിപ്പുകൾ</string>
+    <string name="text_attachment_add">ഒരു കുറിപ്പ് ചേർക്കുക</string>
+    <string name="text_attachment_edit">കുറിപ്പ്</string>
+
+
+    <string name="text_attachment_title">തലക്കെട്ട്</string>
+    <string name="text_attachment_data">കുറിപ്പിന്റെ വാചകം</string>
+
+
+    <string name="photo_attachments">ഫോട്ടോകൾ</string>
+    <string name="photo_attachment_add">ഒരു പടം എടുക്കു</string>
+
+
+    <string name="recording_attachment">വോയ്സ് റെക്കോർഡിംഗുകൾ</string>
+    <string name="recording_attachment_add">ഒരു ശബ്ദം എഴുതുക</string>
+
+    <string name="menu_item_delete">ഇല്ലാതാക്കുക</string>
+
+
+    <string name="selected_items">തിരഞ്ഞെടുത്തു:% d</string>
+    <string name="delete_selected_interview_title">അഭിമുഖങ്ങൾ ഇല്ലാതാക്കണോ?</string>
+    <string name="delete_selected_interview_message">% ഡി അഭിമുഖങ്ങൾ ഇല്ലാതാക്കാൻ നിങ്ങൾ ആഗ്രഹിക്കുന്നുണ്ടോ?</string>
+
+    <string name="delete_selected_card_title">കാർഡുകൾ ഇല്ലാതാക്കണോ?</string>
+    <string name="delete_selected_card_message">% D കാർഡുകൾ ഇല്ലാതാക്കാൻ നിങ്ങൾ ആഗ്രഹിക്കുന്നുണ്ടോ?</string>
+
+    <string name="delete_selected_text_title">കുറിപ്പുകൾ ഇല്ലാതാക്കണോ?</string>
+    <string name="delete_selected_text_message">% D കുറിപ്പുകൾ ഇല്ലാതാക്കാൻ നിങ്ങൾ തീർച്ചയായും ആഗ്രഹിക്കുന്നുണ്ടോ?</string>
+
+    <string name="delete_selected_photo_title">ഫോട്ടോകൾ ഇല്ലാതാക്കണോ?</string>
+    <string name="delete_selected_photo_message">% D ഫോട്ടോ ഇല്ലാതാക്കാൻ നിങ്ങൾ ആഗ്രഹിക്കുന്നുണ്ടോ?</string>
+
+    <string name="delete_selected_recording_title">റെക്കോർഡുകൾ ഇല്ലാതാക്കണോ?</string>
+    <string name="delete_selected_recording_message">% D റെക്കോർഡുകൾ ഇല്ലാതാക്കാൻ നിങ്ങൾ തീർച്ചയായും ആഗ്രഹിക്കുന്നുണ്ടോ?</string>
+
+
+    <string name="delete_interview_title">അഭിമുഖങ്ങൾ ഇല്ലാതാക്കണോ?</string>
+    <string name="delete_interview_message">ഈ അഭിമുഖം ഇല്ലാതാക്കാൻ നിങ്ങൾ തീർച്ചയായും ആഗ്രഹിക്കുന്നുണ്ടോ?</string>
+
+    <string name="delete_card_title">ഒരു കാർഡ് ഇല്ലാതാക്കണോ?</string>
+    <string name="delete_card_message">നിങ്ങൾ തീർച്ചയായും ഈ കാർഡ് ഇല്ലാതാക്കാൻ ആഗ്രഹിക്കുന്നുണ്ടോ?</string>
+
+    <string name="delete_text_title">ഒരു കുറിപ്പ് ഇല്ലാതാക്കണോ?</string>
+    <string name="delete_text_message">നിങ്ങൾ തീർച്ചയായും ഈ കുറിപ്പ് നീക്കംചെയ്യണോ?</string>
+
+    <string name="delete_photo_title">ഫോട്ടോ ഇല്ലാതാക്കണോ?</string>
+    <string name="delete_photo_message">നിങ്ങൾ തീർച്ചയായും ഫോട്ടോ ഇല്ലാതാക്കാൻ ആഗ്രഹിക്കുന്നുണ്ടോ?</string>
+
+    <string name="delete_recording_title">റെക്കോർഡ് ഇല്ലാതാക്കണോ?</string>
+    <string name="delete_recording_message">ഈ എൻട്രി ഇല്ലാതാക്കാൻ നിങ്ങൾ തീർച്ചയായും ആഗ്രഹിക്കുന്നുണ്ടോ?</string>
+
+
+    <string name="activity_settings_title">ക്രമീകരണങ്ങൾ</string>
+    <string name="activity_about_title">കുറിച്ച്</string>
+    <string name="_rate_us">ഞങ്ങളെ റേറ്റുചെയ്യുക</string>
+    <string name="general">പൊതുവായ</string>
+    <string name="other">മറ്റേതായ</string>
+    <string name="language">ഭാഷ</string>
+
+
+    <string name="creators">സ്രഷ്ടാക്കൾ</string>
+
+
+    <string name="empty_interview_name">അജ്ഞാത പേര്</string>
+    <string name="empty_interview_district">അജ്ഞാത ജില്ല</string>
+
+    <string name="empty_card_word">അജ്ഞാതമായ വാക്ക്</string>
+    <string name="empty_card_district">അജ്ഞാത ജില്ല</string>
+
+    <string name="empty_text_title">തലക്കെട്ട്</string>
+</resources>

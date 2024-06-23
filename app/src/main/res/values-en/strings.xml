@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ArkhDialect</string>
+
+
+    <string name="interview">Interview</string>
+    <string name="cards">Cards</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="open">Open</string>
+    <string name="select">Choose</string>
+
+    <string name="no_activity_found">No application for opening this file</string>
+    <string name="no_settings_found">Fails to open the settings</string>
+
+
+    <string name="find_interview">Find the interview</string>
+    <string name="find_card">Find a card</string>
+
+
+    <string name="cant_take_photo">You can’t take pictures due to the lack of a camera</string>
+
+    <string name="interview_full_name_hint">Full name</string>
+    <string name="interview_interviewer_hint">Interviewer</string>
+    <string name="interview_location_hint">District</string>
+    <string name="interview_attachments">Attachments</string>
+    <string name="interview_text_attachment">Notes</string>
+    <string name="interview_photo_attachment">Photos</string>
+    <string name="interview_recording_attachment">Voice recordings</string>
+
+
+    <string name="card_word_hint">Word</string>
+    <string name="card_location_hint">District</string>
+    <string name="card_characteristics_hint">Characteristics</string>
+    <string name="card_meaning_hint">Meaning of the word</string>
+    <string name="card_example_hint">Examples of use</string>
+
+
+    <string name="text_attachment">Notes</string>
+    <string name="text_attachment_add">Add a note</string>
+    <string name="text_attachment_edit">The note</string>
+
+
+    <string name="text_attachment_title">Title</string>
+    <string name="text_attachment_data">The text of the note</string>
+
+
+    <string name="photo_attachments">Photos</string>
+    <string name="photo_attachment_add">Take a photo</string>
+
+
+    <string name="recording_attachment">Voice recordings</string>
+    <string name="recording_attachment_add">Write out a voice</string>
+
+    <string name="menu_item_delete">Delete</string>
+
+
+    <string name="selected_items">Selected: %D</string>
+    <string name="delete_selected_interview_title">Delete interviews?</string>
+    <string name="delete_selected_interview_message">Do you definitely want to delete %D interviews?</string>
+
+    <string name="delete_selected_card_title">Delete cards?</string>
+    <string name="delete_selected_card_message">Do you definitely want to delete %D cards?</string>
+
+    <string name="delete_selected_text_title">Delete notes?</string>
+    <string name="delete_selected_text_message">Do you definitely want to delete %D notes?</string>
+
+    <string name="delete_selected_photo_title">Delete photos?</string>
+    <string name="delete_selected_photo_message">Do you definitely want to delete %D photo?</string>
+
+    <string name="delete_selected_recording_title">Delete records?</string>
+    <string name="delete_selected_recording_message">Do you definitely want to delete %D records?</string>
+
+
+    <string name="delete_interview_title">Delete interviews?</string>
+    <string name="delete_interview_message">Do you definitely want to delete this interview?</string>
+
+    <string name="delete_card_title">Delete a card?</string>
+    <string name="delete_card_message">Do you definitely want to delete this card?</string>
+
+    <string name="delete_text_title">Delete a note?</string>
+    <string name="delete_text_message">Do you definitely want to remove this note?</string>
+
+    <string name="delete_photo_title">Delete photo?</string>
+    <string name="delete_photo_message">Do you definitely want to delete the photo?</string>
+
+    <string name="delete_recording_title">Delete the record?</string>
+    <string name="delete_recording_message">Do you definitely want to delete this entry?</string>
+
+
+    <string name="activity_settings_title">Settings</string>
+    <string name="activity_about_title">About</string>
+    <string name="_rate_us">Rate us</string>
+    <string name="general">General</string>
+    <string name="other">Other</string>
+    <string name="language">Language</string>
+
+
+    <string name="creators">Creators</string>
+
+
+    <string name="empty_interview_name">Unknown name</string>
+    <string name="empty_interview_district">Unknown district</string>
+
+    <string name="empty_card_word">Unknown word</string>
+    <string name="empty_card_district">Unknown district</string>
+
+    <string name="empty_text_title">Title</string>
+</resources>

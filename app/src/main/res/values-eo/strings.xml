@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Arkhdialect</string>
+
+
+    <string name="interview">Intervjuo</string>
+    <string name="cards">Kartoj</string>
+
+    <string name="cancel">Nuligi</string>
+    <string name="save">Savi</string>
+    <string name="delete">Forigi</string>
+    <string name="open">Malferma</string>
+    <string name="select">Elektu</string>
+
+    <string name="no_activity_found">Neniu apliko por malfermi ĉi tiun dosieron</string>
+    <string name="no_settings_found">Malsukcesas malfermi la agordojn</string>
+
+
+    <string name="find_interview">Trovu la intervjuon</string>
+    <string name="find_card">Trovu karton</string>
+
+
+    <string name="cant_take_photo">Vi ne povas fari fotojn pro la manko de fotilo</string>
+
+    <string name="interview_full_name_hint">Plena nomo</string>
+    <string name="interview_interviewer_hint">Intervjuanto</string>
+    <string name="interview_location_hint">Distrikto</string>
+    <string name="interview_attachments">Aldonaĵoj</string>
+    <string name="interview_text_attachment">Notoj</string>
+    <string name="interview_photo_attachment">Fotoj</string>
+    <string name="interview_recording_attachment">Voĉaj registradoj</string>
+
+
+    <string name="card_word_hint">Vorto</string>
+    <string name="card_location_hint">Distrikto</string>
+    <string name="card_characteristics_hint">Karakterizaĵoj</string>
+    <string name="card_meaning_hint">Signifo de la vorto</string>
+    <string name="card_example_hint">Ekzemploj de uzo</string>
+
+
+    <string name="text_attachment">Notoj</string>
+    <string name="text_attachment_add">Aldonu noton</string>
+    <string name="text_attachment_edit">La noto</string>
+
+
+    <string name="text_attachment_title">Titolo</string>
+    <string name="text_attachment_data">La teksto de la noto</string>
+
+
+    <string name="photo_attachments">Fotoj</string>
+    <string name="photo_attachment_add">Fotu</string>
+
+
+    <string name="recording_attachment">Voĉaj registradoj</string>
+    <string name="recording_attachment_add">Skribu voĉon</string>
+
+    <string name="menu_item_delete">Forigi</string>
+
+
+    <string name="selected_items">Elektita: %D</string>
+    <string name="delete_selected_interview_title">Forigi intervjuojn?</string>
+    <string name="delete_selected_interview_message">Ĉu vi certe volas forigi %d intervjuojn?</string>
+
+    <string name="delete_selected_card_title">Forigi kartojn?</string>
+    <string name="delete_selected_card_message">Ĉu vi certe volas forigi %D -kartojn?</string>
+
+    <string name="delete_selected_text_title">Forigi notojn?</string>
+    <string name="delete_selected_text_message">Ĉu vi certe volas forigi %D -notojn?</string>
+
+    <string name="delete_selected_photo_title">Forigi fotojn?</string>
+    <string name="delete_selected_photo_message">Ĉu vi certe volas forigi %D -foton?</string>
+
+    <string name="delete_selected_recording_title">Forigi diskojn?</string>
+    <string name="delete_selected_recording_message">Ĉu vi certe volas forigi %D -rekordojn?</string>
+
+
+    <string name="delete_interview_title">Forigi intervjuojn?</string>
+    <string name="delete_interview_message">Ĉu vi certe volas forigi ĉi tiun intervjuon?</string>
+
+    <string name="delete_card_title">Forigi karton?</string>
+    <string name="delete_card_message">Ĉu vi certe volas forigi ĉi tiun karton?</string>
+
+    <string name="delete_text_title">Forigi noton?</string>
+    <string name="delete_text_message">Ĉu vi certe volas forigi ĉi tiun noton?</string>
+
+    <string name="delete_photo_title">Forigi foton?</string>
+    <string name="delete_photo_message">Ĉu vi certe volas forigi la foton?</string>
+
+    <string name="delete_recording_title">Forigi la rekordon?</string>
+    <string name="delete_recording_message">Ĉu vi certe volas forigi ĉi tiun eniron?</string>
+
+
+    <string name="activity_settings_title">Agordoj</string>
+    <string name="activity_about_title">Pri</string>
+    <string name="_rate_us">Taksu nin</string>
+    <string name="general">Ĝenerala</string>
+    <string name="other">Alia</string>
+    <string name="language">Lingvo</string>
+
+
+    <string name="creators">Kreintoj</string>
+
+
+    <string name="empty_interview_name">Nekonata Nomo</string>
+    <string name="empty_interview_district">Nekonata Distrikto</string>
+
+    <string name="empty_card_word">Nekonata vorto</string>
+    <string name="empty_card_district">Nekonata Distrikto</string>
+
+    <string name="empty_text_title">Titolo</string>
+</resources>

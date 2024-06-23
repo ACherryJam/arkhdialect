@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">arkhdialect</string>
+
+
+    <string name="interview">مقابلة</string>
+    <string name="cards">البطاقات</string>
+
+    <string name="cancel">يلغي</string>
+    <string name="save">يحفظ</string>
+    <string name="delete">يمسح</string>
+    <string name="open">يفتح</string>
+    <string name="select">يختار</string>
+
+    <string name="no_activity_found">لا يوجد طلب لفتح هذا الملف</string>
+    <string name="no_settings_found">فشل في فتح الإعدادات</string>
+
+
+    <string name="find_interview">ابحث عن المقابلة</string>
+    <string name="find_card">ابحث عن بطاقة</string>
+
+
+    <string name="cant_take_photo">لا يمكنك التقاط الصور بسبب عدم وجود كاميرا</string>
+
+    <string name="interview_full_name_hint">الاسم الكامل</string>
+    <string name="interview_interviewer_hint">المحاواة</string>
+    <string name="interview_location_hint">يصرف</string>
+    <string name="interview_attachments">المرفقات</string>
+    <string name="interview_text_attachment">ملحوظات</string>
+    <string name="interview_photo_attachment">الصور</string>
+    <string name="interview_recording_attachment">تسجيلات صوتية</string>
+
+
+    <string name="card_word_hint">كلمة</string>
+    <string name="card_location_hint">يصرف</string>
+    <string name="card_characteristics_hint">صفات</string>
+    <string name="card_meaning_hint">معنى كلمة</string>
+    <string name="card_example_hint">أمثلة على الاستخدام</string>
+
+
+    <string name="text_attachment">ملحوظات</string>
+    <string name="text_attachment_add">أضف ملاحظة</string>
+    <string name="text_attachment_edit">الملاحظة</string>
+
+
+    <string name="text_attachment_title">عنوان</string>
+    <string name="text_attachment_data">نص الملاحظة</string>
+
+
+    <string name="photo_attachments">الصور</string>
+    <string name="photo_attachment_add">التقاط صورة</string>
+
+
+    <string name="recording_attachment">تسجيلات صوتية</string>
+    <string name="recording_attachment_add">اكتب صوت</string>
+
+    <string name="menu_item_delete">يمسح</string>
+
+
+    <string name="selected_items">محدد: ٪ د</string>
+    <string name="delete_selected_interview_title">حذف المقابلات؟</string>
+    <string name="delete_selected_interview_message">هل تريد بالتأكيد حذف المقابلات ٪ D؟</string>
+
+    <string name="delete_selected_card_title">حذف البطاقات؟</string>
+    <string name="delete_selected_card_message">هل تريد بالتأكيد حذف بطاقات ٪ d؟</string>
+
+    <string name="delete_selected_text_title">حذف الملاحظات؟</string>
+    <string name="delete_selected_text_message">هل تريد بالتأكيد حذف الملاحظات ٪ D؟</string>
+
+    <string name="delete_selected_photo_title">حذف الصور؟</string>
+    <string name="delete_selected_photo_message">هل تريد بالتأكيد حذف ٪ D صورة؟</string>
+
+    <string name="delete_selected_recording_title">حذف السجلات؟</string>
+    <string name="delete_selected_recording_message">هل تريد بالتأكيد حذف سجلات ٪ D؟</string>
+
+
+    <string name="delete_interview_title">حذف المقابلات؟</string>
+    <string name="delete_interview_message">هل تريد بالتأكيد حذف هذه المقابلة؟</string>
+
+    <string name="delete_card_title">حذف بطاقة؟</string>
+    <string name="delete_card_message">هل تريد بالتأكيد حذف هذه البطاقة؟</string>
+
+    <string name="delete_text_title">حذف ملاحظة؟</string>
+    <string name="delete_text_message">هل تريد بالتأكيد إزالة هذه الملاحظة؟</string>
+
+    <string name="delete_photo_title">حذف الصورة؟</string>
+    <string name="delete_photo_message">هل تريد بالتأكيد حذف الصورة؟</string>
+
+    <string name="delete_recording_title">حذف السجل؟</string>
+    <string name="delete_recording_message">هل تريد بالتأكيد حذف هذا الإدخال؟</string>
+
+
+    <string name="activity_settings_title">إعدادات</string>
+    <string name="activity_about_title">عن</string>
+    <string name="_rate_us">قيمنا</string>
+    <string name="general">عام</string>
+    <string name="other">آخر</string>
+    <string name="language">لغة</string>
+
+
+    <string name="creators">المبدعون</string>
+
+
+    <string name="empty_interview_name">اسم غير معروف</string>
+    <string name="empty_interview_district">منطقة غير معروفة</string>
+
+    <string name="empty_card_word">كلمة غير معروفة</string>
+    <string name="empty_card_district">منطقة غير معروفة</string>
+
+    <string name="empty_text_title">عنوان</string>
+</resources>

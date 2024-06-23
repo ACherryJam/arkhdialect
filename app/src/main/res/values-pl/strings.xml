@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Arkhdialect</string>
+
+
+    <string name="interview">Wywiad</string>
+    <string name="cards">Karty</string>
+
+    <string name="cancel">Anulować</string>
+    <string name="save">Ratować</string>
+    <string name="delete">Usuwać</string>
+    <string name="open">otwarty</string>
+    <string name="select">Wybierać</string>
+
+    <string name="no_activity_found">Brak aplikacji do otwarcia tego pliku</string>
+    <string name="no_settings_found">Nie otwiera ustawień</string>
+
+
+    <string name="find_interview">Znajdź wywiad</string>
+    <string name="find_card">Znajdź kartę</string>
+
+
+    <string name="cant_take_photo">Nie możesz robić zdjęć z powodu braku aparatu</string>
+
+    <string name="interview_full_name_hint">Pełne imię i nazwisko</string>
+    <string name="interview_interviewer_hint">Przeprowadzający wywiad</string>
+    <string name="interview_location_hint">Dzielnica</string>
+    <string name="interview_attachments">Załączniki</string>
+    <string name="interview_text_attachment">Notatki</string>
+    <string name="interview_photo_attachment">Zdjęcia</string>
+    <string name="interview_recording_attachment">Nagrania głosowe</string>
+
+
+    <string name="card_word_hint">Słowo</string>
+    <string name="card_location_hint">Dzielnica</string>
+    <string name="card_characteristics_hint">Charakterystyka</string>
+    <string name="card_meaning_hint">Znaczenie słowa</string>
+    <string name="card_example_hint">Przykłady użytkowania</string>
+
+
+    <string name="text_attachment">Notatki</string>
+    <string name="text_attachment_add">Dodaj notatkę</string>
+    <string name="text_attachment_edit">Notatka</string>
+
+
+    <string name="text_attachment_title">Tytuł</string>
+    <string name="text_attachment_data">Tekst notatki</string>
+
+
+    <string name="photo_attachments">Zdjęcia</string>
+    <string name="photo_attachment_add">Robić zdjęcie</string>
+
+
+    <string name="recording_attachment">Nagrania głosowe</string>
+    <string name="recording_attachment_add">Napisz głos</string>
+
+    <string name="menu_item_delete">Usuwać</string>
+
+
+    <string name="selected_items">Wybrane: %D</string>
+    <string name="delete_selected_interview_title">Usunąć wywiady?</string>
+    <string name="delete_selected_interview_message">Czy zdecydowanie chcesz usunąć %wywiadów?</string>
+
+    <string name="delete_selected_card_title">Usuń karty?</string>
+    <string name="delete_selected_card_message">Czy zdecydowanie chcesz usunąć %D kart?</string>
+
+    <string name="delete_selected_text_title">Usuń notatki?</string>
+    <string name="delete_selected_text_message">Czy zdecydowanie chcesz usunąć %D UWAGI?</string>
+
+    <string name="delete_selected_photo_title">Usuń zdjęcia?</string>
+    <string name="delete_selected_photo_message">Czy zdecydowanie chcesz usunąć %D zdjęcie?</string>
+
+    <string name="delete_selected_recording_title">Usuń rekordy?</string>
+    <string name="delete_selected_recording_message">Czy zdecydowanie chcesz usunąć %D rekordy?</string>
+
+
+    <string name="delete_interview_title">Usunąć wywiady?</string>
+    <string name="delete_interview_message">Czy zdecydowanie chcesz usunąć ten wywiad?</string>
+
+    <string name="delete_card_title">Usuń kartę?</string>
+    <string name="delete_card_message">Czy zdecydowanie chcesz usunąć tę kartę?</string>
+
+    <string name="delete_text_title">Usuń notatkę?</string>
+    <string name="delete_text_message">Czy zdecydowanie chcesz usunąć tę notatkę?</string>
+
+    <string name="delete_photo_title">Usuń zdjęcie?</string>
+    <string name="delete_photo_message">Czy zdecydowanie chcesz usunąć zdjęcie?</string>
+
+    <string name="delete_recording_title">Usuń rekord?</string>
+    <string name="delete_recording_message">Czy zdecydowanie chcesz usunąć ten wpis?</string>
+
+
+    <string name="activity_settings_title">Ustawienia</string>
+    <string name="activity_about_title">O</string>
+    <string name="_rate_us">Oceń nas</string>
+    <string name="general">Ogólny</string>
+    <string name="other">Inny</string>
+    <string name="language">Język</string>
+
+
+    <string name="creators">Twórcy</string>
+
+
+    <string name="empty_interview_name">Nieznana nazwa</string>
+    <string name="empty_interview_district">Nieznany okręg</string>
+
+    <string name="empty_card_word">Nieznane słowo</string>
+    <string name="empty_card_district">Nieznany okręg</string>
+
+    <string name="empty_text_title">Tytuł</string>
+</resources>

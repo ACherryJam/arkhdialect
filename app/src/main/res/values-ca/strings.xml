@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Arkhdialect</string>
+
+
+    <string name="interview">Entrevista</string>
+    <string name="cards">Targetes</string>
+
+    <string name="cancel">Cancel · lar</string>
+    <string name="save">Estalviar</string>
+    <string name="delete">Esborrar</string>
+    <string name="open">Obrir</string>
+    <string name="select">Escollir</string>
+
+    <string name="no_activity_found">No hi ha cap aplicació per obrir aquest fitxer</string>
+    <string name="no_settings_found">No obre la configuració</string>
+
+
+    <string name="find_interview">Trobeu l’entrevista</string>
+    <string name="find_card">Troba una targeta</string>
+
+
+    <string name="cant_take_photo">No podeu fer fotos per falta de càmera</string>
+
+    <string name="interview_full_name_hint">Nom complet</string>
+    <string name="interview_interviewer_hint">Entrevistador</string>
+    <string name="interview_location_hint">Districte</string>
+    <string name="interview_attachments">Arxivaments</string>
+    <string name="interview_text_attachment">Notes</string>
+    <string name="interview_photo_attachment">Fotografies</string>
+    <string name="interview_recording_attachment">Enregistraments de veu</string>
+
+
+    <string name="card_word_hint">Paraula</string>
+    <string name="card_location_hint">Districte</string>
+    <string name="card_characteristics_hint">Característiques</string>
+    <string name="card_meaning_hint">Significat de la paraula</string>
+    <string name="card_example_hint">Exemples d’ús</string>
+
+
+    <string name="text_attachment">Notes</string>
+    <string name="text_attachment_add">Afegiu una nota</string>
+    <string name="text_attachment_edit">La nota</string>
+
+
+    <string name="text_attachment_title">Títol</string>
+    <string name="text_attachment_data">El text de la nota</string>
+
+
+    <string name="photo_attachments">Fotografies</string>
+    <string name="photo_attachment_add">Fer una foto</string>
+
+
+    <string name="recording_attachment">Enregistraments de veu</string>
+    <string name="recording_attachment_add">Escriu una veu</string>
+
+    <string name="menu_item_delete">Esborrar</string>
+
+
+    <string name="selected_items">Seleccionat: %D</string>
+    <string name="delete_selected_interview_title">Eliminar les entrevistes?</string>
+    <string name="delete_selected_interview_message">Definitivament, voleu suprimir %D entrevistes?</string>
+
+    <string name="delete_selected_card_title">Suprimir les targetes?</string>
+    <string name="delete_selected_card_message">Definitivament, voleu suprimir les targetes d %D?</string>
+
+    <string name="delete_selected_text_title">Suprimir les notes?</string>
+    <string name="delete_selected_text_message">Definitivament, voleu suprimir %D Notes?</string>
+
+    <string name="delete_selected_photo_title">Suprimir fotos?</string>
+    <string name="delete_selected_photo_message">Definitivament, voleu eliminar la foto d %D?</string>
+
+    <string name="delete_selected_recording_title">Suprimir els registres?</string>
+    <string name="delete_selected_recording_message">Definitivament, voleu eliminar els registres %D?</string>
+
+
+    <string name="delete_interview_title">Eliminar les entrevistes?</string>
+    <string name="delete_interview_message">Definitivament, voleu eliminar aquesta entrevista?</string>
+
+    <string name="delete_card_title">Suprimir una targeta?</string>
+    <string name="delete_card_message">Definitivament, voleu suprimir aquesta targeta?</string>
+
+    <string name="delete_text_title">Suprimir una nota?</string>
+    <string name="delete_text_message">Definitivament, voleu eliminar aquesta nota?</string>
+
+    <string name="delete_photo_title">Suprimir la foto?</string>
+    <string name="delete_photo_message">Definitivament, voleu suprimir la foto?</string>
+
+    <string name="delete_recording_title">Suprimir el registre?</string>
+    <string name="delete_recording_message">Definitivament, voleu suprimir aquesta entrada?</string>
+
+
+    <string name="activity_settings_title">Configuració</string>
+    <string name="activity_about_title">Sobre</string>
+    <string name="_rate_us">Puntuans</string>
+    <string name="general">General</string>
+    <string name="other">Altre</string>
+    <string name="language">Llenguatge</string>
+
+
+    <string name="creators">Creadors</string>
+
+
+    <string name="empty_interview_name">Nom desconegut</string>
+    <string name="empty_interview_district">Districte desconegut</string>
+
+    <string name="empty_card_word">Paraula desconeguda</string>
+    <string name="empty_card_district">Districte desconegut</string>
+
+    <string name="empty_text_title">Títol</string>
+</resources>

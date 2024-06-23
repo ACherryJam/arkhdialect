@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Arkhdialect</string>
+
+
+    <string name="interview">Interview</string>
+    <string name="cards">Kaarten</string>
+
+    <string name="cancel">Annuleren</string>
+    <string name="save">Redden</string>
+    <string name="delete">Verwijderen</string>
+    <string name="open">Open</string>
+    <string name="select">Kiezen</string>
+
+    <string name="no_activity_found">Geen aanvraag voor het openen van dit bestand</string>
+    <string name="no_settings_found">Kan de instellingen niet openen</string>
+
+
+    <string name="find_interview">Vind het interview</string>
+    <string name="find_card">Zoek een kaart</string>
+
+
+    <string name="cant_take_photo">U kunt geen foto maken vanwege het ontbreken van een camera</string>
+
+    <string name="interview_full_name_hint">Voor-en achternaam</string>
+    <string name="interview_interviewer_hint">Interviewer</string>
+    <string name="interview_location_hint">Wijk</string>
+    <string name="interview_attachments">Bijlagen</string>
+    <string name="interview_text_attachment">Aantekeningen</string>
+    <string name="interview_photo_attachment">Foto</string>
+    <string name="interview_recording_attachment">Spraakopnames</string>
+
+
+    <string name="card_word_hint">Woord</string>
+    <string name="card_location_hint">Wijk</string>
+    <string name="card_characteristics_hint">Kenmerken</string>
+    <string name="card_meaning_hint">Betekenis van het woord</string>
+    <string name="card_example_hint">Voorbeelden van gebruik</string>
+
+
+    <string name="text_attachment">Aantekeningen</string>
+    <string name="text_attachment_add">Voeg een notitie toe</string>
+    <string name="text_attachment_edit">De notitie</string>
+
+
+    <string name="text_attachment_title">Titel</string>
+    <string name="text_attachment_data">De tekst van de notitie</string>
+
+
+    <string name="photo_attachments">Foto</string>
+    <string name="photo_attachment_add">Maak een foto</string>
+
+
+    <string name="recording_attachment">Spraakopnames</string>
+    <string name="recording_attachment_add">Schrijf een stem op</string>
+
+    <string name="menu_item_delete">Verwijderen</string>
+
+
+    <string name="selected_items">Geselecteerd: %D</string>
+    <string name="delete_selected_interview_title">Interviews verwijderen?</string>
+    <string name="delete_selected_interview_message">Wil je zeker %D -interviews verwijderen?</string>
+
+    <string name="delete_selected_card_title">Kaarten verwijderen?</string>
+    <string name="delete_selected_card_message">Wilt u zeker %D -kaarten verwijderen?</string>
+
+    <string name="delete_selected_text_title">Notes verwijderen?</string>
+    <string name="delete_selected_text_message">Wilt u zeker %D -notities verwijderen?</string>
+
+    <string name="delete_selected_photo_title">Foto verwijderen?</string>
+    <string name="delete_selected_photo_message">Wilt u zeker de %D -foto verwijderen?</string>
+
+    <string name="delete_selected_recording_title">Records verwijderen?</string>
+    <string name="delete_selected_recording_message">Wilt u zeker %D -records verwijderen?</string>
+
+
+    <string name="delete_interview_title">Interviews verwijderen?</string>
+    <string name="delete_interview_message">Wil je dit interview zeker verwijderen?</string>
+
+    <string name="delete_card_title">Een kaart verwijderen?</string>
+    <string name="delete_card_message">Wil je deze kaart zeker verwijderen?</string>
+
+    <string name="delete_text_title">Een notitie verwijderen?</string>
+    <string name="delete_text_message">Wilt u deze notitie zeker verwijderen?</string>
+
+    <string name="delete_photo_title">Verwijder foto?</string>
+    <string name="delete_photo_message">Wilt u de foto zeker verwijderen?</string>
+
+    <string name="delete_recording_title">Het record verwijderen?</string>
+    <string name="delete_recording_message">Wilt u deze inzending zeker verwijderen?</string>
+
+
+    <string name="activity_settings_title">Instellingen</string>
+    <string name="activity_about_title">Over</string>
+    <string name="_rate_us">Beoordeel ons</string>
+    <string name="general">Algemeen</string>
+    <string name="other">Ander</string>
+    <string name="language">Taal</string>
+
+
+    <string name="creators">Makers</string>
+
+
+    <string name="empty_interview_name">Onbekende naam</string>
+    <string name="empty_interview_district">Onbekend district</string>
+
+    <string name="empty_card_word">Onbekend woord</string>
+    <string name="empty_card_district">Onbekend district</string>
+
+    <string name="empty_text_title">Titel</string>
+</resources>
