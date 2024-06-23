@@ -59,7 +59,7 @@
     <string name="selected_items">Выбрано: %d</string>
     <string name="delete_selected_interview_title">Удалить интервью?</string>
     <string name="delete_selected_interview_message">Вы точно хотите удалить %d интервью?</string>
-  
+
     <string name="delete_selected_card_title">Удалить карточки?</string>
     <string name="delete_selected_card_message">Вы точно хотите удалить %d карточек?</string>
 
@@ -90,27 +90,23 @@
 
     <!-- SETTINGS -->
     <string name="activity_settings_title">Настройки</string>
-<!--    <string name="activity_about_title">О программе</string>-->
+    <string name="activity_about_title">О приложении</string>
     <string name="_rate_us">Оценить нас</string>
     <string name="general">Общие</string>
     <string name="other">Другие</string>
     <string name="language">Язык</string>
-    <string name="extension">Расширение</string>
+
 
     <!-- ABOUT -->
     <string name="creators">Создатели</string>
 
-    <!-- formats -->
-    <string name="m4a">m4a</string>
-    <string name="mp3">mp3</string>
-    <string name="ogg">ogg</string>
 
     <!-- Empty values -->
     <string name="empty_interview_name">Неизвесное ФИО</string>
-    <string name="empty_interview_region">Неизвестный район</string>
+    <string name="empty_interview_district">Неизвестный район</string>
 
     <string name="empty_card_word">Неизвестное слово</string>
-    <string name="empty_card_region">Неизвестный регион</string>
+    <string name="empty_card_district">Неизвестный район</string>
 
     <string name="empty_text_title">Заголовок</string>
 </resources>
