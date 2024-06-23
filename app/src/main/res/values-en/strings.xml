@@ -2,23 +2,20 @@
 <resources>
     <string name="app_name">ArkhDialect</string>
 
-
-    <string name="interview">Interview</string>
+    <string name="interview">Interviews</string>
     <string name="cards">Cards</string>
 
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
     <string name="delete">Delete</string>
     <string name="open">Open</string>
-    <string name="select">Choose</string>
+    <string name="select">Select</string>
 
     <string name="no_activity_found">No application for opening this file</string>
-    <string name="no_settings_found">Fails to open the settings</string>
+    <string name="no_settings_found">Failed to open the settings</string>
 
-
-    <string name="find_interview">Find the interview</string>
-    <string name="find_card">Find a card</string>
-
+    <string name="find_interview">Find interview</string>
+    <string name="find_card">Find card</string>
 
     <string name="cant_take_photo">You can’t take pictures due to the lack of a camera</string>
 
@@ -30,32 +27,26 @@
     <string name="interview_photo_attachment">Photos</string>
     <string name="interview_recording_attachment">Voice recordings</string>
 
-
     <string name="card_word_hint">Word</string>
     <string name="card_location_hint">District</string>
     <string name="card_characteristics_hint">Characteristics</string>
     <string name="card_meaning_hint">Meaning of the word</string>
     <string name="card_example_hint">Examples of use</string>
 
-
     <string name="text_attachment">Notes</string>
     <string name="text_attachment_add">Add a note</string>
     <string name="text_attachment_edit">The note</string>
 
-
     <string name="text_attachment_title">Title</string>
     <string name="text_attachment_data">The text of the note</string>
-
 
     <string name="photo_attachments">Photos</string>
     <string name="photo_attachment_add">Take a photo</string>
 
-
     <string name="recording_attachment">Voice recordings</string>
-    <string name="recording_attachment_add">Write out a voice</string>
+    <string name="recording_attachment_add">Record voice</string>
 
     <string name="menu_item_delete">Delete</string>
-
 
     <string name="selected_items">Selected: %d</string>
     <string name="delete_selected_interview_title">Delete interviews?</string>
@@ -87,7 +78,7 @@
     <string name="delete_photo_message">Do you definitely want to delete the photo?</string>
 
     <string name="delete_recording_title">Delete the record?</string>
-    <string name="delete_recording_message">Do you definitely want to delete this entry?</string>
+    <string name="delete_recording_message">Do you definitely want to delete this recording?</string>
 
 
     <string name="activity_settings_title">Settings</string>
@@ -97,11 +88,10 @@
     <string name="other">Other</string>
     <string name="language">Language</string>
 
-
     <string name="creators">Creators</string>
     <string name="first_full_name">Matvienko Daniil Vladimirovich</string>
     <string name="seconds_full_name">Starikov Alexander Alekseevich</string>
-    <string name="info">3rd year of PMI 151112</string>
+    <string name="info">3rd year of AMCS, NaRFU, 151112</string>
 
     <string name="empty_interview_name">Unknown name</string>
     <string name="empty_interview_district">Unknown district</string>
