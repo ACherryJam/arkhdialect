@@ -17,6 +17,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        resourceConfigurations.add("ru")
+        resourceConfigurations.add("en")
     }
 
     buildTypes {
@@ -37,6 +40,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+    androidResources {
+        generateLocaleConfig = false
     }
 
 }
