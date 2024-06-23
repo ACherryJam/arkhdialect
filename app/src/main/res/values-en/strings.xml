@@ -57,21 +57,21 @@
     <string name="menu_item_delete">Delete</string>
 
 
-    <string name="selected_items">Selected: %D</string>
+    <string name="selected_items">Selected: %d</string>
     <string name="delete_selected_interview_title">Delete interviews?</string>
-    <string name="delete_selected_interview_message">Do you definitely want to delete %D interviews?</string>
+    <string name="delete_selected_interview_message">Do you definitely want to delete %d interviews?</string>
 
     <string name="delete_selected_card_title">Delete cards?</string>
-    <string name="delete_selected_card_message">Do you definitely want to delete %D cards?</string>
+    <string name="delete_selected_card_message">Do you definitely want to delete %d cards?</string>
 
     <string name="delete_selected_text_title">Delete notes?</string>
-    <string name="delete_selected_text_message">Do you definitely want to delete %D notes?</string>
+    <string name="delete_selected_text_message">Do you definitely want to delete %d notes?</string>
 
     <string name="delete_selected_photo_title">Delete photos?</string>
-    <string name="delete_selected_photo_message">Do you definitely want to delete %D photo?</string>
+    <string name="delete_selected_photo_message">Do you definitely want to delete %d photo?</string>
 
     <string name="delete_selected_recording_title">Delete records?</string>
-    <string name="delete_selected_recording_message">Do you definitely want to delete %D records?</string>
+    <string name="delete_selected_recording_message">Do you definitely want to delete %d records?</string>
 
 
     <string name="delete_interview_title">Delete interviews?</string>
