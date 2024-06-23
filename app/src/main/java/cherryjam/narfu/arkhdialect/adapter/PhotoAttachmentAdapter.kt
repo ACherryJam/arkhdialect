@@ -107,7 +107,9 @@ class PhotoAttachmentAdapter :
             val intent = Intent().apply {
                 setAction(Intent.ACTION_VIEW)
                 setDataAndType(attachment.uri, context.contentResolver.getType(attachment.uri))
+                setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
+
             try { context.startActivity(intent) }
             catch (e: ActivityNotFoundException) {
                 e.printStackTrace()
