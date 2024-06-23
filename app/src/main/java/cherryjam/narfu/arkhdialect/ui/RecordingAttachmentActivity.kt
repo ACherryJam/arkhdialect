@@ -3,23 +3,26 @@ package cherryjam.narfu.arkhdialect.ui
 import android.Manifest
 import android.app.Activity
 import android.content.ActivityNotFoundException
+import android.content.ContentValues
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.Media
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.core.app.ActivityCompat
-import androidx.core.content.FileProvider
 import androidx.preference.PreferenceManager
 import cherryjam.narfu.arkhdialect.R
 import cherryjam.narfu.arkhdialect.adapter.RecordingAttachmentAdapter
@@ -30,8 +33,6 @@ import cherryjam.narfu.arkhdialect.data.entity.RecordingAttachment
 import cherryjam.narfu.arkhdialect.databinding.ActivityRecordingAttachmentBinding
 import cherryjam.narfu.arkhdialect.utils.AlertDialogHelper
 import com.google.android.material.snackbar.Snackbar
-import java.io.File
-import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -134,19 +135,14 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
     }
 
     private fun startRecording() {
-        val intent = Intent(Media.RECORD_SOUND_ACTION)
+        val intent = Intent(Media.RECORD_SOUND_ACTION).apply {
+            setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+        }
 
         // Recorder application developers tend to not add Media.RECORD_SOUND_ACTION to
         // their intent filter, Intent.resolveActivity(packageManager) is discarded in
         // favor of catching ActivityNotFoundException
         try {
-            val recordingFile: File = try { createRecordingFile() } catch (e: IOException) {
-                e.printStackTrace()
-                return
-            }
-
-            val uri = FileProvider.getUriForFile(this, "$packageName.provider", recordingFile)
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
             recorderLauncher.launch(intent)
         } catch (e: ActivityNotFoundException) {
             e.printStackTrace()
@@ -157,16 +153,53 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
     private val recorderLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val uri = result.data?.data
-            uri?.let {
+            var audioUri: Uri? = null
+
+            uri?.let { receivedUri ->
+                val audioCollection = Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+                val directory = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+                    Environment.DIRECTORY_RECORDINGS
+                else
+                    Environment.DIRECTORY_MUSIC
+
+                val recordingDetails = ContentValues().apply {
+                    put(Media.RELATIVE_PATH, directory)
+                    put(Media.DISPLAY_NAME, createFileName())
+                    put(Media.MIME_TYPE, contentResolver.getType(receivedUri))
+                    put(Media.IS_PENDING, 1)
+                }
+                audioUri = contentResolver.insert(audioCollection, recordingDetails)
+
+                audioUri?.let {
+                    val inputStream = contentResolver.openInputStream(receivedUri)
+                    val outputStream = contentResolver.openOutputStream(it)
+
+                    if (inputStream == null || outputStream == null) return@registerForActivityResult
+                    inputStream.copyTo(outputStream)
+
+                    inputStream.close()
+                    outputStream.close()
+
+                    recordingDetails.clear()
+                    recordingDetails.put(Media.IS_PENDING, 0)
+                    contentResolver.update(it, recordingDetails, null, null)
+
+                    // deleteOriginalFile(receivedUri)
+                }
+            }
+
+            audioUri?.let {
                 contentResolver.query(
                     it,
-                    arrayOf(Media.DISPLAY_NAME, Media.DATE_ADDED, Media.DURATION),
+                    arrayOf(MediaStore.Audio.AudioColumns.DISPLAY_NAME,
+                            MediaStore.Audio.AudioColumns.DATE_ADDED,
+                            MediaStore.Audio.AudioColumns.DURATION),
                     null, null, null
                 )
             }?.use { cursor ->
-                val nameColumn = cursor.getColumnIndexOrThrow(Media.DISPLAY_NAME)
-                val timestampColumn = cursor.getColumnIndexOrThrow(Media.DATE_ADDED)
-                val durationColumn = cursor.getColumnIndexOrThrow(Media.DURATION)
+                val nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DISPLAY_NAME)
+                val timestampColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DATE_ADDED)
+                val durationColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DURATION)
 
                 if (cursor.moveToFirst()) {
                     val name = cursor.getString(nameColumn)
@@ -175,22 +208,12 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
 
                     Thread {
                         database.recordingAttachmentDao().insert(RecordingAttachment(
-                            interview.id!!, uri, name, timestamp, duration
+                            interview.id!!, audioUri!!, name, timestamp, duration
                         ))
                     }.start()
                 }
             }
         }
-    }
-
-    @Throws(IOException::class)
-    private fun createRecordingFile(): File {
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_MUSIC)
-        //val recording: File = File.createTempFile("RECORD_${timeStamp}_", ".mp3", storageDir)
-        val recording: File = File.createTempFile("RECORD_${timeStamp}_", extention, storageDir)
-
-        return recording
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
@@ -273,6 +296,25 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
 
             runOnUiThread { adapter.endSelection() }
         }.start()
+    }
+
+    fun createFileName(): String {
+        val fullName = interview.name.filter { c -> c.isLetterOrDigit() }
+        val timestamp: String = SimpleDateFormat("yyyyMMdd-HHmmss", Locale.getDefault()).format(Date())
+        return "$fullName-$timestamp"
+    }
+
+    fun deleteOriginalFile(uri: Uri) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val intent = MediaStore.createDeleteRequest(contentResolver, mutableListOf(uri))
+            deleteFileLauncher.launch(IntentSenderRequest.Builder(intent.intentSender).build())
+        }
+    }
+
+    val deleteFileLauncher = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            Log.d("deleteFileLauncher", "Android 11 or higher : deleted")
+        }
     }
 
     companion object {
