@@ -55,10 +55,7 @@ class InterviewEditActivity : AppCompatActivity() {
 
         binding.save.setOnClickListener {
             Thread {
-                interview.name = binding.fullName.text.toString()
-                interview.interviewer = binding.interviewer.text.toString()
-                interview.location = binding.location.text.toString()
-
+                updateInterviewData()
                 database.interviewDao().update(interview)
                 finish()
             }.start()
@@ -73,12 +70,20 @@ class InterviewEditActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
+    private fun updateInterviewData() {
+        interview.name = binding.fullName.text.toString()
+        interview.interviewer = binding.interviewer.text.toString()
+        interview.location = binding.location.text.toString()
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressedDispatcher.onBackPressed()
         return true
     }
 
     fun <T : Any> startAttachmentActivity(activity: KClass<T>) {
+        updateInterviewData()
+
         val intent = Intent(this, activity.java)
         intent.putExtra("interview", interview)
         startActivity(intent)

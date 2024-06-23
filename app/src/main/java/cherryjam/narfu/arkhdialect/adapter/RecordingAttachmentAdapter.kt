@@ -1,11 +1,13 @@
 package cherryjam.narfu.arkhdialect.adapter
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import cherryjam.narfu.arkhdialect.R
 import cherryjam.narfu.arkhdialect.data.AppDatabase
@@ -118,7 +120,11 @@ class RecordingAttachmentAdapter(val context: Context)
                 setAction(Intent.ACTION_VIEW)
                 setDataAndType(attachment.uri, context.contentResolver.getType(attachment.uri))
             }
-            context.startActivity(intent)
+            try { context.startActivity(intent) }
+            catch (e: ActivityNotFoundException) {
+                e.printStackTrace()
+                Toast.makeText(context, context.getString(R.string.no_activity_found), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
