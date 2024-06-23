@@ -32,12 +32,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/general" />
-            
-            <FrameLayout
-                android:id="@+id/general_settings"
+
+            <RelativeLayout
+                android:id="@+id/settings_language_holder"
+                style="@style/SettingsHolderTextViewStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="6dp"/>
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/settings_language_label"
+                    style="@style/SettingsTextLabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/language" />
+
+                <TextView
+                    android:id="@+id/settings_language"
+                    style="@style/SettingsTextValueStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/settings_language_label"
+                    tools:text="Русский" />
+
+            </RelativeLayout>
 
             <include
                 android:id="@+id/settings_general_settings_divider"
