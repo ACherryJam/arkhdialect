@@ -11,6 +11,8 @@
     <string name="open">Открыть</string>
     <string name="select">Выбрать</string>
 
+    <string name="no_activity_found">Нет приложения для открытия данного файла</string>
+
     <!-- MAIN ACTIVITY -->
     <string name="find_interview">Найти интервью</string>
     <string name="find_card">Найти карточку</string>
