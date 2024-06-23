@@ -99,6 +99,9 @@
 
     <!-- ABOUT -->
     <string name="creators">Создатели</string>
+    <string name="first_full_name">Матвиенко Даниил Владимирович</string>
+    <string name="seconds_full_name">Стариков Александр Алексеевич</string>
+    <string name="info">3 курс ПМИ 151112</string>
 
 
     <!-- Empty values -->

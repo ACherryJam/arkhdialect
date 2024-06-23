@@ -99,7 +99,9 @@
 
 
     <string name="creators">Creators</string>
-
+    <string name="first_full_name">Matvienko Daniil Vladimirovich</string>
+    <string name="seconds_full_name">Starikov Alexander Alekseevich</string>
+    <string name="info">3rd year of PMI 151112</string>
 
     <string name="empty_interview_name">Unknown name</string>
     <string name="empty_interview_district">Unknown district</string>

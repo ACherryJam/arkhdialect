@@ -4,12 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import cherryjam.narfu.arkhdialect.R
 import cherryjam.narfu.arkhdialect.databinding.ItemAboutBinding
 
 class AboutAdapter(val context: Context) : RecyclerView.Adapter<AboutAdapter.AboutViewHolder>() {
     var data: List<Map<String, String>> = listOf(
-        mapOf("title" to "Матвиенко Даниил Владимирович", "info" to "3 курс ПМИ 151112"),
-        mapOf("title" to "Стариков Александр Алексеевич", "info" to "3 курс ПМИ 151112")
+        mapOf("title" to context.getString(R.string.first_full_name), "info" to context.getString(R.string.info)),
+        mapOf("title" to context.getString(R.string.seconds_full_name), "info" to context.getString(R.string.info))
     )
 
     class AboutViewHolder(val binding: ItemAboutBinding) : RecyclerView.ViewHolder(binding.root)
