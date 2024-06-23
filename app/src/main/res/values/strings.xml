@@ -12,6 +12,7 @@
     <string name="select">Выбрать</string>
 
     <string name="no_activity_found">Нет приложения для открытия данного файла</string>
+    <string name="no_settings_found">Не удается открыть настройки</string>
 
     <!-- MAIN ACTIVITY -->
     <string name="find_interview">Найти интервью</string>
@@ -38,6 +39,7 @@
     <!-- TEXT ATTACHMENT -->
     <string name="text_attachment">Заметки</string>
     <string name="text_attachment_add">Добавить заметку</string>
+    <string name="text_attachment_edit">Заметка</string>
 
     <!-- TEXT ATTACHMENT EDITOR -->
     <string name="text_attachment_title">Заголовок</string>
@@ -47,7 +49,8 @@
     <string name="photo_attachments">Фотографии</string>
     <string name="photo_attachment_add">Сделать фотографию</string>
 
-    <string name="recording_attachment">Диктофон</string>
+    <!-- RECORDING ATTACHMENT -->
+    <string name="recording_attachment">Записи голоса</string>
     <string name="recording_attachment_add">Записать голос</string>
 
     <string name="menu_item_delete">Удалить</string>
@@ -87,12 +90,15 @@
 
     <!-- SETTINGS -->
     <string name="activity_settings_title">Настройки</string>
-    <string name="activity_about_title">О приложении</string>
+<!--    <string name="activity_about_title">О программе</string>-->
     <string name="_rate_us">Оценить нас</string>
-    <string name="general">Основные</string>
+    <string name="general">Общие</string>
     <string name="other">Другие</string>
     <string name="language">Язык</string>
     <string name="extension">Расширение</string>
+
+    <!-- ABOUT -->
+    <string name="creators">Создатели</string>
 
     <!-- formats -->
     <string name="m4a">m4a</string>
