@@ -145,65 +145,84 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
     private val recorderLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val uri = result.data?.data
-            var audioUri: Uri? = null
+            uri ?: return@registerForActivityResult
 
-            uri?.let { receivedUri ->
-                val audioCollection = Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
-                val directory = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-                    Environment.DIRECTORY_RECORDINGS
-                else
-                    Environment.DIRECTORY_MUSIC
-
-                val recordingDetails = ContentValues().apply {
-                    put(Media.RELATIVE_PATH, directory)
-                    put(Media.DISPLAY_NAME, createFileName())
-                    put(Media.MIME_TYPE, contentResolver.getType(receivedUri))
-                    put(Media.IS_PENDING, 1)
-                }
-                audioUri = contentResolver.insert(audioCollection, recordingDetails)
-
-                audioUri?.let {
-                    val inputStream = contentResolver.openInputStream(receivedUri)
-                    val outputStream = contentResolver.openOutputStream(it)
-
-                    if (inputStream == null || outputStream == null) return@registerForActivityResult
-                    inputStream.copyTo(outputStream)
-
-                    inputStream.close()
-                    outputStream.close()
-
-                    recordingDetails.clear()
-                    recordingDetails.put(Media.IS_PENDING, 0)
-                    contentResolver.update(it, recordingDetails, null, null)
-
-                    // deleteOriginalFile(receivedUri)
-                }
+            try {
+                saveRecordingAttachment(uri)
             }
+            catch (e: IllegalArgumentException) {
+                // Save threw because it couldn't read audio metadata columns
+                // Creating new file using MediaStore API and copying data to it
+                val copyUri = copyRecordingFile(uri)
+                copyUri ?: return@registerForActivityResult
 
-            audioUri?.let {
-                contentResolver.query(
-                    it,
-                    arrayOf(MediaStore.Audio.AudioColumns.DISPLAY_NAME,
-                            MediaStore.Audio.AudioColumns.DATE_ADDED,
-                            MediaStore.Audio.AudioColumns.DURATION),
-                    null, null, null
-                )
-            }?.use { cursor ->
-                val nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DISPLAY_NAME)
-                val timestampColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DATE_ADDED)
-                val durationColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DURATION)
+                // Finally saving recording attachment
+                // Won't throw IllegalArgumentException because file's registered in MediaStore API
+                saveRecordingAttachment(copyUri)
+            }
+        }
+    }
 
-                if (cursor.moveToFirst()) {
-                    val name = cursor.getString(nameColumn)
-                    val timestamp = cursor.getInt(timestampColumn)
-                    val duration = cursor.getInt(durationColumn)
+    fun copyRecordingFile(receivedUri: Uri): Uri? {
+        // 1. Determine directory for new file
+        val audioCollection = Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+        val directory = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            Environment.DIRECTORY_RECORDINGS
+        else
+            Environment.DIRECTORY_MUSIC
 
-                    Thread {
-                        database.recordingAttachmentDao().insert(RecordingAttachment(
-                            interview.id!!, audioUri!!, name, timestamp, duration
-                        ))
-                    }.start()
-                }
+        // 2. Create new file using content resolver
+        val recordingDetails = ContentValues().apply {
+            put(Media.RELATIVE_PATH, directory)
+            put(Media.DISPLAY_NAME, createFileName())
+            put(Media.MIME_TYPE, contentResolver.getType(receivedUri))
+            put(Media.IS_PENDING, 1)
+        }
+
+        val audioUri = contentResolver.insert(audioCollection, recordingDetails)
+        audioUri ?: return null
+
+        // 3. Copy data from received file to the copy file
+        val inputStream = contentResolver.openInputStream(receivedUri)
+        val outputStream = contentResolver.openOutputStream(audioUri)
+
+        if (inputStream == null || outputStream == null)
+            return null
+        inputStream.copyTo(outputStream)
+
+        inputStream.close()
+        outputStream.close()
+
+        // 4. Indicate that app finished writing the file
+        recordingDetails.clear()
+        recordingDetails.put(Media.IS_PENDING, 0)
+        contentResolver.update(audioUri, recordingDetails, null, null)
+
+        return audioUri
+    }
+
+    fun saveRecordingAttachment(uri: Uri) {
+        contentResolver.query(
+            uri,
+            arrayOf(MediaStore.Audio.AudioColumns.DISPLAY_NAME,
+                    MediaStore.Audio.AudioColumns.DATE_ADDED,
+                    MediaStore.Audio.AudioColumns.DURATION),
+            null, null, null
+        )?.use { cursor ->
+            val nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DISPLAY_NAME)
+            val timestampColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DATE_ADDED)
+            val durationColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DURATION)
+
+            if (cursor.moveToFirst()) {
+                val name = cursor.getString(nameColumn)
+                val timestamp = cursor.getInt(timestampColumn)
+                val duration = cursor.getInt(durationColumn)
+
+                Thread {
+                    database.recordingAttachmentDao().insert(RecordingAttachment(
+                        interview.id!!, uri, name, timestamp, duration
+                    ))
+                }.start()
             }
         }
     }
