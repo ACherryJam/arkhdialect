@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
@@ -30,4 +31,9 @@ data class TextAttachment(
     constructor(interviewId: Long,
                 title: String="",
                 content: String="") : this(null, interviewId, title, content)
+
+    @Ignore
+    fun isEmpty(): Boolean {
+        return title.isEmpty() && content.isEmpty()
+    }
 }

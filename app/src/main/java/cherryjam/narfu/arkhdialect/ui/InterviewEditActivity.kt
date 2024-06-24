@@ -29,10 +29,7 @@ class InterviewEditActivity : AppCompatActivity() {
         } else {
             intent.getParcelableExtra("interview")
         } ?: throw IllegalArgumentException("No Interview entity passed to InterviewEditActivity")
-
-        binding.fullName.setText(interview.name)
-        binding.interviewer.setText(interview.interviewer)
-        binding.location.setText(interview.location)
+        binding.interview = interview
 
         if (!packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
             binding.photoAttachment.isEnabled = false
@@ -55,7 +52,6 @@ class InterviewEditActivity : AppCompatActivity() {
 
         binding.save.setOnClickListener {
             Thread {
-                updateInterviewData()
                 database.interviewDao().update(interview)
                 finish()
             }.start()
@@ -70,20 +66,12 @@ class InterviewEditActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
-    private fun updateInterviewData() {
-        interview.name = binding.fullName.text.toString()
-        interview.interviewer = binding.interviewer.text.toString()
-        interview.location = binding.location.text.toString()
-    }
-
     override fun onSupportNavigateUp(): Boolean {
         onBackPressedDispatcher.onBackPressed()
         return true
     }
 
     fun <T : Any> startAttachmentActivity(activity: KClass<T>) {
-        updateInterviewData()
-
         val intent = Intent(this, activity.java)
         intent.putExtra("interview", interview)
         startActivity(intent)

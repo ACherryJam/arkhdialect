@@ -29,25 +29,17 @@ class TextAttachmentEditActivity : AppCompatActivity() {
         } else {
             intent.getParcelableExtra("attachment")
         } ?: throw IllegalArgumentException("No attachment passed to TextAttachmentEditActivity")
+        binding.attachment = attachment
 
         isNewAttachment = intent.getBooleanExtra("new", false)
-
-        binding.title.setText(attachment.title)
-        binding.data.setText(attachment.content)
     }
 
     override fun onStop() {
         super.onStop()
         Thread {
-            val title = binding.title.text.toString()
-            val content = binding.data.text.toString()
-
-            attachment.title = title
-            attachment.content = content
-
             val dao = database.textAttachmentDao()
             if (isNewAttachment) {
-                if (title.isEmpty() && content.isEmpty())
+                if (attachment.isEmpty())
                     return@Thread
                 dao.insert(attachment)
             }

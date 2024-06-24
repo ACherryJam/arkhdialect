@@ -28,14 +28,7 @@ class CardEditActivity : AppCompatActivity() {
         } else {
             intent.getParcelableExtra("card")
         } ?: throw IllegalArgumentException("No Card entity passed to CardEditActivity")
-
-        with(binding) {
-            word.setText(card.word)
-            location.setText(card.location)
-            characteristics.setText(card.characteristics)
-            meaning.setText(card.meaning)
-            example.setText(card.example)
-        }
+        binding.card = card
 
         binding.undo.setOnClickListener {
             finish()
@@ -43,12 +36,6 @@ class CardEditActivity : AppCompatActivity() {
 
         binding.save.setOnClickListener {
             Thread {
-                card.word = binding.word.text.toString()
-                card.location = binding.location.text.toString()
-                card.characteristics = binding.characteristics.text.toString()
-                card.meaning = binding.meaning.text.toString()
-                card.example = binding.example.text.toString()
-
                 database.cardDao().update(card)
                 finish()
             }.start()

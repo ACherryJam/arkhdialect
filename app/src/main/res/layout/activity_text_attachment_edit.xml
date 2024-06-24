@@ -1,41 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.TextAttachmentEditActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/padding"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:title="@string/text_attachment_edit" />
+    <data>
+        <variable
+            name="attachment"
+            type="cherryjam.narfu.arkhdialect.data.entity.TextAttachment" />
+    </data>
 
-    <EditText
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_horizontal"
-        android:layout_marginBottom="@dimen/margin_vertical"
-        android:background="@null"
-        android:ems="10"
-        android:hint="@string/text_attachment_title"
-        android:inputType="text"
-        android:textSize="28sp" />
-
-    <EditText
-        android:id="@+id/data"
+    <LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="@dimen/margin_horizontal"
-        android:layout_marginBottom="@dimen/margin_vertical"
-        android:gravity="top"
-        android:hint="@string/text_attachment_data" />
-</LinearLayout>
+        android:orientation="vertical"
+        tools:context=".ui.TextAttachmentEditActivity">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/padding"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:title="@string/text_attachment_edit" />
+
+        <EditText
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_horizontal"
+            android:layout_marginBottom="@dimen/margin_vertical"
+            android:background="@null"
+            android:ems="10"
+            android:hint="@string/text_attachment_title"
+            android:importantForAutofill="no"
+            android:text="@={attachment.title}"
+            android:inputType="text"
+            android:textSize="28sp" />
+
+        <EditText
+            android:id="@+id/data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/margin_horizontal"
+            android:layout_marginBottom="@dimen/margin_vertical"
+            android:gravity="top"
+            android:hint="@string/text_attachment_data"
+            android:importantForAutofill="no"
+            android:text="@={attachment.content}" />
+    </LinearLayout>
+</layout>
