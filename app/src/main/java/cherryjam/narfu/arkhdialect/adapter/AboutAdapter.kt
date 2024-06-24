@@ -25,17 +25,13 @@ class AboutAdapter(val context: Context) : RecyclerView.Adapter<AboutAdapter.Abo
     override fun onBindViewHolder(holder: AboutViewHolder, position: Int) {
         val about = data[position]
 
-        with(holder.binding) {
-            with(listItem) {
-                headline.text = about.getValue("title")
-                supportText.text = about.getValue("info")
-            }
+        with(holder.binding.listItem) {
+            headline.text = about.getValue("title")
+            supportText.text = about.getValue("info")
         }
     }
 
     override fun getItemCount(): Int {
         return data.size
     }
-
-
 }

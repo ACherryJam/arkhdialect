@@ -80,16 +80,11 @@ class InterviewFragment : Fragment() {
             private fun searchDatabase(query: String) {
                 val searchQuery = "%$query%"
 
-                database.interviewDao().searchDatabase(searchQuery).observe(viewLifecycleOwner, { list ->
-                    list.let {
-                        adapter.data = it
-                    }
-                })
+                database.interviewDao().searchDatabase(searchQuery).observe(viewLifecycleOwner) {
+                    adapter.data = it
+                }
             }
         })
-
-
-
     }
 
     override fun onStart() {
@@ -167,11 +162,5 @@ class InterviewFragment : Fragment() {
 
             activity?.runOnUiThread { adapter.endSelection() }
         }.start()
-    }
-
-
-
-    companion object {
-        val DELETE_INTERVIEW_ALERT = 1
     }
 }

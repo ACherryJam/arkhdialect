@@ -52,8 +52,6 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
     private lateinit var adapter: RecordingAttachmentAdapter
     private val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
-    private lateinit var extention: String
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -316,12 +314,6 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
     }
 
     companion object {
-        private val mediaPermission: String by lazy {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-                Manifest.permission.READ_MEDIA_AUDIO
-            else
-                Manifest.permission.READ_EXTERNAL_STORAGE
-        }
         private const val REQUEST_CODE = 1
     }
 }

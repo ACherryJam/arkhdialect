@@ -3,24 +3,10 @@ package cherryjam.narfu.arkhdialect.data.dao
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
-import androidx.room.Embedded
 import androidx.room.Insert
 import androidx.room.Query
-import androidx.room.Relation
-import androidx.room.Transaction
 import androidx.room.Update
 import cherryjam.narfu.arkhdialect.data.entity.Interview
-import cherryjam.narfu.arkhdialect.data.entity.TextAttachment
-
-
-data class InterviewWithAttachments(
-    @Embedded val interview: Interview,
-    @Relation(
-        parentColumn = "id",
-        entityColumn = "interviewId"
-    )
-    val textAttachments: List<TextAttachment>,
-)
 
 @Dao
 interface InterviewDao {
@@ -29,14 +15,6 @@ interface InterviewDao {
 
     @Query("SELECT * FROM interviews WHERE id = :id")
     fun getById(id: Int): Interview
-
-    @Transaction
-    @Query("SELECT * FROM interviews")
-    fun getAllWithAttachments(): List<InterviewWithAttachments>
-
-    @Transaction
-    @Query("SELECT * FROM interviews WHERE id = :id")
-    fun getByIdWithAttachments(id: Int): InterviewWithAttachments
 
     @Insert
     fun _insert(interview: Interview): Long
