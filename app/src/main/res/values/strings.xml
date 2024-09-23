@@ -95,6 +95,8 @@
     <string name="general">Общие</string>
     <string name="other">Другие</string>
     <string name="language">Язык</string>
+    <string name="export">Экспорт данных</string>
+
 
 
     <!-- ABOUT -->
