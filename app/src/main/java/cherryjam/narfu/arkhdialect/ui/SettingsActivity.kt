@@ -10,8 +10,10 @@ import android.provider.Settings
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import cherryjam.narfu.arkhdialect.R
+import cherryjam.narfu.arkhdialect.data.AppDatabase
 import cherryjam.narfu.arkhdialect.databinding.ActivitySettingsBinding
 import java.util.Locale
+import cherryjam.narfu.arkhdialect.utils.ExportDataHelper
 
 
 class SettingsActivity : AppCompatActivity() {
@@ -39,7 +41,21 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         binding.settingsRateHolder.setOnClickListener {
-            openUrl("https://docs.google.com/forms/d/e/1FAIpQLScbRqBZ8W7_E-pSyl3NJoz87Tyr2ZsBM7ENo7elJiUpMEIC1Q/viewform?usp=sf_link")
+            openUrl("https://forms.yandex.ru/cloud/66eff991eb6146b6ea4f2be5/")
+        }
+        val exportDataHelper = ExportDataHelper()
+        binding.settingsExportHolder.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                val database = AppDatabase.getInstance(this)
+
+                //cards
+                val cards = database.cardDao().getAll()
+                exportDataHelper.exportToCSV(this, cards, "cards")
+
+                //interviews
+                val interviews = database.interviewDao().getAll()
+                exportDataHelper.exportToCSV(this, interviews, "interview")
+            }
         }
 
     }
@@ -76,5 +92,4 @@ class SettingsActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
-
 }
