@@ -9,11 +9,15 @@ import android.os.Bundle
 import android.provider.Settings
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import cherryjam.narfu.arkhdialect.R
 import cherryjam.narfu.arkhdialect.data.AppDatabase
+import cherryjam.narfu.arkhdialect.data.entity.Interview
 import cherryjam.narfu.arkhdialect.databinding.ActivitySettingsBinding
+import cherryjam.narfu.arkhdialect.utils.AlertDialogHelper
 import java.util.Locale
 import cherryjam.narfu.arkhdialect.utils.ExportDataHelper
+import java.io.IOException
 
 
 class SettingsActivity : AppCompatActivity() {
@@ -42,21 +46,22 @@ class SettingsActivity : AppCompatActivity() {
         binding.settingsRateHolder.setOnClickListener {
             openUrl("https://forms.yandex.ru/cloud/66eff991eb6146b6ea4f2be5/")
         }
-        val exportDataHelper = ExportDataHelper()
-        binding.settingsExportHolder.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                val database = AppDatabase.getInstance(this)
 
-                //cards
-                val cards = database.cardDao().getAll()
-                exportDataHelper.exportToCSV(this, cards, "cards")
-
-                //interviews
-                val interviews = database.interviewDao().getAll()
-                exportDataHelper.exportToCSV(this, interviews, "interview")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            binding.settingsExportHolder.setOnClickListener {
+                AlertDialogHelper.showAlertDialog(
+                    this@SettingsActivity,
+                    title = getString(R.string.export_data_title),
+                    message = getString(R.string.export_data_message),
+                    positiveText = getString(R.string.export_data),
+                    positiveCallback = ::launchExportData,
+                    negativeText = getString(R.string.cancel),
+                )
             }
         }
-
+        else {
+            binding.settingsExportLabel.setTextColor(ContextCompat.getColor(this, R.color.gray))
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -65,7 +70,6 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun launchChangeAppLanguageIntent() {
-
         try {
             val action = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
                 Settings.ACTION_APP_LOCALE_SETTINGS
@@ -79,6 +83,38 @@ class SettingsActivity : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
             Toast.makeText(this, this.getString(R.string.no_settings_found), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun launchExportData() {
+        val database = AppDatabase.getInstance(this)
+        val exportDataHelper = ExportDataHelper(database, this)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            try {
+                //cards
+                val cards = database.cardDao().getAll()
+                exportDataHelper.exportToCSV(cards, "cards")
+
+                //interviews
+                val interviews = database.interviewDao().getAll()
+                exportDataHelper.exportToCSV(interviews, "interview")
+
+                //textAttachments
+                exportDataHelper.exportToTXT()
+
+                // zip file
+                exportDataHelper.zipFolders()
+
+                Toast.makeText(this, this.getString(R.string.export_successful), Toast.LENGTH_SHORT).show()
+
+            } catch (e: IOException) {
+                e.printStackTrace()
+                Toast.makeText(this, this.getString(R.string.export_unsuccessful), Toast.LENGTH_SHORT).show()
+            }
+        }
+        else {
+            Toast.makeText(this, this.getString(R.string.export_unsuccessful), Toast.LENGTH_SHORT).show()
         }
     }
 

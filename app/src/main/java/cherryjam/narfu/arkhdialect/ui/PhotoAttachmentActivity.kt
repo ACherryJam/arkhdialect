@@ -1,6 +1,7 @@
 package cherryjam.narfu.arkhdialect.ui
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaScannerConnection
@@ -14,6 +15,7 @@ import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
@@ -91,7 +93,11 @@ class PhotoAttachmentActivity : AppCompatActivity() {
     }
 
     private fun askForPermissionIfNeeded(permission: String) {
-        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                permission
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             requestPermissions(arrayOf(permission), REQUEST_CODE)
         }
     }
@@ -131,34 +137,75 @@ class PhotoAttachmentActivity : AppCompatActivity() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
         if (takePictureIntent.resolveActivity(packageManager) != null) {
-            val photoFile: File = try { createImageFile() } catch (e: IOException) {
+            val photoUri: Uri? = try {
+                createImageFile()  // Передаем context в createImageFile
+            } catch (e: IOException) {
                 e.printStackTrace()
+                Toast.makeText(this, "Ошибка при создании файла", Toast.LENGTH_SHORT).show()
                 return
             }
 
-            currentPhotoUri = FileProvider.getUriForFile(this, "$packageName.provider", photoFile)
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, currentPhotoUri)
-            try {
-                cameraLauncher.launch(takePictureIntent)
-            } catch (e: SecurityException) {
-                photoFile.delete()
-                askForPermissionIfNeeded(mediaPermission)
-                askForPermissionIfNeeded(android.Manifest.permission.CAMERA)
+            photoUri?.let { uri ->
+                currentPhotoUri = uri
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, currentPhotoUri)
+
+                try {
+                    cameraLauncher.launch(takePictureIntent)
+                } catch (e: SecurityException) {
+                    // Удаляем файл (по URI), если произошла ошибка доступа
+                    contentResolver.delete(currentPhotoUri, null, null)
+                    askForPermissionIfNeeded(mediaPermission)
+                    askForPermissionIfNeeded(android.Manifest.permission.CAMERA)
+                }
+            } ?: run {
+                Toast.makeText(this, "Не удалось создать URI для фотографии", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
+
     private lateinit var currentPhotoPath: String
     private lateinit var currentPhotoUri: Uri
 
-    private fun createImageFile(): File {
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-        val imageFileName = "IMG_" + timeStamp + "_"
-        val storageDir: File? = getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-        val image: File = File.createTempFile(imageFileName, ".jpg", storageDir)
-        currentPhotoPath = image.absolutePath
-        return image
+    fun createFileName(fullName: String): String {
+        val timestamp: String =
+            SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        return "${fullName}_$timestamp"
     }
+
+
+    private fun createImageFile(): Uri? {
+        val folderName = interview.name.filter { c -> c.isLetterOrDigit() }.ifEmpty { "emptyName" }
+
+        val imageFileName = createFileName(folderName) + "_"
+
+        val timestamp: String = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(Date())
+        // ContentValues для хранения метаданных файла
+        val contentValues = ContentValues().apply {
+            put(MediaStore.Images.Media.DISPLAY_NAME, imageFileName + ".jpg")
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+            put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/ArkhDialect_pictures" + "/$timestamp" + "/${interview.id}_$folderName" + "/images")
+        }
+
+        // Вставка файла в хранилище через MediaStore
+        val resolver = this.contentResolver
+        val imageUri: Uri? = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+
+        imageUri?.let {
+            // Открываем поток для записи данных в файл
+            resolver.openOutputStream(it)?.use { outputStream ->
+                // Вы можете записывать данные изображения в outputStream, если они у вас есть
+                // Например, если у вас есть Bitmap, вы можете его сохранить:
+                // bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            }
+            currentPhotoPath = it.toString() // Сохраняем путь к изображению как URI
+        } ?: run {
+            Toast.makeText(this, "Ошибка при создании изображения", Toast.LENGTH_SHORT).show()
+        }
+
+        return imageUri
+    }
+
 
     private val selectableAdapterCallback = object : SelectableAdapter.Listener {
         override fun onSelectionStart() {
@@ -193,13 +240,17 @@ class PhotoAttachmentActivity : AppCompatActivity() {
                     AlertDialogHelper.showAlertDialog(
                         this@PhotoAttachmentActivity,
                         title = getString(R.string.delete_selected_photo_title),
-                        message = getString(R.string.delete_selected_photo_message, adapter.selectedItemCount),
+                        message = getString(
+                            R.string.delete_selected_photo_message,
+                            adapter.selectedItemCount
+                        ),
                         positiveText = getString(R.string.delete),
                         positiveCallback = ::deleteSelectedItems,
                         negativeText = getString(R.string.cancel),
                     )
                     return true
                 }
+
                 else -> return false
             }
         }

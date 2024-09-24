@@ -17,7 +17,7 @@ interface TextAttachmentDao {
     fun getById(id: Int): TextAttachment
 
     @Query("SELECT * FROM textAttachments WHERE interviewId = :interviewId")
-    fun getByInterviewId(interviewId: Long): LiveData<List<TextAttachment>>
+    fun getByInterviewId(interviewId: Long?): LiveData<List<TextAttachment>>
 
     @Insert
     fun _insert(textAttachment: TextAttachment): Long
