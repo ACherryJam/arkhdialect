@@ -168,9 +168,9 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
         val folderName = interview.name.filter { c -> c.isLetterOrDigit() }.ifEmpty { "emptyName" }
 
         val directory = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-            Environment.DIRECTORY_RECORDINGS+ "/ArkhDialect" + "/$timestamp" + "/$folderName" + "/recordings"
+            Environment.DIRECTORY_RECORDINGS+ "/ArkhDialect_recordings" + "/$timestamp" + "/${interview.id}_$folderName" + "/recordings"
         else
-            Environment.DIRECTORY_MUSIC + "/ArkhDialect" + "/$timestamp" + "/$folderName" + "/recordings"
+            Environment.DIRECTORY_MUSIC + "/ArkhDialect_recordings" + "/$timestamp" + "/${interview.id}_$folderName" + "/recordings"
 
         // 2. Create new file using content resolver
         val recordingDetails = ContentValues().apply {

@@ -184,7 +184,7 @@ class PhotoAttachmentActivity : AppCompatActivity() {
         val contentValues = ContentValues().apply {
             put(MediaStore.Images.Media.DISPLAY_NAME, imageFileName + ".jpg")
             put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-            put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/ArkhDialect" + "/$timestamp" + "/$folderName" + "/images")
+            put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/ArkhDialect_pictures" + "/$timestamp" + "/${interview.id}_$folderName" + "/images")
         }
 
         // Вставка файла в хранилище через MediaStore
