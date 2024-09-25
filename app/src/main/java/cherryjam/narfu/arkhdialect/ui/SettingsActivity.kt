@@ -107,6 +107,9 @@ class SettingsActivity : AppCompatActivity() {
                 exportDataHelper.zipFolders()
 
                 Toast.makeText(this, this.getString(R.string.export_successful), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, this.getString(R.string.export_directory), Toast.LENGTH_SHORT).show()
+                //TODO
+                //Добавить кнопку для выбора сохранения в проводнике
 
             } catch (e: IOException) {
                 e.printStackTrace()

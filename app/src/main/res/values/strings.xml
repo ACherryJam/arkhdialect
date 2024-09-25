@@ -101,6 +101,7 @@
     <string name="export_data">Экспорт</string>
     <string name="export_successful">Экспорт файлов выполнен успешно</string>
     <string name="export_unsuccessful">Не удалось выполнить экспорт файлов</string>
+    <string name="export_directory">Zip файл сохранен в папку Документы</string>
 
 
 
