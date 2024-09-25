@@ -164,10 +164,13 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
     fun copyRecordingFile(receivedUri: Uri): Uri? {
         // 1. Determine directory for new file
         val audioCollection = Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+        val timestamp: String = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(Date())
+        val folderName = interview.name.filter { c -> c.isLetterOrDigit() }.ifEmpty { "emptyName" }
+
         val directory = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-            Environment.DIRECTORY_RECORDINGS
+            Environment.DIRECTORY_RECORDINGS+ "/ArkhDialect_recordings" + "/$timestamp" + "/${interview.id}_$folderName" + "/recordings"
         else
-            Environment.DIRECTORY_MUSIC
+            Environment.DIRECTORY_MUSIC + "/ArkhDialect_recordings" + "/$timestamp" + "/${interview.id}_$folderName" + "/recordings"
 
         // 2. Create new file using content resolver
         val recordingDetails = ContentValues().apply {
@@ -296,8 +299,8 @@ class RecordingAttachmentActivity : AppCompatActivity(), SharedPreferences.OnSha
 
     fun createFileName(): String {
         val fullName = interview.name.filter { c -> c.isLetterOrDigit() }
-        val timestamp: String = SimpleDateFormat("yyyyMMdd-HHmmss", Locale.getDefault()).format(Date())
-        return "$fullName-$timestamp"
+        val timestamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        return "${fullName}_$timestamp"
     }
 
     fun deleteOriginalFile(uri: Uri) {

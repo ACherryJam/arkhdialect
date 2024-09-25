@@ -103,6 +103,24 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/settings_export_holder"
+                style="@style/SettingsHolderTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/settings_export_label"
+                    style="@style/SettingsTextLabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/export_icon"
+                    android:drawablePadding="7dp"
+                    android:gravity="center"
+                    android:text="@string/export" />
+
+            </RelativeLayout>
+
         </LinearLayout>
 
     </LinearLayout>

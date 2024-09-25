@@ -68,6 +68,7 @@ dependencies {
     implementation(libs.androidx.preference.ktx)
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.keyboardvisibilityevent)
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.0")
     ksp(libs.androidx.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

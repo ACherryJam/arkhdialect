@@ -95,6 +95,14 @@
     <string name="general">Общие</string>
     <string name="other">Другие</string>
     <string name="language">Язык</string>
+    <string name="export">Экспорт данных</string>
+    <string name="export_data_title">Экспорт данных</string>
+    <string name="export_data_message">Вы точно хотите экспортировать данные?</string>
+    <string name="export_data">Экспорт</string>
+    <string name="export_successful">Экспорт файлов выполнен успешно</string>
+    <string name="export_unsuccessful">Не удалось выполнить экспорт файлов</string>
+
+
 
 
     <!-- ABOUT -->

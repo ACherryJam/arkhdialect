@@ -12,11 +12,12 @@ class Interview(
     @PrimaryKey(autoGenerate = true)
     var id: Long?,
     @ColumnInfo(name = "name") var name: String,
-    @ColumnInfo(name = "location") var location: String,
-    @ColumnInfo(name = "interviewer") var interviewer: String
+    @ColumnInfo(name = "interviewer") var interviewer: String,
+    @ColumnInfo(name = "location") var location: String
 ) : Parcelable {
     constructor(
-        name: String="",
-        location: String="",
-        interviewer: String="") : this(null, name, location, interviewer)
+        name: String = "",
+        interviewer: String = "",
+        location: String = ""
+    ) : this(null, name, interviewer, location)
 }
