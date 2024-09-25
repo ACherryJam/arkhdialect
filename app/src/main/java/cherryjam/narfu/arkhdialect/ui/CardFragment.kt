@@ -79,11 +79,11 @@ class CardFragment : Fragment() {
             private fun searchDatabase(query: String) {
                 val searchQuery = "%$query%"
 
-                database.cardDao().searchDatabase(searchQuery).observe(viewLifecycleOwner, { list ->
+                database.cardDao().searchDatabase(searchQuery).observe(viewLifecycleOwner) { list ->
                     list.let {
                         adapter.data = it
                     }
-                })
+                }
             }
         })
     }
