@@ -94,6 +94,7 @@
     <string name="export_successful">The file export was completed successfully</string>
     <string name="export_unsuccessful">Failed to export files</string>
     <string name="export_directory">The zip file has been saved to the Documents folder</string>
+    <string name="connect">Connecting to the server</string>
 
     <string name="creators">Creators</string>
     <string name="first_full_name">Matvienko Daniil Vladimirovich</string>

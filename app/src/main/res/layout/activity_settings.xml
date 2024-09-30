@@ -121,6 +121,24 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/settings_connect_holder"
+                style="@style/SettingsHolderTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/settings_connect_label"
+                    style="@style/SettingsTextLabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/connect_icon"
+                    android:drawablePadding="7dp"
+                    android:gravity="center"
+                    android:text="@string/connect" />
+
+            </RelativeLayout>
+
         </LinearLayout>
 
     </LinearLayout>

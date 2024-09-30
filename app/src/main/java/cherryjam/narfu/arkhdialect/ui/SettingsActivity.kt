@@ -62,6 +62,8 @@ class SettingsActivity : AppCompatActivity() {
         else {
             binding.settingsExportLabel.setTextColor(ContextCompat.getColor(this, R.color.gray))
         }
+
+        binding.settingsConnectLabel.setTextColor(ContextCompat.getColor(this, R.color.gray))
     }
 
     override fun onSupportNavigateUp(): Boolean {
